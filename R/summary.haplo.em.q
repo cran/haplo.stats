@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/02/26 23:10:39 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/summary.haplo.em.q,v 1.6 2004/02/26 23:10:39 sinnwell Exp $
+#$Date: 2004/04/06 20:40:00 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/summary.haplo.em.q,v 1.7 2004/04/06 20:40:00 sinnwell Exp $
 #$Locker:  $
 #$Log: summary.haplo.em.q,v $
+#Revision 1.7  2004/04/06 20:40:00  sinnwell
+#use nlines to limit lines in vignettes
+#
 #Revision 1.6  2004/02/26 23:10:39  sinnwell
 #print.banner to printBanner
 #
@@ -51,8 +54,7 @@
 # fax:      507-284-9542
 # email: schaid@mayo.edu
 # 
-summary.haplo.em <- function(object, show.haplo=FALSE, ...){
-
+summary.haplo.em <- function(object, show.haplo=FALSE, nlines=NULL, ...){
   
   printBanner("Subjects: Haplotype Codes and Posterior Probabilities")
 
@@ -65,9 +67,9 @@ summary.haplo.em <- function(object, show.haplo=FALSE, ...){
      df <- data.frame(subj.id=object$subj.id, hap1code=object$hap1code, hap2code=object$hap2code,
                     posterior=round(object$post,5))
   }
-
-  print(df)
- 
+  if(is.null(nlines)) print(df)
+  else print(df[1:nlines,])
+  
   printBanner("Number of haplotype pairs: max vs used")
  
 

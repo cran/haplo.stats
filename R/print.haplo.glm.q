@@ -1,8 +1,15 @@
 #$Author: sinnwell $
-#$Date: 2004/02/26 23:05:23 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.glm.q,v 1.6 2004/02/26 23:05:23 sinnwell Exp $
+#$Date: 2004/10/22 22:08:27 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.glm.q,v 1.8 2004/10/22 22:08:27 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.glm.q,v $
+#Revision 1.8  2004/10/22 22:08:27  sinnwell
+#do not drop matrix to vector when subsetting to haplo.unique
+#when only 1 haplotype
+#
+#Revision 1.7  2004/03/18 23:30:32  sinnwell
+#keep matrix from converting to data.frame, and char vecs to factors
+#
 #Revision 1.6  2004/02/26 23:05:23  sinnwell
 #print.banner to printBanner
 #
@@ -28,7 +35,7 @@ print.haplo.glm <- function(x, print.all.haplo=FALSE, digits = max(options()$dig
 
   haplo.df<- function(x){
     z <- x$haplo.common
-    df <- as.matrix(x$haplo.unique[z,])
+    df <- as.matrix(x$haplo.unique[z,,drop=FALSE])
     y <- x$haplo.freq[z]
 
     if(x$haplo.rare.term){
@@ -36,9 +43,10 @@ print.haplo.glm <- function(x, print.all.haplo=FALSE, digits = max(options()$dig
       y <- c(y, sum(x$haplo.freq[x$haplo.rare]))
     }
 
-    row.names(df) <- x$haplo.names
+    # use dimnames to change row names do not convert from matrix to df
+    dimnames(df)[[1]] <- x$haplo.names
     df <- rbind(df,x$haplo.unique[x$haplo.base,])
-    row.names(df)[nrow(df)] <- "haplo.base"
+    dimnames(df)[[1]][nrow(df)] <- "haplo.base"
     y <- c(y,x$haplo.freq[x$haplo.base])
     data.frame(df,hap.freq=y)
   }

@@ -1,9 +1,12 @@
 #$Author: sinnwell $
-#$Date: 2004/02/26 23:06:50 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.group.q,v 1.6 2004/02/26 23:06:50 sinnwell Exp $
-#$Id: print.haplo.group.q,v 1.6 2004/02/26 23:06:50 sinnwell Exp $
+#$Date: 2004/04/06 21:30:06 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.group.q,v 1.7 2004/04/06 21:30:06 sinnwell Exp $
+#$Id: print.haplo.group.q,v 1.7 2004/04/06 21:30:06 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.group.q,v $
+#Revision 1.7  2004/04/06 21:30:06  sinnwell
+#use nlines to limit output for demos
+#
 #Revision 1.6  2004/02/26 23:06:50  sinnwell
 #print.banner to printBanner
 #
@@ -53,7 +56,7 @@
 # email: schaid@mayo.edu
 # 
 
-print.haplo.group <- function(x, digits=max(options()$digits-2, 5), ...) {
+print.haplo.group <- function(x, digits=max(options()$digits-2, 5), nlines=NULL, ...) {
 
   ### Print haplo.group object with frequency table for group
   ### and estimated frequencies for haplotypes.
@@ -72,8 +75,10 @@ print.haplo.group <- function(x, digits=max(options()$digits-2, 5), ...) {
     cat("\n\n")
     printBanner("Haplotype Frequencies By Group ", banner.width = 80,
                    char.perline = 60, border = "-")
-    print(df.print)
-  
+
+    if(is.null(nlines)) print(df.print)
+    else print(df.print[1:nlines,])
+
     invisible()
 }
 

@@ -7,7 +7,7 @@
 Method function to print a class of type haplo.score
 }
 \usage{
-print.haplo.score(x, digits, ...)
+print.haplo.score(x, digits, nlines=NULL, ...)
 }
 \arguments{
 \item{x}{
@@ -15,6 +15,10 @@ The object returned from haplo.score (which has class haplo.score).
 }
 \item{digits}{
 Number of digits to round the numeric output.
+}
+\item{nlines}{
+Print the first 'nlines' rows of the large data frame for fast, short
+view of the results.  
 }
 \item{\dots }{
 Dynamic parameter for the values of additional parameters for 

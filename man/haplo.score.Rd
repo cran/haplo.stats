@@ -180,10 +180,13 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
                            trait.type="ordinal")
   print(score.ord)
 
-# For a  binary trait and simulations performed
+# For a  binary trait and simulations,
+# limit simulations to 500 in score.sim.control, default is 20000
   y.bin <-ifelse(y.ord==1,1,0)
   score.bin.sim <- haplo.score(y.bin, geno, trait.type = "binomial",
-                               locus.label=label, simulate=TRUE)
+                     locus.label=label, simulate=TRUE, sim.control=
+                     score.sim.control(min.sim=200,max.sim=500))
+
   print(score.bin.sim)
 
 # For a binary trait, adjusted for sex and age:

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/03/17 20:54:32 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/louis.info.q,v 1.6 2004/03/17 20:54:32 sinnwell Exp $
+#$Date: 2004/03/19 15:02:14 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/louis.info.q,v 1.7 2004/03/19 15:02:14 sinnwell Exp $
 #$Locker:  $
 #$Log: louis.info.q,v $
+#Revision 1.7  2004/03/19 15:02:14  sinnwell
+#have PACKAGE in all .C calls, part of '...' for Splus
+#
 #Revision 1.6  2004/03/17 20:54:32  sinnwell
 #two different calls for .C("louis_info" for R and Splus
 #
@@ -109,42 +112,23 @@ louis.info <- function(fit){
   h1 <-  h1 - 1
   h2 <-  h2 - 1
 
-  tmp <- if(exists("is.R") && is.function(is.R) && is.R()) {
-            .C("louis_info",
-               len.tot=as.integer(len.tot),
-               indx.subj=as.integer(indx.subj),
-               resid=as.double(resid),
-               vfunc=as.double(vfunc),
-               wt=as.double(wt),
-               xvec=as.double(xvec),
-               ncov=as.integer(ncov),
-               h1=as.integer(h1),
-               h2=as.integer(h2),
-               hap.base=as.integer(hap.base),
-               nhap=as.integer(nhap),
-               hap.freq=as.double(hap.freq),
-               info11=as.double(info11),
-               info12=as.double(info12),
-               info22=as.double(info22),
-               PACKAGE='haplo.stats')
-          } else {
-            .C("louis_info",
-               len.tot=as.integer(len.tot),
-               indx.subj=as.integer(indx.subj),
-               resid=as.double(resid),
-               vfunc=as.double(vfunc),
-               wt=as.double(wt),
-               xvec=as.double(xvec),
-               ncov=as.integer(ncov),
-               h1=as.integer(h1),
-               h2=as.integer(h2),
-               hap.base=as.integer(hap.base),
-               nhap=as.integer(nhap),
-               hap.freq=as.double(hap.freq),
-               info11=as.double(info11),
-               info12=as.double(info12),
-               info22=as.double(info22))
-          }
+ tmp <- .C("louis_info",
+           len.tot=as.integer(len.tot),
+           indx.subj=as.integer(indx.subj),
+           resid=as.double(resid),
+           vfunc=as.double(vfunc),
+           wt=as.double(wt),
+           xvec=as.double(xvec),
+           ncov=as.integer(ncov),
+           h1=as.integer(h1),
+           h2=as.integer(h2),
+           hap.base=as.integer(hap.base),
+           nhap=as.integer(nhap),
+           hap.freq=as.double(hap.freq),
+           info11=as.double(info11),
+           info12=as.double(info12),
+           info22=as.double(info22),
+           PACKAGE='haplo.stats')
 
 nh <- nhap-1
 info11 <- matrix(tmp$info11, ncol=ncov)

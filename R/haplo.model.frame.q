@@ -1,8 +1,15 @@
 #$Author: sinnwell $
-#$Date: 2004/03/15 22:50:27 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.model.frame.q,v 1.6 2004/03/15 22:50:27 sinnwell Exp $
+#$Date: 2004/10/22 19:19:28 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.model.frame.q,v 1.8 2004/10/22 19:19:28 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.model.frame.q,v $
+#Revision 1.8  2004/10/22 19:19:28  sinnwell
+#for recessive model, if sum(col[i]) is zero, subset accordingly
+#x.mat and haplo.common.  Guard against 1-col left keep as data.frame
+#
+#Revision 1.7  2004/03/22 15:04:24  sinnwell
+#under last change for R, fixed stringsAsFactors problem
+#
 #Revision 1.6  2004/03/15 22:50:27  sinnwell
 #hapEM$haplotype is char for R, so convert to char, then integer
 #
@@ -192,13 +199,23 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
                     haplo.rare.term <- TRUE
                   }
 
-                  # because coding rec can result in columns of 0's, we  need to check and
+                  # because coding rec can result in columns of 0's, we need to check and
                   # exclude cols of 0's
 
-                   ok <- apply(x.hap,2,sum) > 0
-                  if(sum(ok)==0) stop("No homozygotes for rec haplo.effect")
-                   x.hap <- x.hap[,ok]
-                },              
+                  ok <- apply(x.hap,2,sum) > 0
+                  colname.ok <- dimnames(x.hap)[[2]][ok]
+                  
+                  if(sum(ok)==0) {
+                    stop("No homozygotes for rec haplo.effect")
+                  } else if(sum(ok)>0) {
+                  
+                     # subset x.hap, its dimnames and haplo.common      <jps>
+                     # must also protect against 1 column left, don't drop to vector
+                    x.hap <- x.hap[,ok, drop=FALSE]
+                    dimnames(x.hap)[[2]] <- colname.ok
+                    haplo.common <- haplo.common[ok[1:length(haplo.common)]]
+                  }
+                },
           stop("Method for haplo.effect not supported")
   )
 
@@ -208,7 +225,7 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
 
   x.names <- dimnames(x.hap)[[2]]
   haplo.names <- paste(haplo.names, x.names, sep=".")
-
+  
   dimnames(x.hap)[[2]] <- paste(".",dimnames(x.hap)[[2]],sep="")
 
   if(exists("is.R") && is.function(is.R) && is.R()) {
@@ -239,7 +256,7 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
       nloci <- ncol(hapEM$haplotype)
       haplo.unique <- NULL
       for(j in 1:nloci){
-        haplo.unique <- cbind(haplo.unique, allele.lev[[j]][as.numeric(as.character(hapEM$haplotype[,j]))] )
+        haplo.unique <- cbind(haplo.unique, allele.lev[[j]][as.numeric(hapEM$haplotype[,j])] )
       }
       dimnames(haplo.unique) <- dimnames(hapEM$haplotype)
    } else {
@@ -255,8 +272,7 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
        haplo.unique <- hapEM$haplotype
      }
   }
-
-
+  
   return(list(m.frame = m,
               g.dat = g.dat,
               haplo.unique = haplo.unique, 

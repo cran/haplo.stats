@@ -1,14 +1,17 @@
 #$Author: sinnwell $
 #
-#$Date: 2004/02/26 23:08:27 $
+#$Date: 2004/04/07 14:08:59 $
 #
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.q,v 1.8 2004/02/26 23:08:27 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.q,v 1.9 2004/04/07 14:08:59 sinnwell Exp $
 #
-#$Id: print.haplo.score.q,v 1.8 2004/02/26 23:08:27 sinnwell Exp $
+#$Id: print.haplo.score.q,v 1.9 2004/04/07 14:08:59 sinnwell Exp $
 #
 #$Locker:  $
 #
 #$Log: print.haplo.score.q,v $
+#Revision 1.9  2004/04/07 14:08:59  sinnwell
+#use nlines for quick print
+#
 #Revision 1.8  2004/02/26 23:08:27  sinnwell
 #print.banner to printBanner
 #
@@ -67,7 +70,7 @@
 # email: schaid@mayo.edu
 # 
 # 
-print.haplo.score <- function(x, digits=max(options()$digits-2, 5), ...)
+print.haplo.score <- function(x, digits=max(options()$digits-2, 5), nlines=NULL, ...)
 
 # Sinnwell JP, Schaid DJ
 # Mayo Clinic Biostatistics 8/2003
@@ -118,7 +121,10 @@ print.haplo.score <- function(x, digits=max(options()$digits-2, 5), ...)
 
    printBanner("Haplotype-specific Scores", banner.width=80, char.perline=60,
                 border= "-")
-   print(tbl,quote=FALSE)
+
+   if(is.null(nlines) )
+     print(tbl,quote=FALSE)
+   else print(tbl[1:nlines, ], quote=FALSE, ...)
 
    cat("\n\n")
    invisible(x)

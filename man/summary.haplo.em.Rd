@@ -9,7 +9,7 @@ Also display a table with number of max haplotype pairs for a
 subject versus how many were kept (max vs. used).  
 }
 \usage{
-summary.haplo.em(object, show.haplo=FALSE, ...)
+summary.haplo.em(object, show.haplo=FALSE, nlines=NULL, ...)
 }
 \arguments{
 \item{object}{
@@ -18,6 +18,9 @@ A haplo.em object
 \item{show.haplo }{
 Logical. If TRUE, show the alleles of the haplotype pairs, otherwise show
 only the recoded values.
+}
+\item{nlines}{
+To shorten output, print the first 1:nlines rows of the large data frame.  
 }
 \item{\dots }{
 Optional arguments for the summary method
@@ -35,7 +38,7 @@ Optional arguments for the summary method
 
 }
 \seealso{
-
+\code{\link{haplo.em}}
 }
 \examples{
 
