@@ -43,21 +43,6 @@ upper bound for search space for sample size
 power, the difference in power from target power, and sample size,
 respectively for the three different functions
 }
-\section{Side Effects}{
-
-}
-\details{
-
-}
-\section{References}{
-
-}
-\seealso{
-
-}
-\examples{
-
-}
-\keyword{}
+\keyword{power}
 % docclass is function
 % Converted by Sd2Rd version 43268.

@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/08 20:28:21 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.Rd,v 1.2 2008/01/08 20:28:21 sinnwell Exp $
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/plot.haplo.score.Rd,v 1.3 2011/11/10 15:29:41 sinnwell Exp $
 % $Locker:  $ 
 % $Log: plot.haplo.score.Rd,v $
+% Revision 1.3  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.2  2008/01/08 20:28:21  sinnwell
 % fix comment
 %
@@ -51,9 +54,6 @@ the plot method.
 \value{
 Nothing is returned.
 }
-\section{Side Effects}{
-
-}
 \details{
 This is a plot method function used to plot haplotype frequencies on
 the x-axis and haplotype-specific scores on the y-axis. Because
@@ -69,7 +69,7 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 haplo.score
 }
 \examples{
-  setupData(hla.demo)
+  data(hla.demo)
   geno <- as.matrix(hla.demo[,c(17,18,21:24)])
   keep <- !apply(is.na(geno) | geno==0, 1, any)
   hla.demo <- hla.demo[keep,]
@@ -83,7 +83,7 @@ haplo.score
                             trait.type = "gaussian")
 
   plot.haplo.score(score.gaus)
+  ## try: locator.haplo(1)
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

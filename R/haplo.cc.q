@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2008/04/10 20:58:36 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.cc.q,v 1.13 2008/04/10 20:58:36 sinnwell Exp $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.cc.q,v 1.14 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.cc.q,v $
+#Revision 1.14  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.13  2008/04/10 20:58:36  sinnwell
 #add eps.svd, only allow haplo.min.count in control()
 #
@@ -193,7 +196,7 @@ haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
   ## returned score and glm objects in the returned list for
   ## additional applications
   
-  sr.class(cc.lst) <- "haplo.cc"
+  class(cc.lst) <- "haplo.cc"
   cc.lst
   
 }

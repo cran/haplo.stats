@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 19:41:02 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/locator.haplo.Rd,v 1.1 2008/01/09 19:41:02 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/locator.haplo.Rd,v 1.2 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: locator.haplo.Rd,v $
+% Revision 1.2  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.1  2008/01/09 19:41:02  sinnwell
 % Initial revision
 %
@@ -71,6 +74,5 @@ upper-half of the plot).
 
 #  locator.haplo(score.out)
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

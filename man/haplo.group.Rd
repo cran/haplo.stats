@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 17:35:35 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.group.Rd,v 1.1 2008/01/09 17:35:35 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.group.Rd,v 1.2 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $
 % $Log: haplo.group.Rd,v $
+% Revision 1.2  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.1  2008/01/09 17:35:35  sinnwell
 % Initial revision
 %
@@ -81,7 +84,6 @@ list of control parameters for haplo.em (see haplo.em.control).
 }
 }
 \value{
-
 \item{ }{
 A list as an object of the haplo.group class.  The three
 elements of the list are described below.
@@ -106,9 +108,6 @@ grouping variable.
 Number of loci occuring in the geno matrix.
 }
 }
-\section{Side Effects}{
-
-}
 \details{
 Haplo.em is used to compute the maximum likelihood estimates of 
 the haplotype frequencies for the total sample, then for each of 
@@ -123,7 +122,7 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 print.haplo.group, haplo.em
 }
 \examples{
-  setupData(hla.demo)
+  data(hla.demo)
   geno <- as.matrix(hla.demo[,c(17,18,21:24)])
 
 # remove any subjects with missing alleles for faster examples, 
@@ -138,6 +137,5 @@ print.haplo.group, haplo.em
   group.bin <- haplo.group(y.bin, geno, miss.val=0)
   print.haplo.group(group.bin)
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

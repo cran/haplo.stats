@@ -1,8 +1,11 @@
 %  $Author: sinnwell $
-%  $Date: 2008/10/06 15:16:40 $
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.Rd,v 1.5 2008/10/06 15:16:40 sinnwell Exp $
+%  $Date: 2011/11/10 15:29:41 $
+%  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/plot.seqhap.Rd,v 1.6 2011/11/10 15:29:41 sinnwell Exp $
 %  $Locker:  $ 
 %  $Log: plot.seqhap.Rd,v $
+%  Revision 1.6  2011/11/10 15:29:41  sinnwell
+%  major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 %  Revision 1.5  2008/10/06 15:16:40  sinnwell
 %  rm n.sim from example
 %
@@ -22,7 +25,7 @@
 % *** empty log message ***
 % 
 % Revision 1.4  2007/05/30 18:29:47  sinnwell
-% fix example to use setupData
+% fix example to use data
 % 
 % Revision 1.3  2007/05/25 18:17:45  sinnwell
 % rm par optoins cex.axis and las, reserved for users in ...
@@ -81,9 +84,6 @@ for S+: srt=90, cex.axis=1.2, adj=1
 \value{
 Nothing is returned.
 }
-\section{Side Effects}{
-
-}
 \details{
 The x-axis has tick marks for all loci.  The y-axis is the -log10() of
 the selected p-value.  For the sequential result for each locus, a
@@ -104,13 +104,12 @@ association analysis. Genet Epidemiol, in print.
 \code{\link{print.seqhap}}
 }
 \examples{
-setupData(seqhap.dat)
+data(seqhap.dat)
 mydata.y <- seqhap.dat[,1]
 mydata.x <- seqhap.dat[,-1]
-setupData(seqhap.pos)
+data(seqhap.pos)
 myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=seqhap.pos$pos)
 plot(myobj)
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

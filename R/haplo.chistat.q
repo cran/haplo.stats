@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2008/04/01 20:55:08 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.chistat.q,v 1.3 2008/04/01 20:55:08 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.chistat.q,v 1.3 2008/04/01 20:55:08 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.chistat.q,v $
 #Revision 1.3  2008/04/01 20:55:08  sinnwell

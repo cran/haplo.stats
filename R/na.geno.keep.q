@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2008/03/24 21:24:53 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/na.geno.keep.q,v 1.4 2008/03/24 21:24:53 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/na.geno.keep.q,v 1.4 2008/03/24 21:24:53 sinnwell Exp $
 #$Locker:  $
 #$Log: na.geno.keep.q,v $
 #Revision 1.4  2008/03/24 21:24:53  sinnwell

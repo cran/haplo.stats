@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 21:21:56 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/setupGeno.Rd,v 1.2 2008/01/09 21:21:56 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/setupGeno.Rd,v 1.3 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: setupGeno.Rd,v $
+% Revision 1.3  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.2  2008/01/09 21:21:56  sinnwell
 % *** empty log message ***
 %
@@ -48,21 +51,20 @@ and the original values are stored in the 'unique.alleles' attribute.
 The ith item of the unique.alleles list is a vector of unique alleles
 for the ith locus.
 }
-\section{Side Effects}{
-
-}
 \details{
-
-}
-\section{References}{
-
+  This function contains the essential parts of the loci function,
+  which is no longer within haplo.stats
 }
 \note{
 A matrix that contains all elements of mode character will be sorted
-in alphabetic order.
+in alphabetic order. This order may differ across platforms according
+to your setting of LC_COLLATE.  See the note in \code{haplo.em} about
+how this sort order affects results.
 }
 \seealso{
-locus, loci, haplo.glm
+  \code{\link{locus}},
+  \code{\link{haplo.glm}},
+  \code{\link{haplo.em}}
 }
 \examples{
 # Create some loci to work with
@@ -81,6 +83,5 @@ myGeno
 
 attributes(myGeno)$unique.alleles
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

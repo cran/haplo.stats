@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/04/15 20:13:52 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.control.Rd,v 1.3 2008/04/15 20:13:52 sinnwell Exp $
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.em.control.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $
 % $Locker:  $ 
 % $Log: haplo.em.control.Rd,v $
+% Revision 1.4  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.3  2008/04/15 20:13:52  sinnwell
 %  fix a few words in min.post and max.haps.limit
 %
@@ -113,9 +116,6 @@ do not print any messages.
 \value{
 A list of the parameters passed to the function.
 }
-\section{Side Effects}{
-
-}
 \details{
 The default is to use n.try = 10. If this takes too much time, it may
 be worthwhile to decrease n.try. Other tips for computing haplotype
@@ -123,9 +123,6 @@ frequencies for a large number of loci, particularly if some have many
 alleles, is to decrease the batch size (insert.batch.size), increase
 the memory (max.haps.limit), and increase the probability of trimming
 off rare haplotypes at each insertion step (min.posterior).
-}
-\section{References}{
-
 }
 \seealso{
 \code{\link{haplo.em}},
@@ -136,6 +133,4 @@ off rare haplotypes at each insertion step (min.posterior).
 #    > score.gauss <- haplo.score(resp, geno, trait.type="gaussian", 
 #    >           em.control=haplo.em.control(insert.batch.size = 2, n.try=1))
 }
-\keyword{}
-% docclass is function
-% Converted by Sd2Rd version 37351.
+

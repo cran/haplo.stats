@@ -1,6 +1,6 @@
 % $Author: sinnwell $ 
 % $Date: 2009/09/30 19:58:16 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.scan.Rd,v 1.4 2009/09/30 19:58:16 sinnwell Exp $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.scan.Rd,v 1.4 2009/09/30 19:58:16 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: haplo.scan.Rd,v $
 % Revision 1.4  2009/09/30 19:58:16  sinnwell

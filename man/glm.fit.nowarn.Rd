@@ -1,11 +1,10 @@
 %  $Author: sinnwell $ 
-%  $Date: 2009/09/30 20:05:38 $
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/glm.fit.nowarn.Rd,v 1.5 2009/09/30 20:05:38 sinnwell Exp $
+%  $Date: 2011/11/10 15:29:41 $
+%  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/glm.fit.nowarn.Rd,v 1.6 2011/11/10 15:29:41 sinnwell Exp $
 %  $Locker:  $ 
 
 \name{glm.fit.nowarn}
 \alias{glm.fit.nowarn}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Modified from glm.fit function to not warn users for binomial
   non-integer weights. }
 \description{
@@ -14,7 +13,7 @@
 \usage{
 glm.fit.nowarn(x, y, weights = rep(1, nobs), start = NULL,
              etastart = NULL, mustart = NULL, offset = rep(0,nobs),
-             family=gaussian(), control=glm.control(), intercept=TRUE)
+             family=gaussian(), control=list(), intercept=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

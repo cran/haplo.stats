@@ -1,8 +1,11 @@
 % $Author: sinnwell $ -->
-% $Date: 2008/04/29 17:19:14 $ -->
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.control.Rd,v 1.3 2008/04/29 17:19:14 sinnwell Exp $ -->
+% $Date: 2011/11/10 15:29:41 $ -->
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.glm.control.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $ -->
 % $Locker:  $ -->
 % $Log: haplo.glm.control.Rd,v $
+% Revision 1.4  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.3  2008/04/29 17:19:14  sinnwell
 % change defaults of freq.min and min.count
 %
@@ -37,8 +40,10 @@ are passed to this function, then all default values are used.
 haplo.glm.control(haplo.effect="add", haplo.base=NULL,
                   haplo.min.count=NA, haplo.freq.min=.01,
                   sum.rare.min=0.001, haplo.min.info=0.001, 
-                  keep.rare.haplo=TRUE, glm.c=glm.control(maxit=500), 
-                                                  em.c=haplo.em.control())
+                  keep.rare.haplo=TRUE,
+                  eps.svd=sqrt(.Machine$double.eps),
+                  glm.c=glm.control(maxit=500), 
+                  em.c=haplo.em.control())
 }
 \arguments{
 \item{haplo.effect }{
@@ -85,6 +90,10 @@ haplo.glm.control(haplo.effect="add", haplo.base=NULL,
   separate term in the regression model (when keep.rare.haplo=TRUE), or
   pooled with the base-line haplotype (when keep.rare.haplo=FALSE).
 }
+\item{eps.svd}{
+  argument to be passed to Ginv for the generalized inverse of the
+  information matrix, helps to determine the number of singular values
+}
 \item{glm.c }{
   list of control parameters for the usual glm.control (see
 glm.control).
@@ -103,6 +112,7 @@ glm.control).
 \code{\link{glm.control}}
 }
 \examples{
+# NOT RUN
 # using the data set up in the example for haplo.glm,
 # the control function is used in haplo.glm as follows
 #  > fit <- haplo.glm(y ~ male + geno, family = gaussian,  
@@ -111,6 +121,6 @@ glm.control).
 #  >          control = haplo.glm.control(haplo.min.count=5,
 #  >          em.c=haplo.em.control(n.try=1)))
 }
-\keyword{}
+\keyword{glm}
 % docclass is function
 % Converted by Sd2Rd version 37351.

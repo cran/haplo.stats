@@ -1,8 +1,11 @@
 % $Author: sinnwell $
-% $Date: 2008/01/08 20:39:02 $
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.em.Rd,v 1.3 2008/01/08 20:39:02 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/print.haplo.em.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $
 % $Log: print.haplo.em.Rd,v $
+% Revision 1.4  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.3  2008/01/08 20:39:02  sinnwell
 % fix comments
 %
@@ -48,21 +51,8 @@ optional arguments for print
 \value{
 Nothing is returned
 }
-\section{Side Effects}{
-
-}
-\details{
-
-}
-\section{References}{
-
-}
 \seealso{
 \code{\link{haplo.em}}
 }
-\examples{
-
-}
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

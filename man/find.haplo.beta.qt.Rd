@@ -3,10 +3,11 @@
 \alias{find.beta.qt.phase.known}
 \alias{find.intercept.qt.phase.known}
 \title{
-  Find beta's for risk haplotypes, for specified r2
+  Find beta coefficients for risk haplotypes, for specified r2
 }
 \description{
-Find intercept (beta for base.index haplotype)
+  Find betas for risk haplotypes and intercept (beta for base.index
+  haplotype) with a given r2
 }
 \usage{
 find.haplo.beta.qt(haplo, haplo.freq, base.index, haplo.risk, r2, y.mu=0, y.var=1)
@@ -50,22 +51,8 @@ beta values for risk haplotypes in find.beta.qt.phase.known
 }
 }
 \value{
+  beta estimates for haplotypes or intercept
 }
-\section{Side Effects}{
-
-}
-\details{
-
-}
-\section{References}{
-
-}
-\seealso{
-
-}
-\examples{
-
-}
-\keyword{}
+\keyword{power}
 % docclass is function
 % Converted by Sd2Rd version 43268.

@@ -1,6 +1,6 @@
 % $Author: sinnwell $
-% $Date: 2009/09/30 20:05:38 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.design.Rd,v 1.3 2009/09/30 20:05:38 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.design.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: 
 
@@ -62,7 +62,7 @@ collapsed back to a single row per person.
  ### See the user manual for more complete examples
  ###------------------------------------------------
 
- setupData(hla.demo)
+ data(hla.demo)
  attach(hla.demo)
 
  geno <- hla.demo[,c(17,18,21:24)]

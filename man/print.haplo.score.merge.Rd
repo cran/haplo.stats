@@ -1,9 +1,12 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/08 21:55:44 $
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.merge.Rd,v 1.2 2008/01/08 21:55:44 sinnwell Exp $
+% $Date: 2011/11/10 15:29:41 $
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/print.haplo.score.merge.Rd,v 1.3 2011/11/10 15:29:41 sinnwell Exp $
 % $Locker:  $
 % 
 %$Log: print.haplo.score.merge.Rd,v $
+%Revision 1.3  2011/11/10 15:29:41  sinnwell
+%major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 %Revision 1.2  2008/01/08 21:55:44  sinnwell
 %add comments
 %
@@ -86,9 +89,6 @@ the print method.
 \value{
 Nothing is returned.
 }
-\section{Side Effects}{
-
-}
 \details{
 This is a print method function used to print information from the
 haplo.score.merge class. Because haplo.score.merge is a class, 
@@ -107,6 +107,6 @@ haplo.score.merge, haplo.score, haplo.group
 \examples{
 #see example for haplo.score.merge
 }
-\keyword{}
+\keyword{scores}
 % docclass is function
 % Converted by Sd2Rd version 37351.

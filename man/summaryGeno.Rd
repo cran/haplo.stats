@@ -1,9 +1,12 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/08 20:29:33 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summaryGeno.Rd,v 1.2 2008/01/08 20:29:33 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/summaryGeno.Rd,v 1.3 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 % $Log: summaryGeno.Rd,v $
+% Revision 1.3  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.2  2008/01/08 20:29:33  sinnwell
 % fix comments
 %
@@ -46,9 +49,6 @@ Data frame with columns representing the number of loci with zero,
 one, and two missing alleles, then the total haplotype pairs resulting
 from full enumeration of the phenotype.
 }
-\section{Side Effects}{
-
-}
 \details{
 After getting information on the individual loci, this function makes 
 a call to geno.count.pairs().  The E-M steps to estimate haplotype 
@@ -60,9 +60,5 @@ the unlikely haplotypes that result from it.
 \code{\link{geno.count.pairs}},
 \code{\link{haplo.em}}
 }
-\examples{
-
-}
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

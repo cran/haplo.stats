@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/01/23 21:00:27 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/printBanner.q,v 1.4 2007/01/23 21:00:27 sinnwell Exp $
+#$Date: 2011/04/28 19:48:22 $
+#$Header: /projects/genetics/cvs/cvsroot/mgenet/R/printBanner.q,v 1.1 2011/04/28 19:48:22 sinnwell Exp $
 #$Locker:  $
 #$Log: printBanner.q,v $
+#Revision 1.1  2011/04/28 19:48:22  sinnwell
+#is.R, printBanner, setupData
+#
 #Revision 1.4  2007/01/23 21:00:27  sinnwell
 #rm ending newline \n.  Users can space if desired.
 #

@@ -1,12 +1,15 @@
 #$Author: sinnwell $
 #
-#$Date: 2003/12/08 19:49:00 $
+#$Date: 2011/02/21 20:09:27 $
 #
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/locus.q,v 1.6 2003/12/08 19:49:00 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/mgenet/R/locus.q,v 1.1.1.1 2011/02/21 20:09:27 sinnwell Exp $
 #
 #$Locker:  $
 #
 #$Log: locus.q,v $
+#Revision 1.1.1.1  2011/02/21 20:09:27  sinnwell
+#initial, genetics functions for Mayo BSI
+#
 #Revision 1.6  2003/12/08 19:49:00  sinnwell
 #done
 #changed T,F to TRUE,FALSE

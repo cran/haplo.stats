@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2008/03/10 19:01:28 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/get.hapPair.q,v 1.1 2008/03/10 19:01:28 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/get.hapPair.q,v 1.1 2008/03/10 19:01:28 sinnwell Exp $
 #$Locker:  $
 #$Log: get.hapPair.q,v $
 #Revision 1.1  2008/03/10 19:01:28  sinnwell

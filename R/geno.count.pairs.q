@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2003/12/08 19:33:33 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno.count.pairs.q,v 1.5 2003/12/08 19:33:33 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/geno.count.pairs.q,v 1.5 2003/12/08 19:33:33 sinnwell Exp $
 #$Locker:  $
 #$Log: geno.count.pairs.q,v $
 #Revision 1.5  2003/12/08 19:33:33  sinnwell

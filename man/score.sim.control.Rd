@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 19:47:30 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/score.sim.control.Rd,v 1.1 2008/01/09 19:47:30 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/score.sim.control.Rd,v 1.2 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: score.sim.control.Rd,v $
+% Revision 1.2  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.1  2008/01/09 19:47:30  sinnwell
 % Initial revision
 %
@@ -81,9 +84,6 @@ As described above
 As described above
 }
 }
-\section{Side Effects}{
-
-}
 \details{
 In simulations for haplo.score, employ the simulation p-value
 precision criteria of Besag and Clifford (1991).  The criteria
@@ -107,6 +107,6 @@ Biometrika.  78, no. 2 (1991): 301-304.
 # score.sim.500 <- haplo.score(y, geno, trait.type="gaussian", simulate=T, 
 #                sim.control=score.sim.control(min.sim=500, max.sim=2000)
 }
-\keyword{}
+\keyword{scores}
 % docclass is function
 % Converted by Sd2Rd version 37351.

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/05/14 15:33:24 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno1to2.q,v 1.6 2007/05/14 15:33:24 sinnwell Exp $
+#$Date: 2011/02/21 19:08:17 $
+#$Header: /projects/genetics/cvs/cvsroot/mgenet/R/geno1to2.q,v 1.1.1.1 2011/02/21 19:08:17 sinnwell Exp $
 #$Locker:  $
 #$Log: geno1to2.q,v $
+#Revision 1.1.1.1  2011/02/21 19:08:17  sinnwell
+#"initial, general functions for R genetics at Mayo BSI
+#
 #Revision 1.6  2007/05/14 15:33:24  sinnwell
 #remove na.code
 #
@@ -18,7 +21,7 @@
 #Revision 1.1  2006/08/11 21:53:42  sinnwell
 #Initial revision
 #
-## $Id: geno1to2.q,v 1.6 2007/05/14 15:33:24 sinnwell Exp $
+## $Id: geno1to2.q,v 1.1.1.1 2011/02/21 19:08:17 sinnwell Exp $
   
 ## Jason Sinnwell, with contribution by Harold Ye
 ## Mayo Clinic, Division of Biostatistics

@@ -1,6 +1,9 @@
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.q,v 1.6 2008/09/26 21:40:50 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/seqhap.q,v 1.7 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: seqhap.q,v $
+#Revision 1.7  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.6  2008/09/26 21:40:50  sinnwell
 #add sim.control parameters
 #
@@ -20,7 +23,7 @@
 #Initial revision
 #
 #$Author: sinnwell $
-#$Date: 2008/09/26 21:40:50 $
+#$Date: 2011/11/10 15:29:40 $
 
 # License: 
 # 
@@ -167,7 +170,7 @@ seqhap <- function(y, geno, pos, locus.label=NA, weight=NULL,
     sum.p.point=tmp$sum.p.point,
     sum.p.region=tmp$sum.p.region)
   
-   sr.class(results) <- "seqhap"
+   class(results) <- "seqhap"
    return(results)
   
 }

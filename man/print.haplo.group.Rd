@@ -1,9 +1,12 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/08 20:38:37 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.group.Rd,v 1.2 2008/01/08 20:38:37 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/print.haplo.group.Rd,v 1.3 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: print.haplo.group.Rd,v $
+%Revision 1.3  2011/11/10 15:29:41  sinnwell
+%major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 %Revision 1.2  2008/01/08 20:38:37  sinnwell
 %add log
 %
@@ -53,9 +56,6 @@ Optional arguments for the print method
 \value{
 Nothing is returned.
 }
-\section{Side Effects}{
-
-}
 \details{
 This is a print method function used to print information from the
 haplo.group class, with haplotype-specific information given in a
@@ -71,9 +71,5 @@ Submitted to Amer J Hum Genet.
 \seealso{
 haplo.score, haplo.group, haplo.em
 }
-\examples{
-
-}
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

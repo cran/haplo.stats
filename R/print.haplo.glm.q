@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2008/04/04 16:10:18 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.glm.q,v 1.10 2008/04/04 16:10:18 sinnwell Exp $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/print.haplo.glm.q,v 1.11 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.glm.q,v $
+#Revision 1.11  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.10  2008/04/04 16:10:18  sinnwell
 #add show.missing and return coeffDF and hapDF by invisible
 #
@@ -35,17 +38,10 @@
 #Revision 1.1  2003/09/16 16:03:15  schaid
 #Initial revision
 #
-print.haplo.glm <- function(x, print.all.haplo=FALSE, show.missing=FALSE, digits = max(options()$digits - 4, 3), ...){
+print.haplo.glm <- function(x, print.all.haplo=FALSE,
+                            digits = max(options()$digits - 3, 5), ...){
 
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-    x$call <- deparse(x$call, width.cutoff=40)
-    cat("\n  Call: ", x$call, sep="\n")
-  }
-  else {
-    cat("\n  Call: \n")
-    dput(x$call)
-  }
-  
+  ## function to piece togeth haplotype data.frame
   haplo.df<- function(x){
     z <- x$haplo.common
     df <- as.matrix(x$haplo.unique[z,,drop=FALSE])
@@ -65,52 +61,40 @@ print.haplo.glm <- function(x, print.all.haplo=FALSE, show.missing=FALSE, digits
   }
 
 
-  ncoef <- length(x$coef)
-  coef <- x$coef
-  se <- sqrt(x$var.mat[cbind(1:ncoef, 1:ncoef) ])
-
-  wt <- x$weights.expanded * x$haplo.post.info$post
-  df.residual <- sum(wt) - length(x$coef) 
-
-  t.stat <- coef/se
-  pval <- 2*(1-pt(abs(t.stat),  df.residual))
-
-#  printBanner("Regression Coefficients")
-  cat("\nCoefficients:\n")
-  coeff.df <- cbind(coef=coef, se=se, t.stat=t.stat, pval=pval)
-  print(coeff.df, digits=digits)
-
-#  cat("\n")
-#  printBanner("Hapoltypes and their Frequencies")
+  cat("\nCall:  ", paste(deparse(x$call), sep = "\n", collapse = "\n"), 
+      "\n\n", sep = "")
+  
+  if(length(x$coef)) {
+     cat("Coefficients:\n")
+     print.default(format(x$coefficients, digits = digits), 
+                   print.gap = 2, quote = FALSE)
+   }
+  else cat("No coefficients\n\n")
 
   cat("\nHaplotypes:\n")
   hap.df <- haplo.df(x)
   print(hap.df, digits=digits)
   
+  wt <- x$prior.weights * x$haplo.post.info$post
+  df.residual <- sum(wt) - length(x$coef) 
+  df.null <- sum(wt) - 1
 
-  if(print.all.haplo){
-    haplo.type <- rep(NA,length(x$haplo.freq))
-    haplo.type[x$haplo.common] <- "C"
-    haplo.type[x$haplo.rare] <- "*"
-    haplo.type[x$haplo.base] <- "B"
-    df <- data.frame(x$haplo.unique, hap.freq = round(x$haplo.freq, digits), hap.type=haplo.type)
-    cat("\n")
-    printBanner("All Haplotypes")
-    cat("B = base   haplotype\n")
-    cat("C = common haplotype\n")
-    cat("* = rare   haplotype\n\n")
-
-    print(df)
-  }
-
-  if(show.missing) {# & (nrow(miss.tbl) > 1)) {
-
-    cat("\nSubjects removed by NAs in y or x, or all NA in geno\n")
-    miss.tbl <- apply(1*x$missing, 2, sum)
+  cat("\nDegrees of Freedom: ", df.null, "Total (i.e. Null); ", 
+      df.residual, "Residual\n")
+   
+  miss.tbl <- apply(1*x$missing, 2, sum)
+  if(any(miss.tbl > 0)) {
+    cat("\nSubjects removed by NAs in y or x, or all NA in geno\n") 
     print(miss.tbl)
   }
+
+  cat("\n     Null Deviance: ", format(signif(x$null.deviance, digits)),
+      "\n Residual Deviance: ", format(signif(x$deviance, digits)),
+      "\n               AIC: ", format(signif(x$aic, digits)), "\n\n")
+
   
-  invisible(list(coeffDF=coeff.df, hapDF=hap.df))
+  invisible(x)
+  ##invisible(list(coeffDF=coeff.df, hapDF=hap.df))
 
 }
 

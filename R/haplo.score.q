@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2009/04/09 14:31:37 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.q,v 1.28 2009/04/09 14:31:37 sinnwell Exp $
+#$Date: 2011/12/05 20:56:10 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.score.q,v 1.30 2011/12/05 20:56:10 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.q,v $
+#Revision 1.30  2011/12/05 20:56:10  sinnwell
+#final manual changes, updated test suite
+#
+#Revision 1.29  2011/11/23 20:34:02  sinnwell
+#release 1.4.81, updates with test scripts
+#
 #Revision 1.28  2009/04/09 14:31:37  sinnwell
 #*** empty log message ***
 #
@@ -59,7 +65,8 @@
 #added check for var(u.score) < 0 when computing simulated haplo.score.sim
 #
 #Revision 1.11  2003/09/17 22:35:06  schaid
-#modified how max-stat and score.haplo simulated p-values account for NA results (either NA for observed stat, or NA for simulated stats)
+#modified how max-stat and score.haplo simulated p-values account for NA
+#results (either NA for observed stat, or NA for simulated stats)
 #
 #Revision 1.10  2003/09/15 14:53:17  sinnwell
 #add in na.rm in score.max.sim calculation.
@@ -107,7 +114,7 @@
 # 
 # Daniel J. Schaid, Ph.D.
 # Division of Biostatistics
-# Harwick Building – Room 775
+# Harwick Building  Room 775
 # Mayo Clinic
 # 200 First St., SW
 # Rochester, MN 55905
@@ -288,13 +295,11 @@ haplo.score <- function(y, geno, trait.type="gaussian",
      v.score <- tmp$v.score
    }
 
-
 # Scores for Proportional Odds
-   if(trait.int ==4) {
+   if(trait.int==4) {
 
       if(adjusted){
-         library("Design")
-         library("Hmisc")
+         require("rms")
          reg.out <- lrm(y ~ x.adj)
          K <- max(y)
          n.xadj <- ncol(x.adj)
@@ -425,17 +430,19 @@ haplo.score <- function(y, geno, trait.type="gaussian",
             if(score.global.sim >= score.global) score.global.rej <- score.global.rej +1
           }
 
-        # for max stat, and individual haplotype scores, we require the same number of valid
-        # simulations, so that the haplotype-specific simuated p-values are all based on the
-        # same number of valid simulations. Without this, it would be impossible to know the 
-        # confidence in the individual p-values.
+        ## for max stat, and individual haplotype scores, we require the
+        ## same number of valid
+        ## simulations, so that the haplotype-specific simuated
+        ## p-values are all based on the
+        ## same number of valid simulations. Without this, it would be impossible to
+        ## know the  confidence in the individual p-values.
 
          if(!any(is.na(score.haplo.sim))){
 
             n.val.haplo <- n.val.haplo + 1
 
             score.haplo.rej[score.haplo.ok] <- score.haplo.rej[score.haplo.ok] +
-                               ifelse(score.haplo.sim[score.haplo.ok] >= score.haplo.sqr[score.haplo.ok], 1, 0)
+                   ifelse(score.haplo.sim[score.haplo.ok] >= score.haplo.sqr[score.haplo.ok], 1, 0)
 
              score.max.sim <- max(score.haplo.sim[score.haplo.ok])
 

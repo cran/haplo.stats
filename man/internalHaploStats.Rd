@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2009/09/30 20:05:38 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/internalHaploStats.Rd,v 1.3 2009/09/30 20:05:38 sinnwell Exp $ 
+% $Date: 2011/11/23 20:34:02 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/internalHaploStats.Rd,v 1.4 2011/11/23 20:34:02 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: internalHaploStats.Rd,v $
+% Revision 1.4  2011/11/23 20:34:02  sinnwell
+% release 1.4.81, updates with test scripts
+%
 % Revision 1.3  2009/09/30 20:05:38  sinnwell
 % rm keywords, or leave one with one from /doc/KEYWORDS
 %
@@ -13,9 +16,7 @@
 % Initial revision
 %
 
-\name{geno.recode}
-\alias{allele.recode}
-\alias{geno.recode}
+\name{dglm.fit}
 \alias{dglm.fit}
 \alias{haplo.chistat}
 \alias{haplo.enum}

@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/03/24 21:13:26 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.Rd,v 1.3 2008/03/24 21:13:26 sinnwell Exp $
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.glm.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $
 % $Locker:  $ 
 % $Log: haplo.glm.Rd,v $
+% Revision 1.4  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.3  2008/03/24 21:13:26  sinnwell
 % rm allele.lev and miss.val, recommend setupGeno in details, add missing in return object
 %
@@ -42,6 +45,7 @@
 
 \name{haplo.glm}
 \alias{haplo.glm}
+\alias{print.haplo.glm}
 \title{
   GLM Regression of Trait on Ambiguous Haplotypes
 }
@@ -56,7 +60,7 @@ coefficients used to update the posterior probabilities.
 haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
            weights, na.action="na.geno.keep", start=eta, 
            locus.label=NA, control=haplo.glm.control(), 
-           method="glm.fit", model=FALSE, x=FALSE, y=TRUE, 
+           method="glm.fit", model=TRUE, x=FALSE, y=TRUE, 
            contrasts=NULL, ...)
 }
 \arguments{
@@ -97,12 +101,12 @@ haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
   a function to filter missing data. This is applied to the
   model.frame. The default value of na.action=na.geno.keep will keep
   observations with some (but not all) missing alleles, but exclude
-  observations missing any other data (e.g., response variable, other covariates,
-  weight). The EM algorithm for ambiguous haplotypes accounts
-  for missing alleles. Similar to the usual glm, na.fail creates an error if any
-  missing values are found, and a third possible alternative is na.exclude,
-  which deletes observations that contain one or more missing
-  values for any data, including alleles.
+  observations missing any other data (e.g., response variable, other
+  covariates, weight). The EM algorithm for ambiguous haplotypes accounts
+  for missing alleles. Similar to the usual glm, na.fail creates an
+  error if any missing values are found, and a third possible
+  alternative is na.exclude, which deletes observations that contain
+  one or more missing values for any data, including alleles.
 }
 \item{start}{
   a vector of initial values on the scale of the linear
@@ -124,36 +128,36 @@ haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
   currently, glm.fit is the only method allowed.
 }
 \item{model}{
-  if model=TRUE, the model.frame is returned.
+  logical, if model=TRUE, the model.frame is returned.
 }
 \item{x}{
-  a logical flag. If x=TRUE, the model.matrix is returned. By
-  default, x=FALSE.
+  logical, if x=TRUE, the model.matrix is returned.
 }
 \item{y}{
-  a logical flag. The default value of y=TRUE causes the response
-  variable to be returned.
+  logical, if y=TRUE, the response variable is returned.
 }
 \item{contrasts}{
-  currently, contrasts is ignnored (so NULL, the default value, is
-  always used).
+  currently ignored
 }
 \item{\dots }{
-  potential other arguments that may be passed - currently ignored.
+  other arguments that may be passed - currently ignored.
 }
 }
 \value{
   An object of class "haplo.glm" is returned.          
   The output object from haplo.glm has all the components of a
-  glm object, with a few more. It is important to note that some of the returned
-  components correpond to the "expanded" version of the data. This 
-  means that each observation is expanded into the number of terms in the
+  glm object, with a few more. It is important to note that some of
+  the returned components correpond to the "expanded" version
+  of the data. This means that each observation is expanded into
+  the number of terms in the
   observation's posterior distribution of haplotype pairs, given the
   marker data. For example, when fitting the response y on haplotype
   effects, the value of y[i], for the ith observation, is replicated
   m[i] times, where m[i] is the number of pairs of haplotypes consistent
   with the observed marker data. The returned components that are
-  expanded are indicated below by [expanded] in the definition of the component.
+  expanded are indicated below by [expanded] in the definition of the
+  component.
+  
   These expanded components may need to be collapsed, depending on the
   user's objectives. For example, when considering the influence of 
   an observation, it may make sense to examine the expanded residuals
@@ -183,7 +187,8 @@ the coefficients of the linear.predictors, which multiply the
 \item{residuals}{
 [expanded]  residuals from the final weighted least squares fit; also
   known as working residuals, these are typically not
-  interpretable without rescaling by the weights (see glm.object).
+  interpretable without rescaling by the weights
+  (see glm.object and residuals.haplo.glm).
 }
 \item{fitted.values}{
 [expanded] fitted mean values, obtained by transforming
@@ -197,7 +202,8 @@ the triangular factor of the decomposition (see lm.object).
 }
 \item{rank}{
 the computed rank (number of linearly independent columns in
-  the model matrix), which is the model degrees of freedom - see lm.object.
+the model matrix), which is the model degrees of freedom
+- see lm.object.
 }
 \item{assign}{
 the list of assignments of coefficients (and effects) to the
@@ -207,7 +213,7 @@ the list of assignments of coefficients (and effects) to the
 [expanded] number of degrees of freedom for residuals, corresponding
   to the expanded data.
 }
-\item{weights.expanded}{
+\item{prior.weights}{
 [expanded] input weights after expanding according to the number
   of pairs of haplotypes consistent with an observation's 
   marker genotype data. 
@@ -218,11 +224,10 @@ a 3 element character vector giving the name of the family, the
 }
 \item{linear.predictors}{
 [expanded] linear fit, given by the product of the model matrix and
-  the coefficients; also the fitted.values from the final
-  weighted least squares fit.
+  the coefficients. In a glm, eta.
 }
 \item{deviance}{
-[expanded] up to a constant, minus twice the maximized log-likelihood.
+ up to a constant, minus twice the maximized log-likelihood.
  Similar to the residual sum of squares.         
 }
 \item{null.deviance}{
@@ -238,17 +243,17 @@ the number of IRLS iterations used to compute the estimates, for the
   last step of the EM fit of coefficients.
 }
 \item{y}{
-[expanded] response, if y=T.                
+expanded response.                
 }
 \item{contrasts}{
 a list containing sufficient information to construct the
-  contrasts used to fit any factors occurring in the model (see lm.object).        
+contrasts used to fit any factors occurring in the model (see lm.object).
 }
 \item{lnlike}{
 log-likelihood of the fitted model.     
 }
 \item{lnlike.null}{
-log-likelihood of the null model that has only an intercept.      
+log-likelihood of the null model (intercept-only).      
 }
 \item{lrt}{
 likelihood ratio test statistic to test whether all coefficients
@@ -356,13 +361,15 @@ rank of information (info) matrix.
   when linkage phase is ambiguous. Human Heredity 55:56-65.
 }
 \seealso{
-haplo.glm.control, haplo.em, haplo.model.frame
+  \code{\link{haplo.glm.control}},
+  \code{\link{haplo.em}},
+  \code{\link{haplo.model.frame}}
 }
 \examples{
- # FOR REGULAR USAGE, DO NOT DISCARD GENOTYPES WITH MISSING VALUES
- # WE ONLY SUBSET BY KEEP HERE SO THE EXAMPLES RUN FASTER
+cat(" FOR REGULAR USAGE, DO NOT DISCARD GENOTYPES WITH MISSING VALUES\n")
+cat(" WE ONLY SUBSET BY keep HERE SO THE EXAMPLES RUN FASTER\n")
 
- setupData(hla.demo)
+ data(hla.demo)
  geno <- as.matrix(hla.demo[,c(17,18,21:24)])
  keep <- !apply(is.na(geno) | geno==0, 1, any) # SKIP THESE THREE LINES
  hla.demo <- hla.demo[keep,]                   # IN AN ANALYSIS
@@ -392,6 +399,6 @@ haplo.glm.control, haplo.em, haplo.model.frame
  fit.gaus
  
 }
-\keyword{}
+\keyword{glm}
 % docclass is function
 % Converted by Sd2Rd version 37351.

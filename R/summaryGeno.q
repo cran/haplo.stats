@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2008/01/04 21:18:59 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summaryGeno.q,v 1.2 2008/01/04 21:18:59 sinnwell Exp $
+#$Date: 2011/11/22 20:29:04 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/summaryGeno.q,v 1.3 2011/11/22 20:29:04 sinnwell Exp $
 #$Locker:  $
 #$Log: summaryGeno.q,v $
+#Revision 1.3  2011/11/22 20:29:04  sinnwell
+#use setupGeno instead of geno.recode
+#
 #Revision 1.2  2008/01/04 21:18:59  sinnwell
 #change column names of returned data.frame
 #
@@ -55,7 +58,7 @@ summaryGeno <- function(geno, miss.val=0)
   
   n.loci <- ncol(geno)/2
   nr <- nrow(geno)
-  geno <- geno.recode(geno,miss.val)$grec
+  geno <- setupGeno(geno,miss.val)
   
   count.geno <- geno.count.pairs(geno)
 
