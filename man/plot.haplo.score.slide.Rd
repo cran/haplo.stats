@@ -12,8 +12,7 @@ p-values as the sub-haplotype "slides" over a chromosome. Plot
 on the x-axis.
 }
 \usage{
-plot.haplo.score.slide(x, pval="global", dist.vec=1:x$n.loci, 
-                       cex=.8, srt=270, ...)
+plot.haplo.score.slide(x, pval="global", dist.vec=1:x$n.loci, ...)
 }
 \arguments{
 \item{x}{
@@ -27,19 +26,13 @@ simulated p-value), and "max.sim" (the simulated p-value for the
 maximum score statistic).
 }
 \item{dist.vec }{
-Numeric vector for position (i.e. in cM) of the loci along a
+Numeric vector for position (i.e., in cM) of the loci along a
 chromosome. Distances on x-axis will correspond to these positions. 
-}
-\item{cex}{
-Character expansion size.
-}
-\item{srt}{
-String rotation in degrees measured counterclockwise from
-horizontal.  Applies to x-axis (locus) labels.  
 }
 \item{\dots }{
 Dynamic parameter for the values of additional parameters for 
-the plot method.  
+the plot method. Some useful options for manageing the x-axis labels
+are cex.axis, las, and srt.
 }
 }
 \value{
@@ -85,8 +78,8 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 
 #   print(slide.ord.sim)
 #   plot(slide.ord.sim)
-#   plot(slide.ord.sim, pval="global.sim")
-#   plot(slide.ord.sim, pval="max.sim")
+#   plot(slide.ord.sim, pval="global.sim", las=2, cex.axis=.8)
+#   plot(slide.ord.sim, pval="max.sim", srt=90, cex.axis=.8)
 }
 \keyword{}
 % docclass is function

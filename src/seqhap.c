@@ -1,13 +1,3 @@
-/* $Author: sinnwell $ */
-/* $Date: 2007/04/06 19:30:01 $ */
-/* $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.c,v 1.1 2007/04/06 19:30:01 sinnwell Exp $ */
-/* $Locker:  $ */
-/*
- * $Log: seqhap.c,v $
- * Revision 1.1  2007/04/06 19:30:01  sinnwell
- * Initial revision
- * * 
- */
 /*Author: Yu*/
 /*Date: 2007/04/02*/
 
@@ -16,60 +6,72 @@
 #include<string.h>
 #include<math.h>
 
-static long ranAS183_seed(long, long, long);
+/*ranAS183_seed reads three random seeds*/
+static int ranAS183_seed(int, int, int);
+/*ranAS183 generates random values*/
 static double ranAS183();
-static long creatsubhap();
-static double chisq2h(long *);
-static double mantel(long *);
-static double r2test(long, long);
-static double combine(long *, long, long);
-static void permute(long *, double *, long *);
+/*redefine haplotype memberships for a subset of SNPs from a set of SNPs*/
+static int creatsubhap();
+/*calculate the chi^2 statistics for a 2-by-h table*/
+static double chisq2h(int *);
+/*calculate a Mantel-Haenszel statistic*/
+static double mantel(int *);
+/*calculate r^2 for two give SNPs*/
+static double r2test(int, int);
+/*search for the list SNPs that should be combined to a given SNP*/
+static double combine(int *, int, int);
+/*permute disease status*/
+static void permute(int *, double *, int *);
+/*calculate the P-value for a chi^2 statistic with given degrees of freedom*/
 static double pchisq(double, double);
 
-static long *subjid, *hap1code, *hap2code, *disease, *newhap1code, *newhap2code,
+static int *subjid, *hap1code, *hap2code, *disease, *newhap1code, *newhap2code,
   *inlist, inlist_length;
-static long **haplist;
-static double *post, *pos;
-static long *newhap1codesingle, *newhap2codesingle;
+/*inlist is the list of SNPs to be combined to a given SNP*/
+/*inlist_length is the number of SNPs combined to a given SNP*/
 
-static double r2_threshold, mh_threshold, haplo_freq_min; 
-static long nsnp, nhap, nsub, npost, newnhap, flag, hap_df;
+static int **haplist;
+static double *post, *pos; /*posterior probabilities and SNPs' physical positions*/
+static int *newhap1codesingle, *newhap2codesingle;
+
+static double r2_threshold, mh_threshold, haplo_freq_min; /*parameters*/
+static int nsnp, nhap, nsub, npost, newnhap, flag, hap_df;
 
 
 void seqhap(
-	    long *nsnp_c,
-	    long *nsub_c,
-	    long *npost_c,
-	    long *nhap_c,
-	    long *subjid_c,
-	    long *hap_c,
-	    long *hap1_c,
-	    long *hap2_c,
-	    long *disease_c,
+	    int *nsnp_c, /*number of SNPs*/
+	    int *nsub_c, /*number of subjects*/
+	    int *npost_c, /*length of posterior probabilities*/
+	    int *nhap_c, /*number of distinguishing haplotypes*/
+	    int *subjid_c, /*subject ID*/
+	    int *hap_c, /*a int vectors converted from the haplotype matrix*/
+	    int *hap1_c, /*index for the first haplotype for each posterior*/
+	    int *hap2_c, /*index for the second haplotype for each posterior*/
+	    int *disease_c, /*disease status*/
 
-	    double *post_c,
-	    double *pos_c,
+	    double *post_c, /*posterior probabilities*/
+	    double *pos_c, /*SNPs' physical positions*/
 
-	    long *seed_c,
-	    long *nperm_c,
-	    double *lamda_c,
-	    double *r2_threshold_c,
-	    double *haplo_freq_min_c,
+	    int *seed_c, /*random seeds*/
+	    int *nperm_c, /*number of permutations to calculate P-values*/
+	    double *lamda_c, /*threshold for the MH test*/
+	    double *r2_threshold_c, /*threshold to ignore one marker when two are in high r^2*/
+	    double *haplo_freq_min_c, /*the minimum haplotype frequency that should used*/
 
-	    long *inlist_c,
-	    long *hap_df_c,
-	    double *hap_chi_c,
-	    double *hap_p_point_c,
-	    double *hap_p_region_c,
+	    int *inlist_c, /*the list of SNPs combined to a given SNP*/
+	    int *hap_df_c, /*the d.f. of the sequential haplotype test*/
+	    double *hap_chi_c, /*the chi^2 statistic of the sequential hapltoype test*/
+	    double *hap_p_point_c, /*pointwise P-values of the sequential haplotype test based on permutations*/
+	    double *hap_p_region_c, /*the regional P-value of the sequential haplotype test based on permutations*/
 
-	    long *sum_df_c,
-	    double *sum_chi_c,
-	    double *sum_p_point_c,
-	    double *sum_p_region_c,
+	    int *sum_df_c, /*the d.f. of the sequential summary test*/
+	    double *sum_chi_c, /*the chi^2 statistic of the sequential summary test*/
+	    double *sum_p_point_c, /*pointwise P-values of the sequential summary test based on permutations*/
+	    double *sum_p_region_c, /*the regional P-value of the sequential summary test based on permutations */
 
-	    double *chi_chi_c,
-	    double *chi_p_point_c,
-	    double *chi_p_region_c
+	    double *chi_chi_c, /*the chi^2 statistic of the single-SNP test*/
+	    double *chi_p_point_c, /*pointwise P-values of the single-SNP test based on permutations*/
+	    double *chi_p_region_c /*the regional P-value of the single-SNP test based on permutations*/
 )
 {
 
@@ -77,30 +79,30 @@ void seqhap(
   nsnp = *nsnp_c;
   r2_threshold = *r2_threshold_c;
   mh_threshold = *lamda_c;
-  long N_PERM = *nperm_c;
+  int N_PERM = *nperm_c;
   nsub = *nsub_c;
   npost = *npost_c;
   nhap = *nhap_c;
   haplo_freq_min = *haplo_freq_min_c;
 
   FILE *fp;
-  long nperm, si, i, j, k;
+  int nperm, si, i, j, k;
   double chi_stat0i[nsnp], chi_max=0, chi_max0=0, chi_pi[nsnp], chi_p=0,
     hap_stat0i[nsnp], hap_min=1, hap_min0=1, hap_pi[nsnp], hap_p=0,
     sum_stat0i[nsnp], sum_min=1, sum_min0=1, sum_pi[nsnp], sum_p=0; 
   for(i=0; i<nsnp; i++){
     chi_pi[i]=0; hap_pi[i]=0; sum_pi[i]=0;}
 
-  long seed[3];
+  int seed[3];
   for(i=0; i<3; i++) seed[i]=seed_c[i];
   double ran1();
   ranAS183_seed(seed[0],seed[1],seed[2]);
 
-  haplist = (long **) malloc (nhap *sizeof (long *));
+  haplist = (int **) malloc (nhap *sizeof (int *));
   for (i=0; i<nhap; i++)
-      haplist[i] = (long *) malloc ((unsigned) nsnp * sizeof (long));
+      haplist[i] = (int *) malloc ((unsigned) nsnp * sizeof (int));
 
-  /*read haplotype list passed from S*/
+  /*read haplotype list passed from S, convert a vector to a matrix*/
   k=0;
   for(i=0; i<nsnp; i++)
       for(j=0; j<nhap; j++)
@@ -109,17 +111,17 @@ void seqhap(
 	  k++;
 	}
 
-  subjid= (long *) malloc(npost *sizeof(long));
-  hap1code = (long *) malloc(npost *sizeof(long));
-  hap2code = (long *) malloc(npost *sizeof(long));
-  disease = (long *)  malloc(npost *sizeof(long));
-  newhap1code = (long *) malloc(npost *sizeof(long));
-  newhap2code = (long *) malloc(npost *sizeof(long));
-  inlist = (long *) malloc(nsnp *sizeof(long));
+  subjid= (int *) malloc(npost *sizeof(int));
+  hap1code = (int *) malloc(npost *sizeof(int));
+  hap2code = (int *) malloc(npost *sizeof(int));
+  disease = (int *)  malloc(npost *sizeof(int));
+  newhap1code = (int *) malloc(npost *sizeof(int));
+  newhap2code = (int *) malloc(npost *sizeof(int));
+  inlist = (int *) malloc(nsnp *sizeof(int));
   post = (double *) malloc(npost *sizeof(double));
   pos = (double *) malloc(nsnp *sizeof(double));
-  newhap1codesingle = (long *) malloc(npost *sizeof(long));
-  newhap2codesingle = (long *) malloc(npost *sizeof(long));
+  newhap1codesingle = (int *) malloc(npost *sizeof(int));
+  newhap2codesingle = (int *) malloc(npost *sizeof(int));
 
   /*read data passed from S*/
   for(i=0; i<npost; i++)
@@ -134,22 +136,22 @@ void seqhap(
   double doublek; 
   j=0;
 
-  /*calculation using original disease status*/
+  /*calculate statistics using the original disease status*/
   printf("\n");
   for(si=0; si<nsnp; si++)
     {
       inlist_length=1; inlist[inlist_length-1]=si;
       flag=1, k=1, hap_df=1; 
-      newnhap=creatsubhap();
-      chi_stat0i[si]=chisq2h(disease);
-      sum_stat0i[si] = chi_stat0i[si];
+      newnhap=creatsubhap(); /*redefine haplotype membership for SNPs in inlist*/
+      chi_stat0i[si]=chisq2h(disease); /*calculate chi^2 for the single-SNP test*/
+      sum_stat0i[si] = chi_stat0i[si]; /*initialize the summary statistic*/
       while(flag!=0 && (si+k<nsnp || si-k>=0) )
 	{
 	  sum_stat0i[si]=sum_stat0i[si] + combine(disease, si, k);
 	  k++;
-	}
+	}/*search for the list of SNPs to be combined to SNP si and update the summary statistic*/
       if(inlist_length==1) {hap_stat0i[si]=chi_stat0i[si]; hap_df=1;}
-      else hap_stat0i[si] = chisq2h(disease);
+      else hap_stat0i[si] = chisq2h(disease); /*update the haplotype statistic*/
       /*
       printf("snp%d\n",si+1);
       printf("single-locus method:  chi-square %lf, d.f. %d\n", chi_stat0i[si],1);
@@ -169,24 +171,25 @@ void seqhap(
       chi_chi_c[si]=chi_stat0i[si];
 
       doublek = inlist_length;  
-      sum_stat0i[si] = pchisq(doublek/2, sum_stat0i[si]/2);
+      sum_stat0i[si] = pchisq(doublek/2, sum_stat0i[si]/2); /*calculate P-value for the sequential summary method*/
       doublek = hap_df; 
-      hap_stat0i[si] = pchisq(doublek/2, hap_stat0i[si]/2);
-      if(chi_stat0i[si]>chi_max0) chi_max0=chi_stat0i[si];
-      if(hap_stat0i[si]<hap_min0) hap_min0=hap_stat0i[si];
-      if(sum_stat0i[si]<sum_min0) sum_min0=sum_stat0i[si];
+      hap_stat0i[si] = pchisq(doublek/2, hap_stat0i[si]/2); /*calculate P-value for the sequential haplotype method*/
+      if(chi_stat0i[si]>chi_max0) chi_max0=chi_stat0i[si]; /*update the maximum*/
+      if(hap_stat0i[si]<hap_min0) hap_min0=hap_stat0i[si]; /*update the minimum because the P-values are the statistics used in permutations*/
+      if(sum_stat0i[si]<sum_min0) sum_min0=sum_stat0i[si]; /*update the minimum because the P-values are the statistics used in permutations*/
     }
  
- /*calculate statistics using permutated data*/
+ /*calculate the three statistics using permutations*/
+
   double perm_rand[nsub];
-  long perm_disease[npost], nondup_disease[npost], subduplicated[npost];
+  int perm_disease[npost], nondup_disease[npost], subduplicated[npost];
   for(i=0; i<npost; i++)
     { subduplicated[i]=0;
       j = 0;
       while(j<i && subduplicated[i]==0) {
 	if(subjid[i]==subjid[j]) subduplicated[i] = 1;
 	j++;}
-    }
+    }/*check whether several posterior probabilties are for a same person*/
 
   j = 0;
   for(i=0; i<npost; i++)
@@ -203,6 +206,7 @@ void seqhap(
       permute(nondup_disease, perm_rand, perm_disease);
       chi_max=0; hap_min=1; sum_min=1;
 
+      /*calculate the three statistics for a permutated data set*/
       for(si=0; si<nsnp; si++)
 	{
 	  inlist_length=1; inlist[inlist_length-1]=si;
@@ -238,13 +242,13 @@ void seqhap(
       if(sum_min<sum_min0) sum_p++;
     }
 
-  /*global*/
+  /*global P-vlaues based on permutation*/
   *chi_p_region_c=chi_p/N_PERM;
   *hap_p_region_c=hap_p/N_PERM;
   *sum_p_region_c=sum_p/N_PERM;
 
-  /*pointwisw*/
-  for(si=0; si<nsnp; si++)/*3rd and beyond are pointwise p-values*/
+  /*pointwisw P-vlaues based on permutation*/
+  for(si=0; si<nsnp; si++)
     {
       chi_p_point_c[si]=chi_pi[si]/N_PERM;
       hap_p_point_c[si]=hap_pi[si]/N_PERM;
@@ -259,24 +263,24 @@ void seqhap(
 
 }
 
-/*the combine function performs the sequential search*/
-static double combine(long *d, long si, long k)
+/*search for the list of SNPs to be combined to SNP si*/
+static double combine(int *d, int si, int k)
 {
-  long j, flagl, flagr;
+  int j, flagl, flagr;
   double mh_sum=0, mh_tmp;
 	  if(si-k>=0 && si+k<nsnp)
 	    if(pos[si]-pos[si-k] > pos[si+k]-pos[si])
 	      {
 		/*check si+k*/
 		flagr=1;
-		if(r2test(si, si+k)<r2_threshold) 
+		if(r2test(si, si+k)<r2_threshold) /*if ">=", keep growing on the right direction, but do not add si+k to inlist*/
 		  {
 		    for(j=0; j<npost; j++)
 		      {
 			newhap1codesingle[j] = haplist[hap1code[j]-1][si+k];
 			newhap2codesingle[j] = haplist[hap2code[j]-1][si+k];
 		      }
-		    mh_tmp=mantel(d);
+		    mh_tmp=mantel(d); /*calculate the MH statistic*/
 		    if(mh_tmp>mh_threshold){
 		      mh_sum=mh_sum + mh_tmp; 
 		      inlist_length++;
@@ -292,7 +296,7 @@ static double combine(long *d, long si, long k)
 
 		/*check si-k */
 		flagl=1;
-		if(r2test(si,si-k)<r2_threshold) 
+		if(r2test(si,si-k)<r2_threshold) /*if ">=", keep growing on the left direction, but do not add si-k to inlist*/
 		  {
 		    for(j=0; j<npost; j++)
 		      {
@@ -308,7 +312,7 @@ static double combine(long *d, long si, long k)
 		    else flagl=0;
 		  }
 
-		if(flagl!=1 && flagr!=1) flag=0;
+		if(flagl!=1 && flagr!=1) flag=0; /* if either direction is kept for growing, stop*/
 	      }
 	    else
 	      {
@@ -348,7 +352,7 @@ static double combine(long *d, long si, long k)
 		    else flagr=0;
 		  }
 
-		if(flagl!=1 && flagr!=1) flag=0;
+		if(flagl!=1 && flagr!=1) flag=0;/*if neither direction is kept for growing, stop*/
 	      }
 
 	  if(si-k<0 && si+k<nsnp)
@@ -396,10 +400,10 @@ static double combine(long *d, long si, long k)
 	  return(mh_sum);
 }
 
-/*the permute funciton permutes disease status*/
-static void permute(long *nondup_disease, double *perm_rand, long *perm_disease)
+/*permute disease status*/
+static void permute(int *nondup_disease, double *perm_rand, int *perm_disease)
 {
-  long i, j, tmpint, perm_order[nsub];
+  int i, j, tmpint, perm_order[nsub];
   double tmp;
   for(i=0; i<nsub; i++)  perm_order[i] = i; /*initialize*/
 
@@ -417,10 +421,10 @@ static void permute(long *nondup_disease, double *perm_rand, long *perm_disease)
   for(i=0; i<npost; i++) perm_disease[i] = nondup_disease[perm_order[subjid[i]-1]];  
 }
 
-/*the r2test calculates the square of the Pearson's correlation*/
-static double r2test(long site1, long site2)
+/*calculate the square of the Pearson's correlation for SNPs site1 and site2*/
+static double r2test(int site1, int site2)
 {
-  long i;
+  int i;
   double n00=0, n01=0, n10=0, n11=0, r2;
   for(i=0; i<npost; i++)
     {
@@ -444,10 +448,10 @@ static double r2test(long site1, long site2)
   return(r2);
 }
 
-/*the mantel function calculates the Mantel-Haenszel statistic*/
-static double mantel(long *d)
+/*calculate the Mantel-Haenszel statistic for */
+static double mantel(int *d)
 {
-  long i,j;/*a stratum is labelled if a stratum has counts <=2*/
+  int i,j;
   double mh_stat=0, maxcount=0, num=0, denom=0, n00[newnhap], n0plus[newnhap], 
     n1plus[newnhap], nplus0[newnhap],nplus1[newnhap], ntotal[newnhap], n=0;
   /*initialize*/
@@ -509,9 +513,11 @@ static double mantel(long *d)
 	  break;}
 	}
     }
+
   for(i=0; i<newnhap; i++)
     {
       if(n0plus[i]>0.5 && n1plus[i]>0.5 && nplus0[i]>0.5 && nplus1[i]>0.5) 
+	/*a stratum is ignored if a stratum has counts <=2*/
 	{
 	  num = num + n00[i] - n0plus[i] * nplus0[i]/ntotal[i]; 
 	  denom = denom + n0plus[i]*n1plus[i]*nplus0[i]*nplus1[i]/
@@ -521,7 +527,7 @@ static double mantel(long *d)
 	{
 	  if(maxcount < ntotal[i])
 	    maxcount = ntotal[i];
-	}
+	}/*the else expression is not necessary and can be removed. It was used in an early version with an additional parameter.*/
       n = n + ntotal[i];    
     }
 
@@ -540,11 +546,11 @@ static double mantel(long *d)
 }
 
 /*the chisq2h function calculates the chisquare statistic for a 2-by-h table */
-static double chisq2h(long *d)
+static double chisq2h(int *d)
 {
   double n0[newnhap], n1[newnhap], n0sum=0, n1sum=0, nhapsum[newnhap];
   double en0[newnhap], en1[newnhap], ntotal=0, chi2h_stat=0;
-  long i, j;
+  int i, j;
 
   /*initialize*/
   for(i=0; i<newnhap; i++)
@@ -569,7 +575,7 @@ static double chisq2h(long *d)
       }
   ntotal = n0sum + n1sum;
 
-  long ntrunhap=0; 
+  int ntrunhap=0; 
   double trunhapsum[newnhap], trunn0[newnhap], trunn1[newnhap]; 
   for(i=0; i<newnhap; i++)
     {
@@ -608,13 +614,13 @@ static double chisq2h(long *d)
 }
 
 /*the creatsubhap function identifies the subhaplotypes for a chosen set of loci*/
-static long creatsubhap()
+static int creatsubhap()
 {
-  long i, j, a, duplicated[nhap];
+  int i, j, a, duplicated[nhap];
   newnhap =0;
   char temp1[inlist_length];
   char temp2[inlist_length];
-  long newhapcode[nhap];
+  int newhapcode[nhap];
 
   /*initialize duplicated*/
   for(i=0; i<nhap; i++)  duplicated[i] = 0;
@@ -688,7 +694,7 @@ double gammln(double xx)
 	static double cof[6]={76.18009172947146,-86.50532032941677,
 		24.01409824083091,-1.231739572450155,
 		0.1208650973866179e-2,-0.5395239384953e-5};
-	long j;
+	int j;
 
 	y=x=xx;
 	tmp=x+5.5;
@@ -708,7 +714,7 @@ void gcf(double *gammcf, double a, double x, double *gln)
 /*
 	void nrerror(char error_text[]);
 */
-	long i;
+	int i;
 	double an,b,c,d,del,h;
 
 	*gln=gammln(a);
@@ -747,7 +753,7 @@ void gser (double *gamser, double a, double x, double *gln)
 /*
 	void nrerror(char error_text[]);
 */
-	long n;
+	int n;
 	double sum,del,ap;
 
 	*gln=gammln(a);
@@ -779,10 +785,10 @@ void gser (double *gamser, double a, double x, double *gln)
 #undef EPS
 /* (C) Copr. 1986-92 Numerical Recipes Software 3#Q)$. */
 
-static long ix, iy, iz;
+static int ix, iy, iz;
 
-static long ranAS183_seed(long iseed1, long iseed2, long iseed3) {
-  long error;
+static int ranAS183_seed(int iseed1, int iseed2, int iseed3) {
+  int error;
 
   error=1;
   if( ( (iseed1 >=1) && (iseed1 <=30000)) && ( (iseed2 >=1) && (iseed2 <=30000) ) && 

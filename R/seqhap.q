@@ -1,6 +1,15 @@
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.q,v 1.2 2007/04/17 15:18:02 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.q,v 1.5 2007/05/25 15:38:53 sinnwell Exp $
 #$Locker:  $
 #$Log: seqhap.q,v $
+#Revision 1.5  2007/05/25 15:38:53  sinnwell
+#change inlist to scanned.loci
+#
+#Revision 1.4  2007/05/23 18:02:33  sinnwell
+#add n.sim to result
+#
+#Revision 1.3  2007/05/23 14:13:08  sinnwell
+#add locus.label arg, and return pos in the return list
+#
 #Revision 1.2  2007/04/17 15:18:02  sinnwell
 #change F to FALSE for R check
 #
@@ -8,7 +17,7 @@
 #Initial revision
 #
 #$Author: sinnwell $
-#$Date: 2007/04/17 15:18:02 $
+#$Date: 2007/05/25 15:38:53 $
 
 # License: 
 # 
@@ -56,7 +65,7 @@
 ######################################
 
 
-seqhap <- function(y, geno, pos, n.sim=1000, weight=NULL,
+seqhap <- function(y, geno, pos, locus.label=NA, n.sim=1000, weight=NULL,
                    mh.threshold=3.84, r2.threshold=.95,
                    haplo.freq.min=0.005, miss.val=c(0,NA),
                    control=haplo.em.control()) {
@@ -77,7 +86,7 @@ seqhap <- function(y, geno, pos, n.sim=1000, weight=NULL,
   nsub <- dim(geno)[1]
 
   # get haplotype frequencies
-  obj <- haplo.em(geno,miss.val=miss.val,control=control)
+  obj <- haplo.em(geno, locus.label=locus.label, miss.val=miss.val,control=control)
   y <- y[obj$subj.id]#expand the disease status
   subjid <- obj$subj.id 
   hapmatrix <- obj$haplotype
@@ -135,8 +144,10 @@ seqhap <- function(y, geno, pos, n.sim=1000, weight=NULL,
 
   results=list(
     converge=obj$converge,
+    pos=pos,
+    n.sim=n.sim,
     locus.label=obj$locus.label,
-    inlist=inlist,
+    scanned.loci=inlist,
     chi.stat=tmp$chi.chi,
     chi.p.point=tmp$chi.p.point,
     chi.p.region=tmp$chi.p.region,

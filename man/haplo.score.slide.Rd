@@ -159,7 +159,7 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 # Takes > 20 minutes to run
 #  geno.11 <- hla.demo[,-c(1:4)]
 #  label.11 <- c("DPB","DPA","DMA","DMB","TAP1","TAP2","DQB","DQA","DRB","B","A")
-#  slide.gaus <- haplo.score.slide(resp, geno.11, trait.type = "gaussian",
+#  slide.gaus <- haplo.score.slide(hla.demo$resp, geno.11, trait.type = "gaussian",
 #                                  locus.label=label.11, n.slide=2)
 
 #  print(slide.gaus)

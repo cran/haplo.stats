@@ -181,15 +181,10 @@ print(score.bin, nlines=10)
 ###################################################
 ## plot score vs. frequency, gaussian response
 plot(score.gaus.add)
-
+ 
 ## locate and label pts with their haplotypes
 ## works similar to locator() function
-# pts.haplo <- locator.haplo(score.gaus)
-
-## and the results from locating three distinct pts can be 
-## re-created by these two steps
-cat("These next two steps substitute for doing: \n", 
- "\t > locator.haplo(score.gaus.add)\n")
+#> pts.haplo <- locator.haplo(score.gaus)
 
 pts.haplo <- list(x.coord=c(0.05098, 0.03018, .100), 
                   y.coord=c(2.1582, 0.45725, -2.1566), 
@@ -417,8 +412,7 @@ set.seed(seed)
 geno.11 <- hla.demo[,-c(1:4)]
 label.11 <- c("DPB","DPA","DMA","DMB","TAP1","TAP2","DQB","DQA","DRB","B","A")
 score.slide.gaus <- haplo.score.slide(hla.demo$resp, geno.11, trait.type =
-                "gaussian", n.slide=3, min.count=5,
-                locus.label=label.11)
+                "gaussian", n.slide=3, min.count=5, locus.label=label.11)
 print(score.slide.gaus)
 
 
@@ -426,7 +420,7 @@ print(score.slide.gaus)
 ### chunk number 48: 
 ###################################################
 # plot global p-values for sub-haplotypes from haplo.score.slide
-plot(score.slide.gaus)
+plot(score.slide.gaus, las=2)
 
 
 ###################################################
@@ -489,7 +483,14 @@ print(seqhap.out)
 ###################################################
 ### chunk number 53: 
 ###################################################
+# plot global p-values for sub-haplotypes from haplo.score.slide
+plot(seqhap.out, pval="hap", single=TRUE, las=2)
 
+
+###################################################
+### chunk number 54: 
+###################################################
+# create a matrix of haplotype effect columns from haplo.em result
 hap.effect.frame <- haplo.design(save.em)
 
 names(hap.effect.frame)
@@ -499,9 +500,9 @@ hap.effect.frame[1:10,1:8]
 
 
 ###################################################
-### chunk number 54: 
+### chunk number 55: 
 ###################################################
-
+# create haplotype effect cols for haps 4 and 138
 hap4.hap138.frame <- haplo.design(save.em, hapcodes=c(4,138), 
                                  haplo.effect="dominant")
 
