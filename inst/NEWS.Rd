@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.5.6}{
+  \itemize{
+    \item Removed glm.fit.nowarn because glm.fit changed from R 2.15.0
+    \item Added haplo.binomial for family=binomial in haplo.glm. Will
+    work with either, and within haplo.glm it uses the initialize
+    expression for haplo.binomial to ignore warnings of non-integer
+    number of successes because we use posterior probability of a
+    haplotype pair per subject as weights
+  }
+}
 \section{Changes in version 1.5.4}{
   \itemize{
     \item Fixed haplo.glm bug in assigning names to var.mat when

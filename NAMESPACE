@@ -13,7 +13,7 @@ export(haplo.score.slide, print.haplo.score.slide, plot.haplo.score.slide)
 
 export(haplo.glm, summary.haplo.glm, print.haplo.glm, haplo.glm.control)
 
-export(residuals.haplo.glm, fitted.haplo.glm, vcov.haplo.glm, anova.haplo.glm)
+export(haplo.binomial, residuals.haplo.glm, fitted.haplo.glm, vcov.haplo.glm, anova.haplo.glm)
 
 export(seqhap, plot.seqhap, print.seqhap)
 

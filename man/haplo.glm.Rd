@@ -77,7 +77,7 @@ haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
           link, variance function, initialization values, and iterative
           weights for the generalized linear model. Supported families
           are: gaussian, binomial, poisson. Currently, only the logit
-          link is implemented for binimial.        
+          link is implemented for binimial.	  
 }
 \item{data}{
   a data frame in which to interpret the variables occurring in
@@ -357,7 +357,14 @@ rank of information (info) matrix.
   To properly prepare the data frame, the genotype matrix must be
   processed by setupGeno, and then included in the data frame with the
   response and other variables.
+
+  For binomial family, the initialization of values gives warnings if
+  non-integer number of successes, which is a concern in these models
+  because of the weights of posterior probability of each haplotype pair
+  per subject.  We supress the warnings by defining a haplo.binomial
+  family, which we use if family=binomial is used.
 }
+
 \section{References}{
   Lake S, Lyon H, Silverman E, Weiss S, Laird N, Schaid D (2002)
   Estimation and tests of haplotype-environment interaction 

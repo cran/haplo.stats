@@ -255,6 +255,12 @@ haplo.glm  <- function(formula = formula(data),
     stop("`family' not recognized")
   }
 
+  ## init for binomial does not allow non-integer fitted values
+  ## use haplo.binomial init expression
+  if(family$family =="binomial") {
+    family$initialize=haplo.binomial()$initialize
+  }
+  
 
   if(missing(method))
     method <- attr(family, "method")
@@ -271,7 +277,9 @@ haplo.glm  <- function(formula = formula(data),
   # within each loop iteration).
 
   ## switch fitter for binomial because it gives unneeded warnings
-  if(family$family=="binomial") glm.fitter=glm.fit.nowarn
+  #if(family$family=="binomial") glm.fitter=glm.fit.nowarn
+  ## FIXED WITH THE INIT FIX ABOVE
+
   
   ## get the null fit
   fit.null <- glm.fitter(x = X[, "(Intercept)", drop = FALSE],
