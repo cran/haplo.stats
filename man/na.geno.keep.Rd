@@ -1,7 +1,7 @@
 \name{na.geno.keep}
 \alias{na.geno.keep}
 \title{
-  Find non-missing rows in the genotype matrix of the model.frame
+  Remove rows with NA in covariates, but keep genotypes with NAs
 }
 \description{
 An internal function for the haplo.stats package

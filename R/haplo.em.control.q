@@ -1,8 +1,11 @@
 #$Author: schaid $
-#$Date: 2003/11/17 23:28:10 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.control.q,v 1.3 2003/11/17 23:28:10 schaid Exp $
+#$Date: 2005/03/02 15:12:31 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.control.q,v 1.4 2005/03/02 15:12:31 schaid Exp $
 #$Locker:  $
 #$Log: haplo.em.control.q,v $
+#Revision 1.4  2005/03/02 15:12:31  schaid
+#changed max.iter to 5000
+#
 #Revision 1.3  2003/11/17 23:28:10  schaid
 #made compatible with R
 #
@@ -43,7 +46,7 @@
 # email: schaid@mayo.edu
 # 
 haplo.em.control <- function(loci.insert.order=NULL, insert.batch.size = 6,
-                              min.posterior=0.0000001, tol=0.00001, max.iter=500, random.start=0,
+                              min.posterior=0.0000001, tol=0.00001, max.iter=5000, random.start=0,
                               n.try = 10, iseed=NULL, max.haps.limit = 2e6, verbose=0){
 
   if(min.posterior < 0 | min.posterior > .9) {
@@ -57,9 +60,9 @@ haplo.em.control <- function(loci.insert.order=NULL, insert.batch.size = 6,
   }
 
 
-  if(max.iter < 0 | max.iter > 5000) { 
-    warning("The value of max.iter is out of range, the default value of 500 is used instead")
-    max.iter <- 500
+  if(max.iter < 0) { 
+    warning("The value of max.iter is < 0, the default value of 5000 is used instead")
+    max.iter <- 5000
   }
 
   if(random.start !=0  & random.start != 1){

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/04/07 14:08:59 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.merge.q,v 1.9 2004/04/07 14:08:59 sinnwell Exp $
+#$Date: 2005/03/30 16:40:22 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.merge.q,v 1.10 2005/03/30 16:40:22 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.score.merge.q,v $
+#Revision 1.10  2005/03/30 16:40:22  sinnwell
+#remove banner.width from printBanner
+#
 #Revision 1.9  2004/04/07 14:08:59  sinnwell
 #use nlines for quick print
 #
@@ -112,10 +115,9 @@ print.haplo.score.merge <- function(x, order.by="score", all.haps=FALSE, digits=
 
     cat("\n\n")
 
-    printBanner("Haplotype Scores, p-values, and Frequencies By Group", banner.width=80, char.perline=60,
-                 border = "-")
+    printBanner("Haplotype Scores, p-values, and Frequencies By Group", border = "-")
     df.print <- data.frame(df.print[ord,], row.names=NULL)
-    if(is.null(nlines)) 
+    if(is.null(nlines))
       print(df.print, digits=digits, ...)
     else print(df.print[1:nlines,], digits=digits, ...)
     invisible()

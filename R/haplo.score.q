@@ -1,8 +1,17 @@
 #$Author: sinnwell $
-#$Date: 2003/12/08 19:42:18 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.score.q,v 1.13 2003/12/08 19:42:18 sinnwell Exp $
+#$Date: 2005/03/31 15:18:41 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.score.q,v 1.16 2005/03/31 15:18:41 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.q,v $
+#Revision 1.16  2005/03/31 15:18:41  sinnwell
+#for g.inv of class Matrix, must have t(u.score)%*% g.inv
+#
+#Revision 1.15  2005/02/16 19:58:13  sinnwell
+#change some comments
+#
+#Revision 1.14  2004/12/29 17:35:18  sinnwell
+#default for skip.haplo is now 5/(nrow(geno)*2)
+#
 #Revision 1.13  2003/12/08 19:42:18  sinnwell
 # changed F,T to FALSE,TRUE
 #
@@ -69,7 +78,7 @@
 # 
 
 haplo.score <- function(y, geno, trait.type="gaussian",
-                         offset = NA, x.adj = NA, skip.haplo=.005,
+                         offset = NA, x.adj = NA, skip.haplo=5/(2*nrow(geno)),
                          locus.label=NA, miss.val=c(0,NA),
                          simulate=FALSE, sim.control=score.sim.control(),
                          em.control = haplo.em.control())
@@ -246,7 +255,7 @@ haplo.score <- function(y, geno, trait.type="gaussian",
    tmp <- Ginv(v.score)
    df <- tmp$rank
    g.inv <- tmp$Ginv
-   score.global <- u.score%*% g.inv %*%u.score
+   score.global <- t(u.score)%*% g.inv %*%u.score
    score.haplo <- u.score / sqrt(diag(v.score))
    score.max <-  max(score.haplo^2, na.rm=TRUE)
 
@@ -294,10 +303,10 @@ haplo.score <- function(y, geno, trait.type="gaussian",
 
   ## Compute sequential Monte Carlo p-values as given by
   ## Besag and Clifford, Biometrika Jun 1991
-  ##   Choose global.sim or max.sim as target pval to sample
-  ##   within desired pval error range.
+  ##   Make sure max-stat and global pvals are accurate to
+  ##     within desired pval error range.
   ##   Employ an extra rule: sample a min (default=1000) for enough
-  ##   samples to get good estimate of haplo.p.sim pvals
+  ##   samples to get good estimates of haplo.p.sim pvals
 
       done <- FALSE
       while(!done) {
@@ -336,7 +345,7 @@ haplo.score <- function(y, geno, trait.type="gaussian",
      
          tmp <- Ginv(v.score)
          g.inv <- tmp$Ginv  
-         score.global.sim <- u.score %*% g.inv %*% u.score
+         score.global.sim <- t(u.score) %*% g.inv %*% u.score
 
          # note that score.haplo.sim is squared, where score.haplo is not
          # because we want to keep the sign of score.haplo for returned 

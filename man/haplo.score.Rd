@@ -11,7 +11,7 @@ autosomal loci are considered.
 }
 \usage{
 haplo.score(y, geno, trait.type="gaussian", offset = NA,
-            x.adj = NA, skip.haplo=.005, locus.label=NA,
+            x.adj = NA, skip.haplo=5/(2*nrow(geno)), locus.label=NA,
             miss.val=c(0,NA), simulate=FALSE, sim.control=score.sim.control(),
             em.control=haplo.em.control())
 }
@@ -40,7 +40,9 @@ statistics.  Note that intercept should not be included,
 as it will be added in this function.
 }
 \item{skip.haplo }{
-Skip score statistics for haplotypes with frequencies < skip.haplo
+Skip score statistics for haplotypes with frequencies < skip.haplo.
+The default is for an expected count of 5 out of the 2*N haplotype 
+occurrences.
 }
 \item{locus.label }{
 Vector of labels for loci, of length K (see definition of geno matrix)
@@ -96,8 +98,9 @@ Vector of p-values for score.haplo, based on
 simulations (set equal to NA when simulate=F).
 }
 \item{score.max.p.sim}{
-P-value  of  maximum  score.haplo, based on
-simulations  (set equal to NA when simulate=F).
+Simulated p-value indicating for simulations the number of times a 
+maximum score.haplo value exceeds the maximum score.haplo from the
+original data (equal to NA when simulate=F).
 }
 \item{haplotype}{
 Matrix of hapoltypes  analyzed.  The ith row of
@@ -113,7 +116,7 @@ Vector of labels for loci, of length  K  (same  as
 input argument).
 }
 \item{simulate}{
-Same as function input  parameter.  If [T]rue, simulation results are
+Same as function input parameter.  If [T]rue, simulation results are
 included in the haplo.score object.
 }
 \item{n.val.global}{
@@ -157,8 +160,10 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 \code{\link{score.sim.control}}
 }
 \examples{
-  # establish all hla.demo data, remove genotypes with missing alleles
-  # so haplo.score runs faster
+  # establish all hla.demo data, 
+  # remove genotypes with missing alleles just so haplo.score runs faster 
+  # with missing values included, this example takes 2-4 minutes
+  # FOR REGULAR USAGE, DO NOT DISCARD GENOTYPES WITH MISSING VALUES
 
   setupData(hla.demo)
   geno <- as.matrix(hla.demo[,c(17,18,21:24)])

@@ -1,6 +1,6 @@
 /* $Author: schaid $ */
-/* $Date: 2004/05/26 21:06:01 $ */
-/* $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo_em_pin.c,v 1.15 2004/05/26 21:06:01 schaid Exp $ */
+/* $Date: 2005/03/01 23:05:34 $ */
+/* $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo_em_pin.c,v 1.16 2005/03/01 23:05:34 schaid Exp $ */
 /* $Locker:  $ */
 /*
  * $Log:
@@ -34,7 +34,7 @@
 *
 *phone: 507-284-0639
 *fax:      507-284-9542
-*email: schaid@@mayo.edu 
+*email: schaid@@@@mayo.edu 
 */
 
 #include <stdio.h>
@@ -97,7 +97,7 @@ void haplo_em_pin(
 
   long i, j, k, iter, n_iter, insert_loc;
   long is, ie, n_batch;
-  long n_u_hap, n_hap, n_trim, pair_id, len_hap_list;
+  long n_u_hap, n_hap, n_trim, pair_id, len_hap_list, indx1, indx2;
   long **geno;
   double lnlike, lnlike_old;
   double *prior;
@@ -105,7 +105,6 @@ void haplo_em_pin(
   HAP **hap_list;     /* List of all haplotypes = array of pointers to hap structs */
   HAPUNIQUE **u_hap_list;   /* List of unique haplotypes */
   HAP *h1, *h2;
-
 
   /* convert from S vecs to  C structures */
 
@@ -146,30 +145,25 @@ void haplo_em_pin(
   
   pair_id = - 1;
   n_hap=0;
+
   for(i=0;i< *n_subject;i++){
 
     pair_id++;
 
-    h1 = new_hap(i, pair_id, weight[i], 0.0, 1.0);
-    if(!h1){
-      errmsg("could not alloc mem for new_hap");
-    }
+    indx1 = n_hap;
+    n_hap++;
+    indx2 = n_hap;
+    n_hap++;
 
+    hap_list[indx1] = new_hap(i, pair_id, weight[i], 0.0, 1.0);
  
-    h2 = new_hap(i, pair_id, weight[i], 0.0, 1.0);
-    if(!h2){
-      errmsg("could not alloc mem for new hap");
-    }
-
+    hap_list[indx2]  = new_hap(i, pair_id, weight[i], 0.0, 1.0);
 
     k=0;
     for (j=0; j< n_loci; j++) {
-	  h1 ->loci[j] = geno[i][k++];
-	  h2 ->loci[j] = geno[i][k++];
+	   (hap_list[indx1])->loci[j] = geno[i][k++];
+	   (hap_list[indx2])->loci[j] = geno[i][k++];
     }
-
-    hap_list[n_hap++] = h1;
-    hap_list[n_hap++] = h2;
 
   }
 
@@ -295,8 +289,10 @@ void haplo_em_pin(
 		RECOVER(NULL_ENTRY);
       }
 
+
        divideKeep(hap_list, n_hap, &len_hap_list);
        n_hap = len_hap_list;
+
 
        if(*verbose){
 	 printf("\nhap_list after EM and after divideKeep \n\n",n_trim);
@@ -386,6 +382,7 @@ void haplo_em_pin(
   geno = NULL;
 
 
+ 
 }
 
 /***********************************************************************************/
@@ -1217,29 +1214,87 @@ static void insert_new_hap_pair(HAP ***hap_list_ptr, double **prior_ptr,
                                 HAP *h1_old, HAP *h2_old, 
                                 long a1_new, long a2_new,
                                 long *pair_id_ptr, long *j){  
-  HAP *h1_new, *h2_new;
 
- 
   loci_used[insert_loc] = 1;
 
-  h1_new = copy_hap(h1_old);
-  h2_new = copy_hap(h2_old);
-
-  h1_new->loci[insert_loc] = a1_new;
-  h2_new->loci[insert_loc] = a2_new;
-
-  (*pair_id_ptr) ++;
-  h1_new->pair_id = (*pair_id_ptr);
-  h2_new->pair_id = (*pair_id_ptr);
 
   if(  ((*j)+2)  >= (*max_haps) ){
      add_more_memory(hap_list_ptr, prior_ptr, max_haps);
   }
 
-  (*j)++;
-  (*hap_list_ptr)[*j] = h1_new;
+  /* update pair id, to be used for both haplotypes */
 
-  (*j)++;
-  (*hap_list_ptr)[*j] = h2_new;
+ (*pair_id_ptr) ++;
+ 
+  /* By using divideKeep, the number of haploytpes (nhap) is reduced to only
+     those with keep=1, but the memory for those with keep=0 is still in place.
+     So, when adding new haplotypes to the 'end' of the list, nhap gives a count
+     that is shorter than the true length. If where we are adding a haplotype in a list is
+     not NULL, then simply over write existing memory with old haplotype data, and then
+     update this old info with new alleles at insterted locus position, as well a pair_id.
+     If where we are adding points to NULL, then need to copy old haplotype info (while
+     allocating memory), then update inserted allele and pair_id.
+  */
 
+
+  /* First haplotype */
+  (*j)++;
+
+  if( (*hap_list_ptr)[*j] !=NULL)
+   {
+     overwrite_hap((*hap_list_ptr)[*j], h1_old);
+    }
+   else 
+    {
+     (*hap_list_ptr)[*j]  = copy_hap(h1_old);
+    }
+
+   (*hap_list_ptr)[*j]->loci[insert_loc] = a1_new;
+   (*hap_list_ptr)[*j]->pair_id = (*pair_id_ptr);
+ 
+
+   /* Second haplotype */
+
+   (*j)++;
+
+   if( (*hap_list_ptr)[*j] !=NULL)
+   {
+      overwrite_hap((*hap_list_ptr)[*j], h2_old);
+    }
+   else 
+    {
+     (*hap_list_ptr)[*j]  = copy_hap(h2_old);
+    }
+
+   (*hap_list_ptr)[*j]->loci[insert_loc] = a2_new;
+   (*hap_list_ptr)[*j]->pair_id = (*pair_id_ptr);
+ 
+
+
+}
+
+/***********************************************************************************/
+
+static void overwrite_hap(HAP *new, HAP *old) {
+
+    long i;
+
+    new->id      = old->id;
+    new->pair_id = old->pair_id;
+    new->wt      = old->wt;
+    new->post    = old->post;
+    new->code    = old->code;
+    new->keep    = old->keep;
+ 
+
+    if(new->loci == NULL){
+       new->loci = (long *) Calloc(n_loci, long);
+    }
+    if(new->loci == NULL) {
+      errmsg("could not alloc mem for overwrite_hap");
+    }
+
+    for (i=0; i<n_loci; i++){
+	new->loci[i] = old->loci[i];
+    }
 }
