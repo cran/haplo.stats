@@ -1,8 +1,14 @@
 % $Author: sinnwell $ 
-% $Date: 2008/04/29 17:20:59 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.model.frame.Rd,v 1.2 2008/04/29 17:20:59 sinnwell Exp $ 
+% $Date: 2009/09/30 20:05:38 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.model.frame.Rd,v 1.4 2009/09/30 20:05:38 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: haplo.model.frame.Rd,v $
+% Revision 1.4  2009/09/30 20:05:38  sinnwell
+% rm keywords, or leave one with one from /doc/KEYWORDS
+%
+% Revision 1.3  2009/09/30 19:25:04  sinnwell
+% remove empty sections
+%
 % Revision 1.2  2008/04/29 17:20:59  sinnwell
 % rm allele.lev and miss.val
 %
@@ -43,22 +49,11 @@ labels for loci in genotype matrix
 }
 }
 \value{
-}
-\section{Side Effects}{
-
+  A model frame with haplotypes modeled as effects
 }
 \details{
-
+  See haplo.glm description in help file and user manual
 }
-\section{References}{
-
-}
-\seealso{
-
-}
-\examples{
-
-}
-\keyword{}
+\keyword{models}
 % docclass is function
 % Converted by Sd2Rd version 37351.

@@ -1,6 +1,6 @@
 % $Author: sinnwell $
-% $Date: 2008/01/08 20:24:55 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.design.Rd,v 1.1 2008/01/08 20:24:55 sinnwell Exp $ 
+% $Date: 2009/09/30 20:05:38 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.design.Rd,v 1.3 2009/09/30 20:05:38 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: 
 
@@ -47,24 +47,39 @@ Matrix of columns for haplotype effects. Column names are "hap.k"
 where k is the row number of the unique haplotypes within the haplo.em
 object's "haplotypes" item. 
 }
-\section{Side Effects}{
-
-}
 \details{
 First a matrix is made for the possible haplotypes for each
 person, coded for the haplo.effect, weighted by the posterior
 probability of those possible haplotypes per person, and then 
 collapsed back to a single row per person.
 }
-\section{References}{
-
-}
 \seealso{
 \code{\link{haplo.em}}
 }
 \examples{
 
+ ###------------------------------------------------
+ ### See the user manual for more complete examples
+ ###------------------------------------------------
+
+ setupData(hla.demo)
+ attach(hla.demo)
+
+ geno <- hla.demo[,c(17,18,21:24)]
+ label <-c("DQB","DRB","B")
+
+ keep <- !apply(is.na(geno) | geno==0, 1, any)
+
+ save.em.keep <- haplo.em(geno=geno[keep,], locus.label=label)
+
+ save.df <- haplo.design(save.em.keep, min.count=10)
+ dim(save.df)
+
+ names(save.df)
+ save.df[1:10,]
+
+
 }
-\keyword{}
+\keyword{models}
 % docclass is function
 % Converted by Sd2Rd version 37351.

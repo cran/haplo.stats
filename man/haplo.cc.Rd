@@ -1,9 +1,15 @@
 % $Author: sinnwell $ 
-% $Date: 2008/04/10 20:45:41 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.cc.Rd,v 1.3 2008/04/10 20:45:41 sinnwell Exp $ 
+% $Date: 2009/09/30 19:58:16 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.cc.Rd,v 1.5 2009/09/30 19:58:16 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: haplo.cc.Rd,v $
+%Revision 1.5  2009/09/30 19:58:16  sinnwell
+%remove keywords section
+%
+%Revision 1.4  2009/09/30 19:03:54  sinnwell
+%rm section{side effects}, itemize the references
+%
 %Revision 1.3  2008/04/10 20:45:41  sinnwell
 %add eps.svd, leave haplo.min.count in haplo.glm.control
 %
@@ -141,9 +147,6 @@ Odds Ratio based on haplo.glm model estimated coefficient for the haplotype.
 Upper limit of the Odds Ratio Confidence Interval.
 }
 }
-\section{Side Effects}{
-
-}
 \details{
 All function calls within haplo.cc are for the analysis of association
 between haplotypes and the case-control status (binomial trait).  No 
@@ -151,15 +154,17 @@ additional covariates may be modeled with this function.  Odd Ratios
 are in reference to the baseline haplotype.  Odds Ratios will change
 if a different baseline is chosen using haplo.glm.control.
 }
-\section{References}{
-Schaid DJ, Rowland CM, Tines DE, Jacobson RM,  Poland  GA.
-"Score tests for association of traits with haplotypes when
-linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
-}
-\section{}{
-Lake S, LH, Silverman E, Weiss S, Laird N, Schaid DJ.  "Estimation and
-tests of haplotype-environment interaction when linkage phase is
-ambiguous. Human Heredity. 55 (2003):  56-65
+\references{
+  \itemize{
+    \item{Schaid et al}{Schaid DJ, Rowland CM, Tines DE, Jacobson RM,
+      Poland  GA. "Score tests for association of traits with haplotypes
+      when linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):
+      425-434.}
+    \item{Lake et al}{
+      Lake S, LH, Silverman E, Weiss S, Laird N, Schaid DJ.  "Estimation and
+      tests of haplotype-environment interaction when linkage phase is
+      ambiguous". Human Heredity. 55 (2003):  56-65}
+  }
 }
 \seealso{
 \code{\link{haplo.em}},
@@ -175,6 +180,5 @@ ambiguous. Human Heredity. 55 (2003):  56-65
 #  cc.test <- haplo.cc(y.test, geno.test, locus.label=locus.label, haplo.min.count=3, ci.prob=0.95)
 #
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

@@ -72,9 +72,6 @@ power for phased haplotypes
 power for unphased haplotypes
 }
 }
-\section{Side Effects}{
-
-}
 \details{
 Asympotic power calcuations are based on the non-centrality parameter
 of a non-central chi-square distribution. This non-centrality
@@ -92,7 +89,7 @@ function haplo.em will run out of memory, making this function
 "size" of the haplotypes, by reducing the number of columns of haplo,
 and adjusting the corresponding vectors (e.g., haplo.freq, haplo.beta).
 }
-\section{References}{
+\references{
 Schaid, DJ. Power and sample size for testing associations of
 haplotypes with complex traits. Ann Hum Genet (2005) 70:116-130.
 }
@@ -156,6 +153,6 @@ haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac=.5, prevalen
 
 haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac=.5, prevalence=.1, alpha=.05, sample.size=11978)
 }
-\keyword{}
+\keyword{design}
 % docclass is function
 % Converted by Sd2Rd version 43268.

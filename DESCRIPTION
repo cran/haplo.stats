@@ -1,6 +1,6 @@
 Package: haplo.stats
-Version: 1.4.3
-Date: 2009-4
+Version: 1.4.4
+Date: 2009-10
 Title: Statistical Analysis of Haplotypes with Traits and Covariates
         when Linkage Phase is Ambiguous
 Author: Sinnwell JP, Schaid DJ
@@ -16,6 +16,6 @@ License: GPL-2 | file LICENSE
 Depends: R (>= 2.7.0)
 Suggests: Design, Hmisc
 URL: http://mayoresearch.mayo.edu/mayo/research/schaid_lab/software.cfm
-Packaged: Mon Apr 27 16:27:37 2009; sinnwell
+Packaged: Wed Sep 30 15:06:55 2009; sinnwell
 Repository: CRAN
-Date/Publication: 2009-04-28 07:56:11
+Date/Publication: 2009-10-01 19:54:24
