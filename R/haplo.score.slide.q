@@ -1,15 +1,20 @@
 #$Author: sinnwell $
-#$Date: 2003/12/08 19:43:53 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.score.slide.q,v 1.2 2003/12/08 19:43:53 sinnwell Exp $
+#$Date: 2005/03/30 17:40:33 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.score.slide.q,v 1.4 2005/03/30 17:40:33 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.slide.q,v $
+#Revision 1.4  2005/03/30 17:40:33  sinnwell
+#shorten df column names
+#
+#Revision 1.3  2005/03/03 20:51:08  sinnwell
+#change defaults for skip.haplo
+#
 #Revision 1.2  2003/12/08 19:43:53  sinnwell
 # changed F,T to FALSE,TRUE
 #
 #Revision 1.1  2003/08/22 21:05:45  sinnwell
 #Initial revision
 #
-
 # License: 
 # 
 # Copyright 2003 Mayo Foundation for Medical Education and Research. 
@@ -42,17 +47,13 @@
 # 
 
 haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
-                              offset = NA, x.adj = NA, skip.haplo=.005,
+                              offset = NA, x.adj = NA, skip.haplo=5/(2*nrow(geno)),
                               locus.label=NA, miss.val=c(0,NA),
                               simulate=FALSE, sim.control=score.sim.control(),
                               em.control=haplo.em.control())
   # Developed by Schaid, DJ; Sinnwell, JP 2003
   # Mayo Clinic Rochester, Div of Biostatistics
 {
-
-# n.slide is the number of loci in the sub-haplotype to slide across
-# the larger number of loci (n.loci) in the geno matrix
-# run haplo.score on each of these sub-haplotypes and save p-values from each run.
 
 # check that n.slide <= n.loci
   n.loci <- ncol(geno)/2
@@ -92,8 +93,8 @@ haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
     n.val.global[i] <- temp$n.val.global
   }
   
-  score.slide <- list(df=data.frame(start.locus, score.global.p,
-                      score.global.p.sim, score.max.p.sim),
+  score.slide <- list(df=data.frame(start.loc=start.locus, score.global.p,
+                      global.p.sim=score.global.p.sim, max.p.sim=score.max.p.sim),
                       n.loci=n.loci, simulate=simulate,
                       n.slide=n.slide, locus.label=locus.label,
                       n.val.haplo=n.val.haplo, n.val.global=n.val.global)

@@ -1,8 +1,27 @@
 #$Author: sinnwell $
-#$Date: 2004/03/19 15:01:48 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.glm.q,v 1.7 2004/03/19 15:01:48 sinnwell Exp $
+#$Date: 2005/01/25 23:04:06 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.glm.q,v 1.12 2005/01/25 23:04:06 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.q,v $
+#Revision 1.12  2005/01/25 23:04:06  sinnwell
+#use as.list(args(haplo.glm)) instead of formals when na.action not given
+#formals is for R only
+#
+#Revision 1.11  2005/01/25 22:25:22  sinnwell
+#take out print statements left from debugging
+#
+#Revision 1.10  2005/01/23 20:01:38  sinnwell
+#use Thomas Lumley hint from R-help, use formals of haplo.glm to set
+#default na.action to na.geno.keep.
+#
+#Revision 1.9  2005/01/19 16:14:39  sinnwell
+#default na.action not set to na.geno.keep, force it if missing(na.action)
+#m$na.action <- as.name("na.geno.keep")
+#
+#Revision 1.8  2005/01/04 17:37:22  sinnwell
+#set haplo.min.freq as a function of haplo.min.count
+#using a min expected count of haplotypes is better criteria
+#
 #Revision 1.7  2004/03/19 15:01:48  sinnwell
 #consider .C(PACKAGE= as part of '...'
 #
@@ -44,14 +63,15 @@ haplo.glm     <- function(formula = formula(data),
   
   m <- match.call(expand.dots = FALSE)
 
+  if(is.null(m$na.action)) m$na.action=as.list(args(haplo.glm))$na.action
+
   m$family <- m$miss.val <-  m$locus.label <- m$control <- m$method <- m$model <- m$x <- m$y <- NULL
   m$contrasts <- m$print.iter <- m$allele.lev <- m$... <- NULL
 
   m$drop.unused.levels <- TRUE
 
-
   m[[1]] <- as.name("model.frame")
-
+  
   m <- eval(m, sys.parent())
   Terms <- attr(m, "terms")
 
@@ -75,12 +95,15 @@ haplo.glm     <- function(formula = formula(data),
   else if(any(wt.subj < 0))
     stop("negative weights not allowed")
 
-
+  # for control, base minimum haplotype frequencies on haplo.min.count
+  # as precedent over haplo.freq.min, the min count is 5
+  if(is.na(control$haplo.freq.min))
+    control$haplo.freq.min <- control$haplo.min.count/(2*nrow(data))
+  
   ####### Modify model.frame ####################################################
   # Translate from unphased genotype matrix to haplotype design matrix
   # Use haplo.model.frame to modify the model.frame. Note that haplo.model.frame
   # calls haplo.em to estimate haplotype frequencies.
-
 
   haplo.mf <- haplo.model.frame(m, locus.label=locus.label, allele.lev = allele.lev, 
                                 miss.val=miss.val, control=control)

@@ -1,8 +1,12 @@
 #$Author: sinnwell $
-#$Date: 2004/10/22 22:08:27 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.glm.q,v 1.8 2004/10/22 22:08:27 sinnwell Exp $
+#$Date: 2005/03/29 14:18:47 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.glm.q,v 1.9 2005/03/29 14:18:47 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.glm.q,v $
+#Revision 1.9  2005/03/29 14:18:47  sinnwell
+#fix call to print within widths, different for R/Splus
+#®
+#
 #Revision 1.8  2004/10/22 22:08:27  sinnwell
 #do not drop matrix to vector when subsetting to haplo.unique
 #when only 1 haplotype
@@ -30,9 +34,15 @@
 #
 print.haplo.glm <- function(x, print.all.haplo=FALSE, digits = max(options()$digits - 4, 3), ...){
 
-  cat("Call:\n")
-  print(x$call)
-
+  if(exists("is.R") && is.function(is.R) && is.R()) {
+    x$call <- deparse(x$call, width.cutoff=40)
+    cat("\n  Call: ", x$call, sep="\n")
+  }
+  else {
+    cat("\n  Call: \n")
+    dput(x$call)
+  }
+  
   haplo.df<- function(x){
     z <- x$haplo.common
     df <- as.matrix(x$haplo.unique[z,,drop=FALSE])

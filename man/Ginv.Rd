@@ -30,17 +30,20 @@ Rank of matrix x.
 
 }
 \details{
-The function svd is used to compute the singular values of
-the input matrix, and the rank of the matrix is determined
-by the number of singular values  that  are  at  least  as
+The svd function uses the LAPACK library standard to compute the 
+singular values of the input matrix, and the rank of the matrix is 
+determined by the number of singular values  that  are  at  least  as
 large   as  max(svd)*eps,  where  eps  is  a  small  value
-(currently eps = .000001).
+(currently eps = .000001).  For S-PLUS, the Matrix library is required.
 }
 \section{References}{
 Press  WH,  Teukolsky  SA,  Vetterling  WT,  Flannery  BP.
 Numerical  recipes  in C. The art of scientific computing.
 2nd ed. Cambridge University Press,  Cambridge.1992.  page
 61.
+
+Anderson, E., et al. (1994). LAPACK User's Guide, 
+2nd edition, SIAM, Philadelphia.
 }
 \seealso{
 svd

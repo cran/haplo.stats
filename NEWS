@@ -1,0 +1,105 @@
+=================================================================
+#                    HAPLO STATS News File
+#                     
+#        This file documents software changes up to version 1.2.0
+#
+#        format is as such
+#        ---------------------
+#        function.name:  title for issue
+#        explanation of issue, status, and recommendations 
+=========================================================
+#### changes made between release 1.1.1 and 1.2.0  #####
+=========================================================
+
+---------------------
+haplo.em:  fixed memory leak
+Versions up to 1.1.1 had either one or two memory leaks in haplo.em.
+They are fixed.
+
+---------------------
+All .C functions: Long Integers warning for 64-bit machine
+Due to problems with long integers between 32-bit and 64-bit machines
+using R, all integers used in C functions will use unsigned integers.
+
+---------------------
+haplo.glm:  haplo.effect="recessive"
+the estimation stops if no columns are left in the model.matrix for 
+homozygotes with the haplotype, and for haplotypes that do not have 
+any subjects with a posterior probability of being homozygous for the 
+haplotype, those subjects are grouped into the baseline effect.
+Guidelines for rare haplotypes are explained further in the manual.
+
+---------------------
+haplo.glm:  na.action, when not specified got set to something besides
+the intended 'na.geno.keep'.  Now the default setting works.
+
+---------------------
+haplo.cc: New Function for Case-Control Analysis
+New function added to combine methods of haplo.score,
+haplo.group and haplo.glm into one set of output for Case-Control
+data.  Choose haplotypes for analysis by haplo.min.count only, not a 
+frequency cut-off.
+
+------------------
+haplo.score: skip.haplo new default
+Default for skip.haplo is now 5/(nrow(geno)*2)
+
+------------------
+haplo.glm: haplo.freq.min and haplo.min.count control parameters
+Haplotypes used in the glm are still chosen by haplo.freq.min, but
+the default is based on a minimum expected count of 5 in the
+sample. The better choice for selecting haplotypes is
+haplo.min.count. The issue is documented in the manual and help files.
+
+-----------------
+haplo.score: max-stat simulated p-value
+A better description of this is included in the manual and help file
+
+------------------
+haplo.em.control and haplo.em:  defaults for control parameters
+changed
+The default for control parameter:
+max.iter=5000, changed from 500
+insert.batch.size = 6, changed from 4
+ 
+------------------
+locus
+The genetics package for R has a function named locus which does not
+agree with locus from haplo.stats.  We do not plan to change it, so be
+aware of the possible clash if you use these two packages
+
+------------------
+haplo.scan:  new function
+For analyzing a genome region with case-control
+data.  Search for a trait-locus by sliding a fixed-width window over 
+each marker locus and scanning all possible haplotype lengths within 
+the window
+
+
+=================================================================
+### changes made prior to release 1.1.1  #####
+=================================================================
+
+----------------------
+haplo.glm: Warnings for non-integer weights
+glm.fit for R does not allow non-integer weights for subjects, whereas
+S-PLUS does.  Use a glm.fit.nowarn function for R to ignore warnings.
+
+---------------------
+haplo.glm: Character Alleles
+Local settings for strings as factors causes confusion for keeping
+orinial character allele values.  To ensure consistency of allele
+codes, use setupGeno() and then in the haplo.glm call, use allele.lev
+as documented in the manual and help files.
+
+---------------------
+haplo.score.slide: add to package
+Run haplo.score on all contiguous subsets of size n.slide from the 
+loci in a genotype matrix (geno).
+
+---------------------
+haplo.score: simulations controlled for precision
+Employ simulation precision criteria for p-values, adopted from
+Besag and Clifford [1991].  Control simulations with 
+score.sim.control.
+

@@ -1,14 +1,20 @@
 #$Author: sinnwell $
 #
-#$Date: 2004/04/07 14:08:59 $
+#$Date: 2005/03/29 16:27:27 $
 #
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.q,v 1.9 2004/04/07 14:08:59 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.q,v 1.11 2005/03/29 16:27:27 sinnwell Exp $
 #
-#$Id: print.haplo.score.q,v 1.9 2004/04/07 14:08:59 sinnwell Exp $
+#$Id: print.haplo.score.q,v 1.11 2005/03/29 16:27:27 sinnwell Exp $
 #
 #$Locker:  $
 #
 #$Log: print.haplo.score.q,v $
+#Revision 1.11  2005/03/29 16:27:27  sinnwell
+#*** empty log message ***
+#
+#Revision 1.10  2005/03/25 15:38:36  sinnwell
+#un-specify banner width, controlled by options.
+#
 #Revision 1.9  2004/04/07 14:08:59  sinnwell
 #use nlines for quick print
 #
@@ -83,8 +89,7 @@ print.haplo.score <- function(x, digits=max(options()$digits-2, 5), nlines=NULL,
      stop("Not an object of class haplo.score!")
   
  # print of global score stats:
-   printBanner("Global Score Statistics", banner.width=80, char.perline=60,
-                border= "-")
+   printBanner("Global Score Statistics", border= "-")
    cat(paste("global-stat = ",round(x$score.global,digits),", df = ", x$df,
              ", p-val = ",round(x$score.global.p,digits),sep=""))
 
@@ -94,8 +99,7 @@ print.haplo.score <- function(x, digits=max(options()$digits-2, 5), nlines=NULL,
    cat("\n\n")
 
    if(x$simulate) {
-     printBanner("Global Simulation p-value Results",
-                 banner.width=80, char.perline=60, border="-")
+     printBanner("Global Simulation p-value Results", border="-")
      cat("Global sim. p-val = ",round(x$score.global.p.sim, digits),"\n")
      cat("Max-Stat sim. p-val = ",round(x$score.max.p.sim, digits), "\n")
      cat("Number of Simulations, Global: ", x$n.val.global, ", Max-Stat:", x$n.val.haplo)
@@ -119,8 +123,7 @@ print.haplo.score <- function(x, digits=max(options()$digits-2, 5), nlines=NULL,
    else dimnames(tbl) <- list(NULL,c(x$locus.label,"Hap-Freq",
                   "Hap-Score","p-val","sim p-val"))
 
-   printBanner("Haplotype-specific Scores", banner.width=80, char.perline=60,
-                border= "-")
+   printBanner("Haplotype-specific Scores",  border= "-")
 
    if(is.null(nlines) )
      print(tbl,quote=FALSE)

@@ -12,7 +12,7 @@ simulated p-values.
 }
 \usage{
 haplo.score.slide(y, geno, trait.type="gaussian", n.slide=2,
-                  offset = NA, x.adj = NA, skip.haplo=.005,
+                  offset = NA, x.adj = NA, skip.haplo=5/(2*nrow(geno)),
                   locus.label=NA, miss.val=c(0,NA),
                   simulate=FALSE, sim.control=score.sim.control(),
                   em.control=haplo.em.control())
@@ -48,7 +48,8 @@ statistics.  Note that intercept should not be included,
 as it will be added in this function. 
 }
 \item{skip.haplo }{
-Skip score statistics for haplotypes with frequencies < skip.haplo
+For haplotypes with frequencies < skip.haplo, categorize them into a common
+group of rare haplotypes.
 }
 \item{locus.label }{
 Vector of labels for loci, of length K (see definition of geno matrix).
@@ -143,10 +144,10 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 
 # Run shortened example on 9 loci 
 # For an ordinal trait, slide by 3 loci, and simulate p-values:
-  geno.9 <- hla.demo[,-c(1:6,15,16)]
-  label.9 <- c("DPA","DMA","DMB","TAP1","DQB","DQA","DRB","B","A")
- 
-  y.ord <- as.numeric(hla.demo$resp.cat)
+#  geno.9 <- hla.demo[,-c(1:6,15,16)]
+#  label.9 <- c("DPA","DMA","DMB","TAP1","DQB","DQA","DRB","B","A")
+
+#  y.ord <- as.numeric(hla.demo$resp.cat)
 
 # data is set up, to run, run these lines of code on the data that was
 # set up in this example. It takes > 15 minutes to run

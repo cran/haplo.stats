@@ -323,11 +323,14 @@ rank of information (info) matrix.
 haplo.glm.control, haplo.em, haplo.model.frame
 }
 \examples{
+ # FOR REGULAR USAGE, DO NOT DISCARD GENOTYPES WITH MISSING VALUES
+ # WE ONLY SUBSET BY KEEP HERE SO THE EXAMPLES RUN FASTER
+
  setupData(hla.demo)
  geno <- as.matrix(hla.demo[,c(17,18,21:24)])
- keep <- !apply(is.na(geno) | geno==0, 1, any)
- hla.demo <- hla.demo[keep,]
- geno <- geno[keep,]
+ keep <- !apply(is.na(geno) | geno==0, 1, any) # SKIP THESE THREE LINES
+ hla.demo <- hla.demo[keep,]                   # IN AN ANALYSIS
+ geno <- geno[keep,]                           # 
  attach(hla.demo)
  label <-c("DQB","DRB","B")
  y <- hla.demo$resp

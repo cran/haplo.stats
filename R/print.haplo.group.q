@@ -1,9 +1,12 @@
 #$Author: sinnwell $
-#$Date: 2004/04/06 21:30:06 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.group.q,v 1.7 2004/04/06 21:30:06 sinnwell Exp $
-#$Id: print.haplo.group.q,v 1.7 2004/04/06 21:30:06 sinnwell Exp $
+#$Date: 2005/03/29 19:21:53 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.group.q,v 1.8 2005/03/29 19:21:53 sinnwell Exp $
+#$Id: print.haplo.group.q,v 1.8 2005/03/29 19:21:53 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.group.q,v $
+#Revision 1.8  2005/03/29 19:21:53  sinnwell
+#make printBanner abide to options()$width
+#
 #Revision 1.7  2004/04/06 21:30:06  sinnwell
 #use nlines to limit output for demos
 #
@@ -69,12 +72,10 @@ print.haplo.group <- function(x, digits=max(options()$digits-2, 5), nlines=NULL,
     df.print<-data.frame((x$group.df)[,1:n.loci],
            round((x$group.df)[,(n.loci+1):(n.loci+n.group+1)],digits))
     cat("\n")
-    printBanner("Counts per Grouping Variable Value", banner.width = 80,
-                 char.perline = 60, border = "-")
+    printBanner("Counts per Grouping Variable Value", border = "-")
     print(x$group.count)
     cat("\n\n")
-    printBanner("Haplotype Frequencies By Group ", banner.width = 80,
-                   char.perline = 60, border = "-")
+    printBanner("Haplotype Frequencies By Group ", border = "-")
 
     if(is.null(nlines)) print(df.print)
     else print(df.print[1:nlines,])

@@ -1,2 +1,2 @@
-UserManTest		Execute the user-level functions on a tested data set.
-			The same examples appear in docs/HaploStatsUserMan.pdf
+manualHaploStats	Execute the user-level functions on a tested data set.
+			The same examples appear in docs/manualHaploStats.pdf

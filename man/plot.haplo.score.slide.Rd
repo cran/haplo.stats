@@ -65,7 +65,7 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 \code{\link{haplo.score.slide}}
 }
 \examples{
-#This example is run completely in the haplo.score.slide
+# This example has a long run time, therefore it is commented
 
 #   setupData(hla.demo)
 #   attach(hla.demo)

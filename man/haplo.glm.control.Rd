@@ -8,7 +8,8 @@ Create a list of control pararameters for haplo.glm. If no parameters
 are passed to this function, then all default values are used.
 }
 \usage{
-haplo.glm.control(haplo.effect="add", haplo.base=NULL,haplo.freq.min=0.001, 
+haplo.glm.control(haplo.effect="add", haplo.base=NULL,
+                  haplo.min.count=NA, haplo.freq.min=NA,
                   sum.rare.min=0.001, haplo.min.info=0.001, 
                   keep.rare.haplo=TRUE, glm.c=glm.control(maxit=500), 
                                                   em.c=haplo.em.control())
@@ -26,6 +27,11 @@ haplo.glm.control(haplo.effect="add", haplo.base=NULL,haplo.freq.min=0.001,
   the index for the haplotype to be used as the base-line for
   regression. By default, haplo.base=NULL, so that the most frequent
   haplotype is chosen as the base-line.
+}
+\item{haplo.min.count }{
+  The minimum number of expected counts for a haplotype from the
+  sample to be included in the model.  The count is based on 
+  estimated haplotype frequencies.  Suggested minimum is 5.
 }
 \item{haplo.freq.min }{
   the minimum haplotype frequency for a haplotype to be included in
@@ -66,7 +72,9 @@ glm.control).
   the list of above components
 }
 \seealso{
-  glm.control, haplo.em.control
+\code{\link{haplo.glm}},
+\code{\link{haplo.em.control}},
+\code{\link{glm.control}}
 }
 \examples{
 # using the data set up in the example for haplo.glm,
@@ -74,8 +82,8 @@ glm.control).
 #  > fit <- haplo.glm(y ~ male + geno, family = gaussian,  
 #  >          na.action="na.geno.keep",
 #  >          data=my.data, locus.label=locus.label,
-#  >          control = haplo.glm.control(haplo.freq.min =
-#  >          0.02,em.c=haplo.em.control(n.try=1)))
+#  >          control = haplo.glm.control(haplo.min.count=5,
+#  >          em.c=haplo.em.control(n.try=1)))
 }
 \keyword{}
 % docclass is function

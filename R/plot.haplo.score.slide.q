@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/02/16 22:03:55 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/plot.haplo.score.slide.q,v 1.5 2004/02/16 22:03:55 sinnwell Exp $
+#$Date: 2005/03/31 19:23:35 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/plot.haplo.score.slide.q,v 1.6 2005/03/31 19:23:35 sinnwell Exp $
 #$Locker:  $
 #$Log: plot.haplo.score.slide.q,v $
+#Revision 1.6  2005/03/31 19:23:35  sinnwell
+#global.p.sim and max.p.sim names remove 'score' from them
+#
 #Revision 1.5  2004/02/16 22:03:55  sinnwell
 #fix handling of pval parameter, easier
 #
@@ -84,16 +87,16 @@ plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, cex=.8
            ylabel="-log10(score.global.p)"
          },
          global.sim = {
-           eq.zero <- (1:length(x$df[[1]]))[x$df$score.global.p.sim==0]
-           lnp <- (-1)*log10(x$df$score.global.p.sim)
+           eq.zero <- (1:length(x$df[[1]]))[x$df$global.p.sim==0]
+           lnp <- (-1)*log10(x$df$global.p.sim)
            lnp[eq.zero] <- (-1)*log10(.5/x$n.val.global[eq.zero])
-           ylabel="-log10(score.global.p.sim)"
+           ylabel="-log10(global.p.sim)"
          },
          max.sim = {
-           eq.zero <- (1:length(x$df[[1]]))[x$df$score.max.p.sim==0]
-           lnp <- (-1)*log10(x$df$score.max.p.sim)
+           eq.zero <- (1:length(x$df[[1]]))[x$df$max.p.sim==0]
+           lnp <- (-1)*log10(x$df$max.p.sim)
            lnp[eq.zero] <- (-1)*log10(.5/x$n.val.haplo[eq.zero])
-           ylabel="-log10(score.max.p.sim)"
+           ylabel="-log10(max.p.sim)"
          })
 
   # prepare x.axis marks for the loci, based on dist.vec

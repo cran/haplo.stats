@@ -1,8 +1,12 @@
 #$Author: sinnwell $
-#$Date: 2004/06/25 15:56:48 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/printBanner.q,v 1.2 2004/06/25 15:56:48 sinnwell Exp $
+#$Date: 2005/02/04 20:57:18 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/printBanner.q,v 1.3 2005/02/04 20:57:18 sinnwell Exp $
 #$Locker:  $
 #$Log: printBanner.q,v $
+#Revision 1.3  2005/02/04 20:57:18  sinnwell
+#banner.width now based on options()$width
+#char.perline based on banner.width
+#
 #Revision 1.2  2004/06/25 15:56:48  sinnwell
 #now compatible with R, changed end when a line is done
 #
@@ -35,13 +39,13 @@
 # Mayo Clinic
 # 200 First St., SW
 # Rochester, MN 55905
-# 
+#
 # phone: 507-284-0639
 # fax:      507-284-9542
 # email: schaid@mayo.edu
-# 
+#
 
-printBanner <- function(str, banner.width=80, char.perline=60, border = "="){
+printBanner <- function(str, banner.width=options()$width, char.perline=.75*banner.width, border = "="){
 
 # char.perline was calculated taking the floor of banner.width/3
 

@@ -5,15 +5,15 @@
 Probabilities, with Progressive Insertion of Loci
 }
 \description{
-This function creates a list of parameters that control the 
-EM algorithm based on progressive insertion of loci.
-Non-default parameters for the EM algorithm can be
-set as parameters passed to haplo.em.control. 
+Create a list of parameters that control the EM algorithm for 
+estimating haplotype frequencies, based on progressive insertion 
+of loci. Non-default parameters for the EM algorithm can be
+set as parameters passed to haplo.em.control.
 }
 \usage{
 haplo.em.control(loci.insert.order=NULL, insert.batch.size = 6,
                              min.posterior = 1e-07, tol = 1e-05,
-                             max.iter=500, random.start=0, n.try = 10,
+                             max.iter=5000, random.start=0, n.try = 10,
                              iseed=NULL, max.haps.limit = 2e6, verbose=0)
 }
 \arguments{
@@ -26,30 +26,31 @@ is NULL, the insert oder will be in sequential order (1, 2, ..., No. Loci).
 Number of loci to be inserted in a single batch.
 }
 \item{min.posterior }{
-Minimum posterior probability of haplotype pair, conditional on
+Minimum posterior probability of a haplotype pair, conditional on
 observed marker genotypes. Posteriors below this minimum value will
 have their pair of haplotypes "trimmed" off the list of possible
 pairs.
 }
 \item{tol}{
-Default 1e-5
+If the change in log-likelihood value between EM steps is less 
+than the tolerance (tol), it has converged.
 }
 \item{max.iter }{
 Maximum number of iterations allowed for the EM algorithm before it
-stops and prints an error.  Default is 500.  
+stops and prints an error.  If the error is printed, double max.iter.
 }
 \item{random.start }{
 If random.start = 0, then the inititial starting values of the
 posteriors for the first  EM attempt will be based on assuming equal
 posterior probabilities (conditional on genotypes). If random.start = 1,
-then the initial starting values of the first  EM attempt will be based on assuming a uniform distribution for
+then the initial starting values of the first EM attempt will be based on assuming a uniform distribution for
 the initial posterior probabilities.
 }
 \item{n.try }{
 Number of times to try to maximize the lnlike by the EM algorithm. The
-first try will use, as initial starting values for the posteriors,
+first try uses, as initial starting values for the posteriors,
 either equal values or uniform random variables, as determined by
-random.start. All subsequent tries will use uniform random values as
+random.start. All subsequent tries will use random uniform values as
 initial starting values for the posterior probabilities.
 }
 \item{iseed}{
@@ -60,8 +61,8 @@ be reproduced by using the same initial seed.
 The maximum number of haplotypes for which memory is allocated. 
 }
 \item{verbose}{
-Logical, if [T]rue, print lots of debug messages to the screen.  If [F]alse, default,
-do not print any messages. It is best to use verbose=F.
+Logical, if [T]rue, print procedural messages to the screen.  If [F]alse, 
+do not print any messages. 
 }
 }
 \value{

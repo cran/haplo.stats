@@ -4,17 +4,16 @@
   Find Location from Mouse Clicks and Print Haplotypes on Plot
 }
 \description{
-Much like the Splus locator() is used to find x-y coordinates on a plot,
-locator.haplo() finds all x-y coordinates that are clicked on by a
-user, and then prints haplotypes at the chosen positions.
+Much like the R/Splus locator function is used to find x-y coordinates
+on a plot.  Find all x-y coordinates that are chosen by the user's
+mouse clicks.  Then print haplotype labels at the chosen positions.
 }
 \usage{
 locator.haplo(obj)
 }
 \arguments{
 \item{obj}{
-An object (of class haplo.score) which contains the analysis results
-that are returned from the function haplo.score.
+An object (of class haplo.score) that is returned from haplo.score.
 }
 }
 \value{
@@ -45,7 +44,7 @@ on the lower-half of the plot) or below the point (for points in the
 upper-half of the plot).
 }
 \seealso{
-haplo.score
+\code{\link{haplo.score}}
 }
 \examples{
 # follow the pseudo-code
