@@ -8,7 +8,7 @@ Display results for a haplotype analysis on a case-control study.
 }
 \usage{
 print.haplo.cc(x, order.by="score", digits=max(options()$digits-2, 5),
-    nlines=NULL ...)
+    nlines=NULL, ...)
 }
 \arguments{
 \item{x}{
@@ -25,6 +25,10 @@ Number of digits to display for the numeric columns of the data frame.
 Print the first nlines of the cc.df data frame of the haplo.cc object,
 keeps output short if desired.
 }
+\item{\dots }{
+Dynamic parameter for the values of additional parameters for 
+the print method.
+}
 }
 \value{
 Nothing is returned.
@@ -36,12 +40,12 @@ Nothing is returned.
 
 }
 \seealso{
-\code{\link{haplo.cc}},
+\code{\link{haplo.cc}}
 }
 \examples{
 ## for a haplo.cc object named cc.test, 
 ##    order results by haplotype 
-# print(cc.test, order.by="haplotype")
+# print.haplo.cc(cc.test, order.by="haplotype")
 }
 \keyword{}
 % docclass is function
