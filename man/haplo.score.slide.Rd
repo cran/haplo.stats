@@ -1,0 +1,157 @@
+\name{haplo.score.slide}
+\alias{haplo.score.slide}
+\title{
+  Score Statistics for Association of Traits with Haplotypes
+}
+\description{
+Used to identify sub-haplotypes from a group of loci.  Run haplo.score
+on all contiguous subsets of size n.slide from the loci in a genotype
+matrix (geno).  From each call to haplo.score, report the global score
+statistic p-value. Can also report global and maximum score statistics
+simulated p-values.
+}
+\usage{
+haplo.score.slide(y, geno, trait.type="gaussian", n.slide=2,
+                  offset = NA, x.adj = NA, skip.haplo=.005,
+                  locus.label=NA, miss.val=c(0,NA),
+                  simulate=FALSE, sim.control=score.sim.control(),
+                  em.control=haplo.em.control())
+}
+\arguments{
+\item{y}{
+Vector of trait values. For trait.type = "binomial", y must 
+have values of 1 for event, 0 for no event.
+}
+\item{geno}{
+Matrix of alleles, such that each locus has a pair of
+adjacent columns of alleles, and the order of columns
+corresponds to the order of loci on a chromosome.  If
+there are K loci, then ncol(geno) = 2*K. Rows represent
+alleles for each subject.
+}
+\item{trait.type }{
+Character string defining type of trait, with values of 
+"gaussian", "binomial", "poisson", "ordinal".
+}
+\item{n.slide }{
+Number of loci in each contiguous subset.  The first subset is the ordered
+loci numbered 1 to n.slide, the second subset is 2 through n.slide+1
+and so on.  If the total number of loci in geno is n.loci, then there
+are n.loci - n.slide + 1 total subsets.
+}
+\item{offset}{
+Vector of offset when trait.type = "poisson"
+}
+\item{x.adj }{
+Matrix of non-genetic covariates used to adjust the score 
+statistics.  Note that intercept should not be included, 
+as it will be added in this function. 
+}
+\item{skip.haplo }{
+Skip score statistics for haplotypes with frequencies < skip.haplo
+}
+\item{locus.label }{
+Vector of labels for loci, of length K (see definition of geno matrix).
+}
+\item{miss.val }{
+Vector of codes for missing values of alleles.
+}
+\item{simulate}{
+Logical, if [F]alse (default) no empirical p-values are computed.
+If [T]rue simulations are performed.  Specific simulation parameters
+can be controlled in the sim.control parameter list.
+}
+\item{sim.control }{
+A list of control parameters used to perform simulations for simulated
+p-values in haplo.score.  The list is created by the function
+score.sim.control and the default values of this function can be
+changed as desired.
+}
+\item{em.control }{
+A list of control parameters used to perform the em algorithm for
+estimating haplotype frequencies when phase is unknown.  The list is
+created by the function haplo.em.control and the default values of
+this function can be changed as desired.
+}
+}
+\value{
+List with the following components:
+
+\item{df}{
+Data frame with start locus, global p-value, simulated global p-value,
+and simulated maximum-score p-value.
+}
+\item{n.loci}{
+Number of loci given in the genotype matrix.
+}
+\item{simulate}{
+Same as parameter description above.
+}
+\item{n.slide}{
+Same as parameter description above.
+}
+\item{locus.label}{
+Same as parameter description above.
+}
+\item{n.val.haplo}{
+Vector containing the number of valid simulations used in the
+maximum-score statistic p-value simulation.  The number of valid simulations
+can be less than the number of simulations requested (by sim.control)
+if simulated data sets produce unstable variables of the score
+statistics. 
+}
+\item{n.val.global}{
+Vector containing the number of valid simulations used in the
+global score statistic p-value simulation.  
+}
+}
+\section{Side Effects}{
+
+}
+\details{
+Haplo.score.slide is useful for a series of loci where little is
+known of the association between a trait and haplotypes.  Using a
+range of n.slide values, the region with the strongest association
+will consistently have low p-values for locus subsets containing the
+associated haplotypes.  The global p-value measures significance 
+of the entire set of haplotypes for the locus subset.  Simulated
+maximum score statistic p-values indicate when one or a few haplotypes
+are associated with the trait.
+}
+\section{References}{
+Schaid DJ, Rowland CM, Tines DE, Jacobson RM,  Poland  GA.
+"Score tests for association of traits with haplotypes when
+linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
+}
+\seealso{
+\code{\link{haplo.score}},
+\code{\link{plot.haplo.score.slide}},
+\code{\link{score.sim.control}}
+}
+\examples{
+  setupData(hla.demo)
+  attach(hla.demo)
+  geno.11 <- hla.demo[,-c(1:4)]
+  label.11 <- c("DPB","DPA","DMA","DMB","TAP1","TAP2","DQB","DQA","DRB","B","A")
+
+# Continuous trait slide by 2 loci
+#  slide.gaus <- haplo.score.slide(resp, geno.11, trait.type = "gaussian", 
+#                                  locus.label=label.11, n.slide=2)
+
+#  print(slide.gaus)
+#  plot(slide.gaus)
+
+# For an ordinal trait, slide by 3 loci, and simulate p-values:
+  y.ord <- as.numeric(resp.cat)
+  slide.ord.sim <-  haplo.score.slide(y.ord, geno.11, trait.type = "ordinal",
+                              n.slide=3, locus.label=label.11, simulate=TRUE,
+                              sim.control=score.sim.control(min.sim=500))
+
+  print(slide.ord.sim)
+  plot(slide.ord.sim)
+  plot(slide.ord.sim, pval="global.sim")
+  plot(slide.ord.sim, pval="max.sim")
+}
+\keyword{}
+% docclass is function
+% Converted by Sd2Rd version 1.21.
