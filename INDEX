@@ -1,6 +1,7 @@
 Ginv                    Compute Generalized Inverse of Input Matrix
 allele.recode           Recode allele values to integer ranks
 dglm.fit                Density function for GLM fit
+geno1to2		Convert genotype matrix from 1-column 2-column
 geno.count.pairs        Counts of Total Haplotype Pairs Produced by
                         Genotypes
 geno.recode             Recode Genotypes
@@ -10,6 +11,7 @@ haplo.cc                Haplotype Association Analysis in a
                         Case-Control design
 haplo.chistat           Calculate a score test statistic for
                         haplotypes
+haplo.design		Build a design matrix for haplotypes
 haplo.em                EM Computation of Haplotype Probabilities,
                         with Progressive Insertion of Loci
 haplo.em.control        Create the Control Parameters for the EM
@@ -73,10 +75,13 @@ print.haplo.score.merge
 print.haplo.score.slide
                         Print the contents of a haplo.score.slide
                         object
+print.seqhap		Print Contents of a seqhap object
 printBanner             Print a nice banner
 residScaledGlmFit       Scaled Residuals for GLM fit
 score.sim.control       Create the list of control parameters for
                         simulations in haplo.score
+seqhap			Sequential Haplotype Scan Association Analysis
+			for Case-Control Data
 setupData               Set up an example dataset provided within the
                         library.
 setupGeno               Create a group of locus objects from a

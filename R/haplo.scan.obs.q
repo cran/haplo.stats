@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2005/03/28 22:26:58 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.scan.obs.q,v 1.2 2005/03/28 22:26:58 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.scan.obs.q,v 1.2 2005/03/28 22:26:58 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.scan.obs.q,v $
 #Revision 1.2  2005/03/28 22:26:58  sinnwell

@@ -11,7 +11,8 @@ autosomal loci are considered.
 }
 \usage{
 haplo.score(y, geno, trait.type="gaussian", offset = NA,
-            x.adj = NA, skip.haplo=5/(2*nrow(geno)), locus.label=NA,
+            x.adj = NA, haplo.effect="additive", min.count=5, 
+            skip.haplo=min.count/(2*nrow(geno)), locus.label=NA,
             miss.val=c(0,NA), simulate=FALSE, sim.control=score.sim.control(),
             em.control=haplo.em.control())
 }
@@ -39,10 +40,28 @@ Matrix of non-genetic covariates used to adjust the score
 statistics.  Note that intercept should not be included, 
 as it will be added in this function.
 }
+\item{haplo.effect }{
+The "effect" pattern of haplotypes on the response. This parameter
+determines the coding for scoring the haplotypes. 
+Valid coding options for heterozygous and homozygous carriers of a
+haplotype are "additive" (1, 2, respectively), "dominant" (1,1,
+respectively), and "recessive" (0, 1, respectively).
+}
+\item{min.count }{
+The minimum number of counts for a haplotype to be included in the
+model.  First, the haplotypes selected to score are chosen by minimum
+frequency greater than skip.haplo (based on min.count, by default).
+It is also used when haplo.effect is either dominant or
+recessive. This is explained best in the recessive instance, where
+only subjects who are homozygous for a haplotype will contribute
+information to the score for that haplotype.  If fewer than min.count
+subjects are estimated to be affected by that haplotype, it is not
+scored.  A warning is issued if no haplotypes can be scored.
+}
 \item{skip.haplo }{
-Skip score statistics for haplotypes with frequencies < skip.haplo.
-The default is for an expected count of 5 out of the 2*N haplotype 
-occurrences.
+Minimum haplotype frequency for which haplotypes are scored in the model.
+By default, the frequency is based on "min.count" divided by the 2*N total haplotype 
+occurrences in the sample.
 }
 \item{locus.label }{
 Vector of labels for loci, of length K (see definition of geno matrix)
@@ -51,7 +70,7 @@ Vector of labels for loci, of length K (see definition of geno matrix)
 Vector of codes for missing values of alleles
 }
 \item{simulate}{
-Logical:  if [F]alse, no empirical p-values are computed; if [T]rue,
+Logical:  if FALSE, no empirical p-values are computed; if TRUE,
 simulations are performed. Specific simulation parameters
 can be controlled in the sim.control parameter list.  
 }
@@ -114,6 +133,13 @@ haplotypes in the matrix haplotype.
 \item{locus.label}{
 Vector of labels for loci, of length  K  (same  as
 input argument).
+}
+\item{call}{
+The call to the haplo.score function; useful for recalling what
+parameters were used.
+}
+\item{haplo.effect}{
+The haplotype effect model parameter that was selected for haplo.score.
 }
 \item{simulate}{
 Same as function input parameter.  If [T]rue, simulation results are
@@ -203,4 +229,4 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

@@ -1,6 +1,6 @@
 #$Author: schaid $
 #$Date: 2004/02/26 17:31:02 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/na.geno.keep.q,v 1.3 2004/02/26 17:31:02 schaid Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/na.geno.keep.q,v 1.3 2004/02/26 17:31:02 schaid Exp $
 #$Locker:  $
 #$Log: na.geno.keep.q,v $
 #Revision 1.3  2004/02/26 17:31:02  schaid

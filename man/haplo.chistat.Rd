@@ -48,4 +48,4 @@ The score test statistic for the set of haplotypes
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

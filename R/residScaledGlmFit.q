@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2004/02/26 22:35:38 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/residScaledGlmFit.q,v 1.1 2004/02/26 22:35:38 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/residScaledGlmFit.q,v 1.1 2004/02/26 22:35:38 sinnwell Exp $
 #$Locker:  $
 #$Log: residScaledGlmFit.q,v $
 #Revision 1.1  2004/02/26 22:35:38  sinnwell

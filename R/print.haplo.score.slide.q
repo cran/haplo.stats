@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2003/09/19 16:48:38 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.slide.q,v 1.2 2003/09/19 16:48:38 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.slide.q,v 1.2 2003/09/19 16:48:38 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.score.slide.q,v $
 #Revision 1.2  2003/09/19 16:48:38  sinnwell

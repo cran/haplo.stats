@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/03/10 21:21:16 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/setupGeno.q,v 1.3 2004/03/10 21:21:16 sinnwell Exp $
+#$Date: 2007/04/19 20:59:18 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/setupGeno.q,v 1.4 2007/04/19 20:59:18 sinnwell Exp $
 #$Locker:  $
 #$Log: setupGeno.q,v $
+#Revision 1.4  2007/04/19 20:59:18  sinnwell
+#add locus.label
+#
 #Revision 1.3  2004/03/10 21:21:16  sinnwell
 #remove excess parms and attributes
 #
@@ -14,7 +17,7 @@
 # This is copying much code from loci(), but it is better named
 # for users as setupGeno
 
-setupGeno <- function(geno, miss.val = c(0,NA))
+setupGeno <- function(geno, miss.val = c(0,NA),locus.label=NULL)
 {
 	# Title: Create an object of class model.matrix
 	loci <- NULL
@@ -27,18 +30,24 @@ setupGeno <- function(geno, miss.val = c(0,NA))
 		stop("Error: Number of columns in geno object is not an even number")
 	exp.num.loc <- ncol(geno)/2
 
+        if(is.null(locus.label)) locus.label <- paste("loc",1:exp.num.loc, sep="-")
+        
 	for(i in 1:exp.num.loc) {
-          locus.names <- paste("loc",1:exp.num.loc, sep="-")
+        
           tmp <- locus(geno[, (i * 2 - 1)], geno[, i * 2], chrom.label = NULL,
-                       locus.names[i], x.linked = FALSE, sex = NULL,
+                       locus.alias=locus.label[i], x.linked = FALSE, sex = NULL,
                        male.code = "M", female.code = "F", miss.val = miss.val)
           ualleles <- attr(tmp, "allele.labels")
           tmp <- as.matrix(tmp)
-          dimnames(tmp)[[2]][1] <- paste(locus.names[i], dimnames(tmp)[[2]][1], sep = ".")
-          dimnames(tmp)[[2]][2] <- paste(locus.names[i], dimnames(tmp)[[2]][2], sep = ".")
+          dimnames(tmp)[[2]][1] <- paste(locus.label[i], dimnames(tmp)[[2]][1], sep = ".")
+          dimnames(tmp)[[2]][2] <- paste(locus.label[i], dimnames(tmp)[[2]][2], sep = ".")
           loci <- cbind(loci, tmp)
           unique.alleles[[i]] <- ualleles
 	}
+        
+        # assign class model.matrix so it can be put into a data.frame
+        # and to hold the unique.alleles attributes
+        # negative is that subsetting does not work.
 	if(exists("is.R") && is.function(is.R) && is.R()) {
           class(loci) <- "model.matrix"
 	}

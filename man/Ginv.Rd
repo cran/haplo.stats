@@ -8,12 +8,15 @@ Singular value decomposition (svd) is used to compute a
 generalized inverse of input matrix.
 }
 \usage{
-Ginv(x)
+Ginv(x, eps=1e-6)
 }
 \arguments{
 
 \item{x}{
 A matrix.
+}
+\item{eps}{
+minimum cutoff for singular values in svd of x
 }
 }
 \value{
@@ -30,11 +33,12 @@ Rank of matrix x.
 
 }
 \details{
-The svd function uses the LAPACK library standard to compute the 
+The svd function uses the LAPACK standard library to compute the 
 singular values of the input matrix, and the rank of the matrix is 
 determined by the number of singular values  that  are  at  least  as
-large   as  max(svd)*eps,  where  eps  is  a  small  value
-(currently eps = .000001).  For S-PLUS, the Matrix library is required.
+large   as  max(svd)*eps,  where  eps  is  a  small  value.  
+For S-PLUS, the Matrix library is required (Ginv loads Matrix if not already
+done so).
 }
 \section{References}{
 Press  WH,  Teukolsky  SA,  Vetterling  WT,  Flannery  BP.
@@ -51,10 +55,11 @@ svd
 \examples{
 # for matrix x, extract the generalized inverse and 
 # rank of x as follows
-#   > save <- Ginv(x)
-#   > ginv.x <- save$Ginv
-#   > rank.x <- save$rank
+    x <- matrix(c(1,2,1,2,3,2),ncol=3)
+    save <- Ginv(x)
+    ginv.x <- save$Ginv
+    rank.x <- save$rank
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

@@ -1,8 +1,11 @@
-#$Author: sinnwell $
-#$Date: 2004/03/19 15:02:44 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.fitter.q,v 1.4 2004/03/19 15:02:44 sinnwell Exp $
+#$Author: schaid $
+#$Date: 2007/02/27 20:15:24 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.fitter.q,v 1.5 2007/02/27 20:15:24 schaid Exp $
 #$Locker:  $
 #$Log: haplo.em.fitter.q,v $
+#Revision 1.5  2007/02/27 20:15:24  schaid
+#control max.haps.limit with checkIntMax (see haplo.em and haplo_em_pin)
+#
 #Revision 1.4  2004/03/19 15:02:44  sinnwell
 #keep PACKAGE in all .C calls, required for R, '...' for Splus
 #
@@ -45,23 +48,23 @@
 # fax:      507-284-9542
 # email: schaid@mayo.edu
 # 
-haplo.em.fitter <- function(
-		       n.loci,
-      		       n.subject,
-                       weight,
-     		       geno.vec,
-                       n.alleles,
-                       max.haps,
-		       max.iter,
-		       loci.insert.order,		      
-		       min.posterior,
-		       tol,
-		       insert.batch.size,
-                       random.start,            
-                       iseed1,          
-                       iseed2,
-                       iseed3,
-                       verbose){
+haplo.em.fitter  <- function(
+                                 n.loci,
+                                 n.subject,
+                                 weight,
+                                 geno.vec,
+                                 n.alleles,
+                                 max.haps,
+                                 max.iter,
+                                 loci.insert.order,		      
+                                 min.posterior,
+                                 tol,
+                                 insert.batch.size,
+                                 random.start,            
+                                 iseed1,          
+                                 iseed2,
+                                 iseed3,
+                                 verbose){
 
 converge <- 0
 min.prior <- 0.0

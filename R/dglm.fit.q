@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2003/12/24 17:36:50 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/dglm.fit.q,v 1.3 2003/12/24 17:36:50 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/dglm.fit.q,v 1.3 2003/12/24 17:36:50 sinnwell Exp $
 #$Locker:  $
 #$Log: dglm.fit.q,v $
 #Revision 1.3  2003/12/24 17:36:50  sinnwell

@@ -2,7 +2,7 @@
 #
 #$Date: 2003/12/08 19:49:00 $
 #
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/locus.q,v 1.6 2003/12/08 19:49:00 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/locus.q,v 1.6 2003/12/08 19:49:00 sinnwell Exp $
 #
 #$Locker:  $
 #

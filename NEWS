@@ -1,12 +1,101 @@
 =================================================================
 #                    HAPLO STATS News File
 #                     
-#        This file documents software changes up to version 1.2.0
+#        This file documents software changes up to version 1.3.0
 #
 #        format is as such
 #        ---------------------
 #        function.name:  title for issue
 #        explanation of issue, status, and recommendations 
+
+=========================================================
+#### changes made between release 1.2.5 and 1.3.0  #####
+=========================================================
+
+--------------------------
+seqhap: sequential haplotype selection in a set of loci
+For choosing loci for haplotype associations, as 
+described in Yu and Schaid, 2007.  The method performs three tests 
+for association of a binary trait over a set of bi-allelic loci. 
+When evaluating each locus, loci close to it are added in a sequential
+manner based on the Mantel-Haenszel test. 
+
+--------------------------
+geno1to2: convert geno from 1- to 2-column
+convert 1-column minor-allele-count matrix to two-column 
+allele codes
+
+---------------------
+plot.haplo.score.slide: handle near-zero pvalues
+For asymptotic pvalues near zero, set to epsilon.
+For simulated, set to 0.5 divided by the number of simulations performed
+
+-----------------------
+haplo.design: create design matrix for haplotypes
+In response to many requests made for getting columns for haplotype
+effects to use in glm, survival, or other regression models, we
+created a function to set up this kind of design matrix.  There are
+issues surrounding the use of these effect columns, as outlined in the
+user manual.  
+
+----------------------
+Ginv: svd problems continue
+The Matrix library svd function has changed for Splus 8.0.1.
+Therefore, revert back to the default svd function in getting the
+generalized inverse.
+
+
+=========================================================
+#### changes made between release 1.2.0 and 1.2.5  #####
+=========================================================
+
+-----------------------------------
+haplo.glm: Iterative steps efficiency
+In consecutive steps of the IRWLS steps in haplo.glm, the starting
+values for re-fitting the glm model were not updated to be the most
+recently updated values.  This now saves about 20% of run time in
+haplo.glm.
+
+-----------------------------------
+haplo.score: haplo.effect allow additive, dominant, recessive 
+A new option to make haplo.score more flexible.  Previously the scores
+for haplotypes were computed assuming an additive effect for all
+haplotypes.  A new parameter, haplo.effect, is in place to allow
+either additive, dominant, or recessive effects.  
+
+-----------------------------------
+haplo.score:  min.count parameter
+The cut-off for selecting haplotypes to score is either by a minimum
+frequency, skip.haplo, or a new option, min.count.  The min.count is
+based on the same idea as that used in haplo.glm, where the minimum 
+expected count of haplotypes in the population is enough such that 
+accurate estimates of parameters and standard errors are computed.  The
+min.count became needed when haplo.effect was added because under
+the dominant or recessive models, the number of persons actually
+having a haplotype effect could be fewer than the expected count
+over the population (i.e., haplotype pair h1/h2 is coded as 0 for
+both under recessive model, and h1/h1 is coded as 1 under dominant).  
+
+---------------------------------------
+haplo.em:  improved reliability of C routines
+Previously problems had been observed with running haplo.em and
+haplo.glm on linux 64-bit machines, because of issues with the storage
+of integers in R.  In R, all integers are stored as int, which are
+stored differently on 64-bit and 32-bit machines.  We get around this
+problem by using all int types for integers, which are only used for
+indices of other data structures.  We find out the max value for integers
+on the system, and if the indices are going to exceed the max, issue a
+warning from C.  
+
+--------------------------------------
+haplo.glm and Ginv: improvement of standard error calculations
+Under some extreme circumstances, such as haplo.glm modeling
+haplotypes with rare frequencies, or a high amount of variance in the
+response, the standard error estimates were unreliable.
+The issue came out in the Ginv function in haplo.stats, which needed a
+smaller epsilon to decide on the rank of the information matrix. 
+
+
 =========================================================
 #### changes made between release 1.1.1 and 1.2.0  #####
 =========================================================

@@ -1,8 +1,18 @@
 #$Author: sinnwell $
-#$Date: 2005/01/25 23:04:06 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.glm.q,v 1.12 2005/01/25 23:04:06 sinnwell Exp $
+#$Date: 2007/02/01 20:25:29 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.q,v 1.15 2007/02/01 20:25:29 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.q,v $
+#Revision 1.15  2007/02/01 20:25:29  sinnwell
+#starting values for eta taken out of fit.null and updated correctly
+#at each step of while loop
+#
+#Revision 1.14  2006/10/25 15:06:17  sinnwell
+#rm Matrix library dependency, only done in Ginv.q
+#
+#Revision 1.13  2006/01/27 16:30:19  sinnwell
+#depends on Matrix library
+#
 #Revision 1.12  2005/01/25 23:04:06  sinnwell
 #use as.list(args(haplo.glm)) instead of formals when na.action not given
 #formals is for R only
@@ -58,9 +68,10 @@ haplo.glm     <- function(formula = formula(data),
                           x = FALSE,
                           y = TRUE,
                           contrasts = NULL,
-                          ...){
-  call <- match.call()
+                          ...) {
   
+  call <- match.call()
+
   m <- match.call(expand.dots = FALSE)
 
   if(is.null(m$na.action)) m$na.action=as.list(args(haplo.glm))$na.action
@@ -242,19 +253,18 @@ haplo.glm     <- function(formula = formula(data),
    
   # Unlike the generic glm, we compute the Null model (Intercept-only) 
   # here,  instead of within the EM loop (to avoid recomputing the null
-  # within each loop iteration). 
-
- 
+  # within each loop iteration).
 
   if(exists("is.R") && is.function(is.R) && is.R()) {
     
     # switch fitter for binomial because it gives unneeded warnings
     if(family$family=="binomial") glm.fitter=glm.fit.nowarn
-    
+
+    # get the null fit
     fit.null <- glm.fitter(x = X[, "(Intercept)", drop = FALSE],
                             y = Y, 
                             weights = w, 
-                            etastart = start, 
+                            etastart = NULL, 
                             offset = offset, 
                             family = family, 
                             control=glm.control(maxit = control$maxit, epsilon = control$epsilon))
@@ -262,7 +272,7 @@ haplo.glm     <- function(formula = formula(data),
      fit.null <- glm.fitter(x = X[, "(Intercept)", drop = FALSE],
                             y = Y, 
                             w = w,
-                            start = start,
+                            start = NULL,
                             offset = offset, 
                             family = family, 
                             maxit = control$maxit, 
@@ -294,15 +304,12 @@ haplo.glm     <- function(formula = formula(data),
   control.epislon.em <- min(c(control$epsilon,  0.000001))
   iter <- 0
 
-
   while(iter < control$maxit){
 
    iter <- iter + 1
 
    # M-step for regression beta's, using weights that depend on
    # earlier haplotype freqs and beta's
-
-
 
   if(exists("is.R") && is.function(is.R) && is.R()) {
      fit <- glm.fitter(x = X,
@@ -333,7 +340,7 @@ haplo.glm     <- function(formula = formula(data),
     dfit <- dglm.fit(fit)
     prior <- prior.coef * haplo.freq[g.dat$hap1] * haplo.freq[g.dat$hap2] * dfit
 
-    # For the following, the use of tapply was originally used, 
+    # For the following, tapply was originally used, 
     # as pr.pheno <- tapply(prior,subj.indx, sum), but this took too much
     # time within this EM loop, so a C function 'groupsum' is used instead.
 
@@ -376,6 +383,8 @@ haplo.glm     <- function(formula = formula(data),
       break
     }
 
+   # update starting values for eta, and update lnlike
+    start <- X%*%fit$coeff
     lnlike.old <- lnlike.new
 
   }

@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2005/03/28 22:26:31 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.scan.q,v 1.3 2005/03/28 22:26:31 sinnwell Exp $
+#$Date: 2006/10/25 14:51:32 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.scan.q,v 1.5 2006/10/25 14:51:32 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.scan.q,v $
+#Revision 1.5  2006/10/25 14:51:32  sinnwell
+#remove Matrix library load
+#
+#Revision 1.4  2006/01/27 16:30:10  sinnwell
+#dependency on Matrix library
+#
 #Revision 1.3  2005/03/28 22:26:31  sinnwell
 #change calls to haplo.scan.sim and haplo.scan.obs
 #
@@ -31,9 +37,8 @@ haplo.scan <- function(y, geno, width=4, miss.val=c(0,NA),
 # Perform simulations using permuted case/control status for evaluation of
 # significance of the max-stat for each locus, and also for a global-max-stat
 
-
 {
-
+  
   call <- match.call()
   
   # check dimensions of parameters

@@ -1,8 +1,11 @@
-#$Author: sinnwell $
-#$Date: 2004/03/19 15:02:14 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/louis.info.q,v 1.7 2004/03/19 15:02:14 sinnwell Exp $
+#$Author: schaid $
+#$Date: 2007/02/21 21:19:40 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/louis.info.q,v 1.8 2007/02/21 21:19:40 schaid Exp $
 #$Locker:  $
 #$Log: louis.info.q,v $
+#Revision 1.8  2007/02/21 21:19:40  schaid
+#fixed call of Ginv by passing a smaller value of eps (see Machine tol for eps) .
+#
 #Revision 1.7  2004/03/19 15:02:14  sinnwell
 #have PACKAGE in all .C calls, part of '...' for Splus
 #
@@ -130,21 +133,21 @@ louis.info <- function(fit){
            info22=as.double(info22),
            PACKAGE='haplo.stats')
 
-nh <- nhap-1
-info11 <- matrix(tmp$info11, ncol=ncov)
-info12 <- matrix(tmp$info12, ncol=nh)
-info22 <- matrix(tmp$info22, ncol=nh)
+ nh <- nhap-1
+ info11 <- matrix(tmp$info11, ncol=ncov)
+ info12 <- matrix(tmp$info12, ncol=nh)
+ info22 <- matrix(tmp$info22, ncol=nh)
 
-info <- rbind( cbind(info11,   info12),
-             cbind(t(info12), info22) )
+ info <- rbind( cbind(info11,   info12),
+               cbind(t(info12), info22) )
 
-v <-  Ginv(info)
-var.mat <-v$Ginv
-rank   <- v$rank
+ v <-  Ginv(info, eps=sqrt(.Machine$double.eps))
+ var.mat <-v$Ginv
+ rank   <- v$rank
 
-if(length(hap.elim)==0) hap.elim <- NA
+ if(length(hap.elim)==0) hap.elim <- NA
 
-return(list(info=info, var.mat=var.mat, rank = rank, haplo.base = hap.base +1, haplo.elim=hap.elim))
+ return(list(info=info, var.mat=var.mat, rank = rank, haplo.base = hap.base +1, haplo.elim=hap.elim))
 
 
 }

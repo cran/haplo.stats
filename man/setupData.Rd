@@ -41,4 +41,4 @@ The name of a dataset provided within the Splus/R library.
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

@@ -1,14 +1,30 @@
 #$Author: sinnwell $
 #
-#$Date: 2005/09/19 14:36:11 $
+#$Date: 2006/10/25 14:39:02 $
 #
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/Ginv.q,v 1.11 2005/09/19 14:36:11 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/Ginv.R,v 1.1 2006/10/25 14:39:02 sinnwell Exp $
 #
-#$Id: Ginv.q,v 1.11 2005/09/19 14:36:11 sinnwell Exp $
+#$Id: Ginv.R,v 1.1 2006/10/25 14:39:02 sinnwell Exp $
 #
 #$Locker:  $
 #
-#$Log: Ginv.q,v $
+#$Log: Ginv.R,v $
+#Revision 1.1  2006/10/25 14:39:02  sinnwell
+#Initial revision
+#
+#Revision 1.15  2006/04/25 21:24:08  sinnwell
+#pass epsilon as parameter, default the same
+#
+#Revision 1.14  2006/03/07 21:38:04  sinnwell
+#Matrix library is attached in other functions that call Ginv a lot
+#don't leave attached at the end of Ginv
+#
+#Revision 1.13  2006/01/23 21:22:40  sinnwell
+#leave Matrix attached if it wasn't already (in SPLUS)
+#
+#Revision 1.12  2006/01/09 16:38:10  sinnwell
+#check for x==0, return zero to agree with S:ginverse
+#
 #Revision 1.11  2005/09/19 14:36:11  sinnwell
 #explain change to svd.Matrix
 #
@@ -74,52 +90,45 @@
 # email: schaid@mayo.edu
 #
 
-Ginv<-function(x) {
+Ginv<-function(x, eps=1e-6) {
+  
+  # For S-PLUS, We use Matrix class svd method because
+  # haplo.scan (of HaploStats had num. error with svd.default,
+  # which uses LINPACK svd.Matrix uses LAPACK svd method.
+  # In R, default is LAPACK in svd(), no action needed
 
-  # We use Matrix class svd method because haplo.scan(HaploStats had num.
-  # error 120 with svd.default, which uses LINPACK
-  # svd.Matrix uses LAPACK svd method, the new standard
-  # in R, default is LAPACK svd.
+  # In Oct 2006, R's package check gives an error for having
+  # library(Matrix) in our code but not having it
+  # 'require'-ed or 'suggest'-ed in DESCRIPTION.haplo.stats
 
-  # Check if Matrix is attached, if not, attach and detach at the end.
-  # if attached, use svd.Matrix
-  needMatrix <- TRUE
+  # Our solution is to keep two separate files, Ginv.q and Ginv.R
+  # both keeping documentation on what the other method required
+
+  # if any NA's cannot invert
+  if(any(is.na(x))) stop("NA(s) encountered in matrix, cannot invert.")
+
+  
+  # In SPLUS, Check if Matrix library is attached, if not, attach here
+  # and detach at the end.  We use svd.Matrix
+  # needMatrix <- TRUE
+
   if(length(x)>1) {
-    if(exists("is.R") && is.function(is.R) && is.R()) {
+    #if(exists("is.R") && is.function(is.R) && is.R()) {
       savesvd <- svd(x, LINPACK=FALSE)
       U.svd<-savesvd$u
       V.svd<-savesvd$v
       d.svd<-savesvd$d
       
-    } else{
-      needMatrix <- TRUE
-      needMatrix <- is.na(match("Matrix", search()))
-      if(needMatrix)
-        library(Matrix)
+      maxd <- max(d.svd)
+      w <- ifelse((d.svd/maxd) < eps, rep(0,length(d.svd)), 1/d.svd)
+      rank<-sum(d.svd/maxd >= eps)
       
-      savesvd<-svd.Matrix(x)
-      U.svd<-savesvd$vectors$left
-      V.svd<-savesvd$vectors$right
-      d.svd<-savesvd$values
+      Ginv <- V.svd %*% diag(w) %*% t(U.svd)
+
+    } else {  # x is 1 by 1
+      Ginv <- ifelse(x < eps, 0, 1/x)
+      rank <- ifelse(x < eps, 0, 1)
     }
-
-    eps<- 1e-6
-    maxd<-max(d.svd)
-    w<-ifelse((d.svd/maxd) < eps, rep(0,length(d.svd)), 1/d.svd)
-    df<-sum(d.svd/maxd >= eps)
-
-    Ginv <- V.svd %*% diag(w) %*% t(U.svd)
-
-    if(!(exists("is.R") && is.function(is.R) && is.R())) {
-      Ginv <- matrix(as.vector(Ginv),ncol=ncol(Ginv))
-      if(needMatrix)
-        detach("Matrix")
-    }
-  }else {
-    # x is 1 by 1
-    Ginv <- 1/x
-    df=1
-  }
   
-  list(Ginv=Ginv,rank=df)
+  list(Ginv=Ginv,rank=rank)
 }

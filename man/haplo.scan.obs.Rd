@@ -54,4 +54,4 @@ score test statistics on the simulated data sets in haplo.scan.sim
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

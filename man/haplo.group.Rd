@@ -9,7 +9,8 @@ the entire dataset and separately for each subset defined by the
 levels of a group variable.  Only autosomal loci are considered.
 }
 \usage{
-haplo.group(group, geno, locus.label=NA, miss.val=0, 
+haplo.group(group, geno, locus.label=NA, 
+            miss.val=0, weight=NULL, 
             control=haplo.em.control())
 }
 \arguments{
@@ -28,6 +29,11 @@ Vector of labels for loci, of length K (see definition of geno matrix).
 }
 \item{miss.val }{
 Vector of codes for allele missing values.
+}
+\item{weight}{
+weights for observations (rows of geno matrix). One reason to use is
+to adjust for disproportionate sample of sub-groups.  Weights only
+used in the frequency calculation for the pooled subject.
 }
 \item{control}{
 list of control parameters for haplo.em (see haplo.em.control).
@@ -93,4 +99,4 @@ print.haplo.group, haplo.em
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

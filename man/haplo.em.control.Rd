@@ -14,7 +14,7 @@ set as parameters passed to haplo.em.control.
 haplo.em.control(loci.insert.order=NULL, insert.batch.size = 6,
                              min.posterior = 1e-07, tol = 1e-05,
                              max.iter=5000, random.start=0, n.try = 10,
-                             iseed=NULL, max.haps.limit = 2e6, verbose=0)
+                             iseed=NULL, verbose=0)
 }
 \arguments{
 
@@ -57,11 +57,8 @@ initial starting values for the posterior probabilities.
 An integer or a saved copy of .Random.seed. This allows simulations to
 be reproduced by using the same initial seed.
 }
-\item{max.haps.limit }{
-The maximum number of haplotypes for which memory is allocated. 
-}
 \item{verbose}{
-Logical, if [T]rue, print procedural messages to the screen.  If [F]alse, 
+Logical, if TRUE, print procedural messages to the screen.  If FALSE, 
 do not print any messages. 
 }
 }
@@ -92,4 +89,4 @@ the memory (max.haps.limit).
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.
