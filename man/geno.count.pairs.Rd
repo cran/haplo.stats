@@ -33,13 +33,13 @@ include 0, 1, or 2 missing alleles at any locus.
 }
 \details{
 When a subject has no missing alleles, and has h heterozygous sites, 
-there are 2 raised (h-1) haplotype pairs that are possible (raised=power).
+there are 2**(h-1) haplotype pairs that are possible ('**'=power).
 For loci with missing alleles, we consider all possible pairs of alleles 
 at those loci.  Suppose that there are M loci with missing alleles, and 
 let the vector V have values 1 or 0 acccording to whether these loci 
 are imputed to be heterozygous or homozygous, respectively. The length
 of V is M.  The total number of  possible states of V is 
-2-raised-M. Suppose that  the vector W, also of length M, provides a count
+2**M. Suppose that  the vector W, also of length M, provides a count
 of the number of possible heterozygous/homozygous states at the loci
 with missing data. For example, if one allele  is missing, and there
 are K possible alleles at that locus, then there can be one homozygous

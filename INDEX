@@ -1,57 +1,67 @@
 Ginv                    Compute Generalized Inverse of Input Matrix 
 allele.recode           Recode allele values to integer ranks 
-dglm.fit		Given a glm Model Fit, Compute the Probability
-			Density P(y|Xb)
+dglm.fit                Density function for GLM fit 
+geno.count.pairs        Counts of Total Haplotype Pairs Produced by
+                        Genotypes 
 geno.recode             Recode Genotypes 
-geno.count.pairs        Counts of Total Haplotype Pairs 
-glm.fit.nowarn		Version of glm.fit for haplo.glm in R with binomial trait
-haplo.em                EM Computation of Haplotype Probabilities
-haplo.em.control        Control Parameters for haplo.em
-haplo.em.fitter		Manage C Routine for Haplotype Frequency Estimation
-haplo.enum              Enumerate all haplotype pairs consistent with 
-			a set of un-phased multilocus markers
-haplo.glm		Perform glm regression of a trait on haplotype effects
-haplo.glm.control	Control parameters for haplo.glm
-haplo.group		Haplotype Frequencies by Grouping Variable
+glm.fit.nowarn          Modified from glm.fit function to not warn
+                        users for binomial non-integer weights. 
+haplo.em                EM Computation of Haplotype Probabilities, with
+                        Progressive Insertion of Loci 
+haplo.em.control        Create the Control Parameters for the EM
+                        Computation of Haplotype Probabilities, with
+                        Progressive Insertion of Loci 
+haplo.em.fitter         Compute engine for haplotype EM algorithm 
+haplo.enum              Enumerate all possible pairs of haplotypes that
+                        are consistent with a set of un-phased
+                        multilocus markers 
+haplo.glm               GLM Regression of Trait on Ambiguous Haplotypes 
+haplo.glm.control       Create list of control parameters for haplo.glm 
+haplo.group             Frequencies for Haplotypes by Grouping Variable 
 haplo.hash              Integer Rank Codes for Haplotypes 
-haplo.model.frame	Set up a glm model.frame for Ambiguous Haplotypes
+haplo.model.frame       Sets up a model frame for haplo.glm 
 haplo.score             Score Statistics for Association of Traits with
                         Haplotypes 
 haplo.score.glm         Compute haplotype score statistics for GLM 
-haplo.score.merge	Merge haplo.score and haplo.group Objects 
+haplo.score.merge       Merge haplo.score And haplo.group Objects 
 haplo.score.podds       Compute Haplotype Score Statistics for Ordinal
                         Traits with Proportional Odds Model 
-haplo.score.slide       Sliding Window of haplo.score Applied to Sub-haplotypes 
-hla.demo                HLA Loci and Serologic Response to
-                        Measles Vaccination.
+haplo.score.slide       Score Statistics for Association of Traits with
+                        Haplotypes 
+hla.demo                HLA Loci and Serologic Response to Measles
+                        Vaccination. 
 locator.haplo           Find Location from Mouse Clicks and Print
                         Haplotypes on Plot 
-loci			Pairs of Columns are the Marker Alleles for
-			loci in a model.matrix
-locus			A Pair of Columns as a Single Locus, as a model.matrix
-louis.info		Compute Louis' Information Matrix for glm
-			Regression Coefficients
-mf.gindx		Get the Genotype Matrix from a model.frame
-na.geno.keep.q		Keep Rows of Genotype Matrix if Missing Alleles, but Without Missing
-			Values for Response or Other Covaraites
-plot.haplo.score        Plot Haplotype Frequencies Versus Haplotype
+loci                    Create a group of locus objects from a genotype
+                        matrix, assign to 'model.matrix' class. 
+locus                   Creates an object of class "locus" 
+louis.info              Louis Information for haplo.glm 
+mf.gindx                Model Frame Genotype Index to Account for
+                        Missing Data in haplo.glm 
+na.geno.keep            Find non-missing rows in the genotype matrix of
+                        the model.frame 
+plot.haplo.score        Plot Haplotype Frequencies versus Haplotype
                         Score Statistics 
-plot.haplo.score.slide  Plot -log10(p-value) of haplo.score for Sub-haplotypes
-printBanner             Print a Nice Banner
-print.haplo.em          Print Haplotype Frequency EM Results
-print.haplo.glm         Print a haplo.glm Object
-print.haplo.group	Print a haplo.group Object
-print.haplo.score       Print a haplo.score Object 
-print.haplo.score.merge Print a haplo.score.merge Object
-print.haplo.score.slide Print a haplo.score.slide Object
-residScaledGlmFit	Given a glm Model Fit, Compute Scaled Residual
-score.sim.control       Control Parameters for haplo.score Simulations
-setupData		Load a data set into the working directory.
-			Does same as data() in R.
-setupGeno		Prepare a genotype matrix to be used in
-			haplo.glm.  Handles class, and allele type issues.
-summaryGeno		Summarize Full Haplotype Enumeration on Genotype Matrix 
-summary.haplo.em        Print Extended Results from Haplotype
-			Frequency EM Computation
-varfunc.glm.fit		Given a glm Model Fit, Compute the Variance
-			Function, b''(theta),  Where theta = X'B
+plot.haplo.score.slide
+                        Plot a haplo.score.slide Object 
+print.haplo.em          Print contents of a haplo.em object 
+print.haplo.glm         Print a contents of a haplo.glm object 
+print.haplo.group       Print a haplo.group object 
+print.haplo.score       Print a haplo.score object 
+print.haplo.score.merge
+                        Print a haplo.score.merge object 
+print.haplo.score.slide
+                        Print the contents of a haplo.score.slide
+                        object 
+printBanner             Print a nice banner 
+residScaledGlmFit       Scaled Residuals for GLM fit 
+score.sim.control       Create the list of control parameters for
+                        simulations in haplo.score 
+setupData               Set up an example dataset provided within the
+                        library. 
+setupGeno               Create a group of locus objects from a genotype
+                        matrix, assign to 'model.matrix' class. 
+summary.haplo.em        Summarize contents of a haplo.em object 
+summaryGeno             Summarize Full Haplotype Enumeration on
+                        Genotype Matrix 
+varfunc.glm.fit         Variance Function for GLM 

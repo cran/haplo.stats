@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/02/26 23:07:36 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.merge.q,v 1.8 2004/02/26 23:07:36 sinnwell Exp $
+#$Date: 2004/04/07 14:08:59 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.score.merge.q,v 1.9 2004/04/07 14:08:59 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.score.merge.q,v $
+#Revision 1.9  2004/04/07 14:08:59  sinnwell
+#use nlines for quick print
+#
 #Revision 1.8  2004/02/26 23:07:36  sinnwell
 #print.banner to printBanner
 #
@@ -58,7 +61,7 @@
 # email: schaid@mayo.edu
 # 
 
-print.haplo.score.merge <- function(x, order.by="score", all.haps=FALSE, digits=max(options()$digits-2, 5), ...)
+print.haplo.score.merge <- function(x, order.by="score", all.haps=FALSE, digits=max(options()$digits-2, 5), nlines=NULL, ...)
 {
 
    ### Print haplo.score.merge object to screen 
@@ -112,6 +115,8 @@ print.haplo.score.merge <- function(x, order.by="score", all.haps=FALSE, digits=
     printBanner("Haplotype Scores, p-values, and Frequencies By Group", banner.width=80, char.perline=60,
                  border = "-")
     df.print <- data.frame(df.print[ord,], row.names=NULL)
-    print(df.print, digits=digits, ...)
+    if(is.null(nlines)) 
+      print(df.print, digits=digits, ...)
+    else print(df.print[1:nlines,], digits=digits, ...)
     invisible()
   }

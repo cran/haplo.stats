@@ -1,6 +1,6 @@
 /* $Author: schaid $ */
-/* $Date: 2004/02/16 21:04:09 $ */
-/* $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo_em_pin.c,v 1.13 2004/02/16 21:04:09 schaid Exp $ */
+/* $Date: 2004/05/26 21:06:01 $ */
+/* $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo_em_pin.c,v 1.15 2004/05/26 21:06:01 schaid Exp $ */
 /* $Locker:  $ */
 /*
  * $Log:
@@ -648,7 +648,10 @@ static long hap_enum(HAP ***hap_list_ptr, double **prior_ptr, long *max_haps, lo
     /* fill in missing allele values */
 
     n_al = n_alleles[insert_loc];
-    n_miss = (a1==0) + (a2==0);
+
+    n_miss = 0;
+    if(a1==0) n_miss ++;
+    if(a2==0) n_miss ++;
  
   switch(n_miss){
  

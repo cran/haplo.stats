@@ -8,12 +8,15 @@ Print a data frame with haplotypes and their frequencies.  Also print
 likelihood information.
 }
 \usage{
-print.haplo.em(x, ...)
+print.haplo.em(x, nlines=NULL, ...)
 }
 \arguments{
 
 \item{x}{
 A haplo.em object
+}
+\item{nlines}{
+To shorten output, print the first 1:nlines rows of the large data frame.  
 }
 \item{\dots }{
 optional arguments for print
@@ -32,7 +35,7 @@ Nothing is returned
 
 }
 \seealso{
-haplo.em
+\code{\link{haplo.em}}
 }
 \examples{
 

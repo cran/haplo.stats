@@ -26,12 +26,15 @@ Additionally, since simulations are stopped as soon as this criteria
 is met, p-values may be biased high.  
 }
 \item{min.sim }{
-The minimum number of simulations to run.
+The minimum number of simulations to run.  To run exactly min.sim
+simulations, set max.sim = min.sim.  Also, if run-time is an issue, a
+lower minimum (e.g. 500) may be useful, especially when doing
+simulations in haplo.score.slide.
 }
 \item{max.sim }{
-The upper limit of simulations allowed.  When the number of simulations reaches
-max.sim, p-values are approximated based on simulation results at that
-time.
+The upper limit of simulations allowed.  When the number of
+simulations reaches max.sim, p-values are approximated based on
+simulation results at that time.
 }
 \item{verbose}{
 Logical, if (T)rue, print updates from every simulation to the
@@ -45,8 +48,7 @@ A list of the control parameters:
 As described above
 }
 \item{min.sim}{
-As described above.  If run-time is an issue, a
-lower minimum (e.g. 500) may be useful.
+As described above.
 }
 \item{max.sim}{
 As described above

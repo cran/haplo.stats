@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/03/17 21:11:12 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.glm.q,v 1.6 2004/03/17 21:11:12 sinnwell Exp $
+#$Date: 2004/03/19 15:01:48 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.glm.q,v 1.7 2004/03/19 15:01:48 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.q,v $
+#Revision 1.7  2004/03/19 15:01:48  sinnwell
+#consider .C(PACKAGE= as part of '...'
+#
 #Revision 1.6  2004/03/17 21:11:12  sinnwell
 #separate calls of .C("groupsum" for R and Splus
 #
@@ -311,23 +314,14 @@ haplo.glm     <- function(formula = formula(data),
     # as pr.pheno <- tapply(prior,subj.indx, sum), but this took too much
     # time within this EM loop, so a C function 'groupsum' is used instead.
 
-    tmp.sum <- if(exists("is.R") && is.function(is.R) && is.R()) {
-                 .C("groupsum",
-                    x=as.double(prior),
-                    indx=as.integer(subj.indx),
-                    n=as.integer(len.subj.indx),
-                    grouptot= as.double(prior.tot),
-                    ngroup=as.integer(n.subj),
-                    PACKAGE="haplo.stats")
-               } else {
-                 .C("groupsum",
-                    x=as.double(prior),
-                    indx=as.integer(subj.indx),
-                    n=as.integer(len.subj.indx),
-                    grouptot= as.double(prior.tot),
-                    ngroup=as.integer(n.subj))
-               }
-                 
+    tmp.sum <- .C("groupsum",
+                  x=as.double(prior),
+                  indx=as.integer(subj.indx),
+                  n=as.integer(len.subj.indx),
+                  grouptot= as.double(prior.tot),
+                  ngroup=as.integer(n.subj),
+                  PACKAGE="haplo.stats")
+
     pr.pheno <- tmp.sum$grouptot
     den <- rep(pr.pheno,nreps)
     post <- prior/den
@@ -342,23 +336,14 @@ haplo.glm     <- function(formula = formula(data),
 
     # M-step for  haplotype frequencies, based on expected counts
 
-   tmp.sum <- if(exists("is.R") && is.function(is.R) && is.R()) {
-                .C("groupsum",
-                   x=as.double(c(post*wt.expanded, post*wt.expanded)),
-                   indx=as.integer(haplo.group),
-                   n=as.integer(len.haplo.group),
-                   grouptot= as.double(post.tot),
-                   ngroup=as.integer(n.haplo.group),
-                   PACKAGE="haplo.stats")
-              } else {
-                .C("groupsum",
-                   x=as.double(c(post*wt.expanded, post*wt.expanded)),
-                   indx=as.integer(haplo.group),
-                   n=as.integer(len.haplo.group),
-                   grouptot= as.double(post.tot),
-                   ngroup=as.integer(n.haplo.group) )
-              }
-   
+   tmp.sum <- .C("groupsum",
+                 x=as.double(c(post*wt.expanded, post*wt.expanded)),
+                 indx=as.integer(haplo.group),
+                 n=as.integer(len.haplo.group),
+                 grouptot= as.double(post.tot),
+                 ngroup=as.integer(n.haplo.group),
+                 PACKAGE="haplo.stats")
+
    e.hap.count <- tmp.sum$grouptot
    haplo.freq <- e.hap.count/n.hap
 

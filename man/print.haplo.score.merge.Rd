@@ -8,7 +8,7 @@ Method function to print a class of type haplo.score.merge
 }
 \usage{
 print.haplo.score.merge(x, order.by="score", all.haps=FALSE, 
-                        digits=max(options()$digits-2, 5), ...)
+                digits=max(options()$digits-2, 5), nlines=NULL, ...)
 }
 \arguments{
 \item{x}{
@@ -24,6 +24,10 @@ default, only prints the haplotypes kept in haplo.score for modelling.
 }
 \item{digits}{
 Set the number of significant digits to print for the numeric output.
+}
+\item{nlines}{
+Print the first 'nlines' rows of the large data frame for a short
+view of the results.
 }
 \item{\dots }{
 Dynamic parameter for the values of additional parameters for 

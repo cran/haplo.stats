@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/02/26 23:04:28 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.em.q,v 1.3 2004/02/26 23:04:28 sinnwell Exp $
+#$Date: 2004/04/06 20:39:39 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.em.q,v 1.4 2004/04/06 20:39:39 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.em.q,v $
+#Revision 1.4  2004/04/06 20:39:39  sinnwell
+#use nlines to limit printouts in vignettes
+#
 #Revision 1.3  2004/02/26 23:04:28  sinnwell
 #print.banner to printBanner
 #
@@ -42,12 +45,13 @@
 # fax:      507-284-9542
 # email: schaid@mayo.edu
 # 
-print.haplo.em <- function(x,...){
+print.haplo.em <- function(x, nlines=NULL, ...){
 
   printBanner("Haplotypes")
   df <- data.frame(x$haplotype,round(x$hap.prob,5))
   names(df) <- c(x$locus.label, "hap.freq")
-  print(df)
+  if(is.null(nlines)) print(df)
+  else print(df[1:nlines,])
   invisible()
 
   if(x$converge==0)
@@ -64,7 +68,7 @@ print.haplo.em <- function(x,...){
   if(n.rem > 0) {
      cat("\nRow number of subjects removed because max number of pairs of haplotypes > enum.limit\n")
      tbl <- data.frame(row.num=x$rows.rem, max.pairs=x$max.pairs[x$rows.rem])
-     print(tbl)
+    
    }
 
   invisible()

@@ -7,7 +7,7 @@
 Method function to print a class of type haplo.group
 }
 \usage{
-print.haplo.group(x, digits=max(options()$digits-2, 5), ...)
+print.haplo.group(x, digits=max(options()$digits-2, 5), nlines=NULL, ...)
 }
 \arguments{
 \item{x}{
@@ -15,6 +15,9 @@ The object returned from haplo.group (which has old class haplo.group).
 }
 \item{digits}{
 Set the number of significant digits to print for haplotype probabilities.
+}
+\item{nlines}{
+For shorter output, print first 1:nlines rows of the large data frame
 }
 \item{\dots}{
 Optional arguments for the print method
@@ -29,7 +32,7 @@ Nothing is returned.
 \details{
 This is a print method function used to print information from the
 haplo.group class, with haplotype-specific information given in a
-table. Because haplo.score is a class, the generic print function 
+table. Because haplo.group is a class, the generic print function 
 can be used, which in turn calls this print.haplo.group function.
 }
 \section{References}{

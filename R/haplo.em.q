@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2004/03/01 20:52:37 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.q,v 1.11 2004/03/01 20:52:37 sinnwell Exp $
+#$Date: 2004/07/09 14:36:22 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.q,v 1.13 2004/07/09 14:36:22 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.em.q,v $
+#Revision 1.13  2004/07/09 14:36:22  sinnwell
+#warning for n.loci < 2
+#
+#Revision 1.12  2004/03/18 23:31:28  sinnwell
+#keep haplotype matrix from data.frame, char vecs from factors
+#
 #Revision 1.11  2004/03/01 20:52:37  sinnwell
 #change T to TRUE for matrix()
 #
@@ -56,6 +62,8 @@ haplo.em  <- function(geno, locus.label=NA, miss.val=c(0,NA), weight=NULL,
 n.loci <- ncol(geno)/2
 n.subject <- nrow(geno)
 subj.id <- 1:n.subject
+
+if(n.loci<2) stop("Must have at least 2 loci for haplotype estimation!")
 
 # set up weight
 if(any(is.null(weight))){
@@ -217,13 +225,13 @@ tmp2 <- fit$tmp2
 u.hap <- matrix(tmp2$u.hap,nrow=tmp2$n.u.hap,byrow=TRUE)
 
 # code alleles for haplotpes with original labels
-
-haplotype <- NULL
-for(j in 1:n.loci){
-  haplotype <- cbind(haplotype, allele.labels[[j]][u.hap[,j]])
+# use I() to keep char vectors to factors in making a data.frame
+haplotype <- data.frame(I(allele.labels[[1]][u.hap[,1]]))
+for(j in 2:n.loci){
+  haplotype <- cbind(haplotype, I(allele.labels[[j]][u.hap[,j]]))
 }
 
-haplotype <- data.frame(haplotype)
+# haplotype <- data.frame(haplotype)
 names(haplotype) <- locus.label
 
 

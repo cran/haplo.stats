@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/02/19 23:10:16 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/README.haplo.stats,v 1.8 2004/02/19 23:10:16 sinnwell Exp $
+#$Date: 2004/03/25 20:40:16 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/README.haplo.stats,v 1.9 2004/03/25 20:40:16 sinnwell Exp $
 #$Locker:  $
 #$Log: README.haplo.stats,v $
+#Revision 1.9  2004/03/25 20:40:16  sinnwell
+#update to version 1.1.1
+#
 #Revision 1.8  2004/02/19 23:10:16  sinnwell
 #add comments for UserManTest.R working as demo
 #
@@ -67,7 +70,7 @@ haplo.score
 
 =================================================================
 
-Installation procedures for haplo.stats (version 1.1.0)
+Installation procedures for haplo.stats (version 1.1.1)
 
 We develop the haplo.stats library in Splus, and we have
 translated haplo.stats to be a package in R. Intallation procedures
@@ -81,11 +84,11 @@ S-PLUS Installation
 
 The haplo.stats Splus functions are written for Splus version 6.0. 
 
-To install the software for local use in Splus, move haplo.stats_1.1.0_S.tar.gz to
+To install the software for local use in Splus, move haplo.stats_1.1.1_S.tar.gz to
 your installation directory and follow the series of commands:
 
-1) gunzip haplo.stats_1.1.0_S.tar.gz
-2) tar -xvf haplo.stats_1.1.0_S.tar
+1) gunzip haplo.stats_1.1.1_S.tar.gz
+2) tar -xvf haplo.stats_1.1.1_S.tar
 3) cd haplo.stats
 4) cd src
 5) Splus CHAPTER -m
@@ -101,7 +104,7 @@ R Installation
 For local installation, execute the following command with the local
 "INSTALL LIBRARY DIR PATH" correctly specified.  
 
-R CMD INSTALL -l /INSTALL LIBRARY DIR PATH/ haplo.stats_1.1.0_R.tar.gz
+R CMD INSTALL -l /INSTALL LIBRARY DIR PATH/ haplo.stats_1.1.1_R.tar.gz
 
 Installation instructions for different use may be found on the R project 
 website (http://www.r-project.org).

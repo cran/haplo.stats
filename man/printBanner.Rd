@@ -29,7 +29,7 @@ type of character for the border
 
 }
 \details{
-
+This function prints a nice banner in both R and S-PLUS
 }
 \section{References}{
 

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/03/17 21:06:24 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.fitter.q,v 1.3 2004/03/17 21:06:24 sinnwell Exp $
+#$Date: 2004/03/19 15:02:44 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.fitter.q,v 1.4 2004/03/19 15:02:44 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.em.fitter.q,v $
+#Revision 1.4  2004/03/19 15:02:44  sinnwell
+#keep PACKAGE in all .C calls, required for R, '...' for Splus
+#
 #Revision 1.3  2004/03/17 21:06:24  sinnwell
 #separate calls for .C( for R and Splus
 #
@@ -68,87 +71,47 @@ n.u.hap <- 0
 n.hap.pairs <- 0
 
 on.exit( 
- { if(exists("is.R") && is.function(is.R) && is.R())
-     .C("haplo_free_memory", PACKAGE="haplo.stats") 
-   else .C("haplo_free_memory")
- }
-)
+        .C("haplo_free_memory", PACKAGE="haplo.stats") 
+        )
 
-tmp1 <- if(exists("is.R") && is.function(is.R) && is.R()) {
-           .C("haplo_em_pin",
-              n.loci=as.integer(n.loci),
-              n.subject=as.integer(n.subject),
-              weight=as.double(weight),
-              geno.vec=as.integer(geno.vec),
-              n.alleles = as.integer(n.alleles),
-              max.haps = as.integer(max.haps),
-              max.iter=as.integer(max.iter),
-              loci.insert.order=as.integer(loci.insert.order),
-              min.prior=as.double(min.prior),
-              min.posterior=as.double(min.posterior),
-              tol=as.double(tol),
-              insert.batch.size=as.integer(insert.batch.size),
-              converge=as.integer(converge),
-              lnlike=as.double(lnlike),
-              n.u.hap=as.integer(n.u.hap),
-              n.hap.pairs=as.integer(n.hap.pairs),
-              random.start=as.integer(random.start),            
-              iseed1=as.integer(iseed1),          
-              iseed2=as.integer(iseed2),
-              iseed3=as.integer(iseed3),
-              verbose=as.integer(verbose),
-              PACKAGE="haplo.stats")
-         } else {
-           .C("haplo_em_pin",
-              n.loci=as.integer(n.loci),
-              n.subject=as.integer(n.subject),
-              weight=as.double(weight),
-              geno.vec=as.integer(geno.vec),
-              n.alleles = as.integer(n.alleles),
-              max.haps = as.integer(max.haps),
-              max.iter=as.integer(max.iter),
-              loci.insert.order=as.integer(loci.insert.order),
-              min.prior=as.double(min.prior),
-              min.posterior=as.double(min.posterior),
-              tol=as.double(tol),
-              insert.batch.size=as.integer(insert.batch.size),
-              converge=as.integer(converge),
-              lnlike=as.double(lnlike),
-              n.u.hap=as.integer(n.u.hap),
-              n.hap.pairs=as.integer(n.hap.pairs),
-              random.start=as.integer(random.start),            
-              iseed1=as.integer(iseed1),          
-              iseed2=as.integer(iseed2),
-              iseed3=as.integer(iseed3),
-              verbose=as.integer(verbose))
-         }
+tmp1 <- .C("haplo_em_pin",
+           n.loci=as.integer(n.loci),
+           n.subject=as.integer(n.subject),
+           weight=as.double(weight),
+           geno.vec=as.integer(geno.vec),
+           n.alleles = as.integer(n.alleles),
+           max.haps = as.integer(max.haps),
+           max.iter=as.integer(max.iter),
+           loci.insert.order=as.integer(loci.insert.order),
+           min.prior=as.double(min.prior),
+           min.posterior=as.double(min.posterior),
+           tol=as.double(tol),
+           insert.batch.size=as.integer(insert.batch.size),
+           converge=as.integer(converge),
+           lnlike=as.double(lnlike),
+           n.u.hap=as.integer(n.u.hap),
+           n.hap.pairs=as.integer(n.hap.pairs),
+           random.start=as.integer(random.start),            
+           iseed1=as.integer(iseed1),          
+           iseed2=as.integer(iseed2),
+           iseed3=as.integer(iseed3),
+           verbose=as.integer(verbose),
+           PACKAGE="haplo.stats")
+         
 
-tmp2 <- if(exists("is.R") && is.function(is.R) && is.R()) {
-          .C("haplo_em_ret_info",
-             n.u.hap=as.integer(tmp1$n.u.hap),
-             n.loci=as.integer(tmp1$n.loci),
-             n.pairs=as.integer(tmp1$n.hap.pairs),
-             hap.prob=as.double(numeric(tmp1$n.u.hap)),
-             u.hap=as.integer(numeric(tmp1$n.u.hap*tmp1$n.loci)),
-             u.hap.code=as.integer(numeric(tmp1$n.u.hap)),
-             indx.subj=as.integer(numeric(tmp1$n.hap.pairs)),
-             post=as.double(numeric(tmp1$n.hap.pairs)),
-             hap1code=as.integer(numeric(tmp1$n.hap.pairs)),
-             hap2code=as.integer(numeric(tmp1$n.hap.pairs)),
-             PACKAGE="haplo.stats")
-        } else {
-          .C("haplo_em_ret_info",
-             n.u.hap=as.integer(tmp1$n.u.hap),
-             n.loci=as.integer(tmp1$n.loci),
-             n.pairs=as.integer(tmp1$n.hap.pairs),
-             hap.prob=as.double(numeric(tmp1$n.u.hap)),
-             u.hap=as.integer(numeric(tmp1$n.u.hap*tmp1$n.loci)),
-             u.hap.code=as.integer(numeric(tmp1$n.u.hap)),
-             indx.subj=as.integer(numeric(tmp1$n.hap.pairs)),
-             post=as.double(numeric(tmp1$n.hap.pairs)),
-             hap1code=as.integer(numeric(tmp1$n.hap.pairs)),
-             hap2code=as.integer(numeric(tmp1$n.hap.pairs)))
-        }
+tmp2 <- .C("haplo_em_ret_info",
+           n.u.hap=as.integer(tmp1$n.u.hap),
+           n.loci=as.integer(tmp1$n.loci),
+           n.pairs=as.integer(tmp1$n.hap.pairs),
+           hap.prob=as.double(numeric(tmp1$n.u.hap)),
+           u.hap=as.integer(numeric(tmp1$n.u.hap*tmp1$n.loci)),
+           u.hap.code=as.integer(numeric(tmp1$n.u.hap)),
+           indx.subj=as.integer(numeric(tmp1$n.hap.pairs)),
+           post=as.double(numeric(tmp1$n.hap.pairs)),
+           hap1code=as.integer(numeric(tmp1$n.hap.pairs)),
+           hap2code=as.integer(numeric(tmp1$n.hap.pairs)),
+           PACKAGE="haplo.stats")
+       
 obj <- list(tmp1=tmp1, tmp2=tmp2)
 
 return(obj)
