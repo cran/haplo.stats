@@ -149,7 +149,7 @@ void seqhap(
   j=0;
 
   /*calculate statistics using the original disease status*/
-  printf("\n");
+
   for(si=0; si<nsnp; si++)
     {
       inlist_length=1; inlist[inlist_length-1]=si;
@@ -164,14 +164,7 @@ void seqhap(
 	}/*search for the list of SNPs to be combined to SNP si and update the summary statistic*/
       if(inlist_length==1) {hap_stat0i[si]=chi_stat0i[si]; hap_df=1;}
       else hap_stat0i[si] = chisq2h(disease); /*update the haplotype statistic*/
-      /*
-      printf("snp%d\n",si+1);
-      printf("single-locus method:  chi-square %lf, d.f. %d\n", chi_stat0i[si],1);
-      printf("Sequential method combines snps ");
-      for(i=0; i<inlist_length; i++) printf("%d ",inlist[i]+1); printf("\n");
-      printf("Seq-haplotype method: chi-square %lf, d.f. %d\n", hap_stat0i[si],hap_df);
-      printf("Seq-summary method:   chi-square %lf, d.f. %d\n\n", sum_stat0i[si],inlist_length);
-      */
+ 
 
       /*save for Splus*/
       for(i=0; i<inlist_length; i++) {inlist_c[j]=inlist[i]+1;j++;}
@@ -566,15 +559,7 @@ static double mantel(int *d)
   if(denom==0) return(denom);
   mh_stat = pow(num,2)/denom;
   return(mh_stat);
-  /*
-    for(i=0; i<newnhap; i++)
-      {
-	printf("n00=%lf n0plus=%lf n1plus=%lf nplus0=%lf nplus1=%lf\n",
-	       n00[i], n0plus[i], n1plus[i], nplus0[i], nplus1[i]);
-      }
-	printf("num=%lf, denom=%lf, mh_stat=%lf\n", num, denom, mh_stat);
-	  printf("mh_stat\n%lf\n", mh_stat);
-  */
+
 }
 
 /*the chisq2h function calculates the chisquare statistic for a 2-by-h table */
@@ -633,14 +618,7 @@ static double chisq2h(int *d)
       chi2h_stat = chi2h_stat + pow(trunn0[i]-en0[i],2)/en0[i] + 
 	pow(trunn1[i]-en1[i],2)/en1[i];
     }
-  /*
-  printf("k=%d\n", k);
-  printf("chisq2htest:\n");
-  for(i=0; i<ntrunhap; i++)
-    printf("n0=%lf n1=%lf en0=%lf en1=%lf %lf\n", trunn0[i], trunn1[i], en0[i], en1[i], trunhapsum[i]);
-  printf("n0sum=%lf n1sum=%lf ntotal=%lf\n", n0sum, n1sum, n0sum+n1sum);
-  printf("chi2h=%lf\n", chi2h_stat);
-  */
+  
   hap_df=ntrunhap-1;
   return(chi2h_stat);
 }
@@ -686,14 +664,6 @@ static int creatsubhap()
       newhap1code[i] = newhapcode[hap1code[i]-1];
       newhap2code[i] = newhapcode[hap2code[i]-1];
     }
-
-  /*
-  printf("\n\nprintout from creatsub\n");
-  for(i=0; i<nhap; i++) printf("%d ", duplicated[i]); printf("newnhap=%d\n", newnhap);
-  for(i=0; i<nhap; i++) printf("%d,%d ", i+1,newhapcode[i]); printf("\n");
-  for(i=0; i<nhap; i++) printf("%d ", newhap1code[i]); printf("\n");
-  for(i=0; i<nhap; i++) printf("%d ", newhap2code[i]); printf("\n");
-  printf("createsub:\nnewnhap=%d\n",newnhap);*/
 
   return(newnhap);
 

@@ -1,22 +1,32 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.5.4}{
+  \itemize{
+    \item Fixed haplo.glm bug in assigning names to var.mat when
+    haplo.elim=NA
+    \item replaced printf statements with REprintf (from R_ext/Print.h)
+    in verbose C code sections
+    \item Placed raw manual in rnw directory at top level, as suggested
+    by Andreas Tille (2/11/2012)
+  }
+}
 \section{Changes in version 1.5.2}{
   \itemize{
-	\item Added methods for haplo.glm object: anova, residuals,
-	vcov, fitted
-	\item Updated haplo.glm to work more like glm object with
-	methods
-	\item Took out S-PLUS functionality for haplo.glm
-	\item Remove notes for S-PLUS usage in documentation
-	\item Added eps.svd argument to haplo.glm.control to 
-	give users control over calculation information matrix rank
-	\item Remove loci, geno.recode, allele.recode, which is now
-	handled with setupGeno
-	\item Add test suite with .R and .Rout.save files
-	\item Major update to user manual in doc/ 
-	\item Suggest Harrell's rms package instead of Design
-	for haplo.score with ordinal traits
-	\item Add NAMESPACE and NEWS files
+    \item Added methods for haplo.glm object: anova, residuals,
+    vcov, fitted
+    \item Updated haplo.glm to work more like glm object with
+    methods
+    \item Took out S-PLUS functionality for haplo.glm
+    \item Remove notes for S-PLUS usage in documentation
+    \item Added eps.svd argument to haplo.glm.control to 
+    give users control over calculation information matrix rank
+    \item Remove loci, geno.recode, allele.recode, which is now
+    handled with setupGeno
+    \item Add test suite with .R and .Rout.save files
+    \item Major update to user manual in doc/ 
+    \item Suggest Harrell's rms package instead of Design
+    for haplo.score with ordinal traits
+    \item Add NAMESPACE and NEWS files
   }
 }
 \section{Release Notes for version 1.4.4}{

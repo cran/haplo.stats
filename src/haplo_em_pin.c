@@ -42,7 +42,7 @@
 #include <math.h>
 #include <string.h>
 #include <limits.h>
-
+#include <R.h> 
 #include <S.h> 
 #include "haplo_em_pin.h"
 
@@ -115,12 +115,12 @@ void haplo_em_pin(
 
 
   if(*verbose){
-    printf("geno matrix:\n");
+    REprintf("geno matrix:\n");
     for(i=0;i< *n_subject;i++){
       for (j=0; j< (2*n_loci); j++) {
-        printf("%i ",geno[i][j]);
+        REprintf("%i ",geno[i][j]);
       }
-      printf("\n");
+      REprintf("\n");
     }
   }
 
@@ -181,14 +181,14 @@ void haplo_em_pin(
 
   if(*verbose){
 
-    printf("min_posterior = %8.5f\n",*min_posterior);
-    printf("min_prior     = %8.5f\n",*min_prior);
+    REprintf("min_posterior = %8.5f\n",*min_posterior);
+    REprintf("min_prior     = %8.5f\n",*min_prior);
 
-    printf("loci_insert_order = ");
+    REprintf("loci_insert_order = ");
     for(i=0;i<n_loci;i++){
-      printf("%i ",loci_insert_order[i]);
+      REprintf("%i ",loci_insert_order[i]);
     }
-    printf("\n\n");
+    REprintf("\n\n");
   }
 
 
@@ -200,11 +200,11 @@ void haplo_em_pin(
     n_batch++;
 
     if(*verbose){
-      printf("Inserting batch %i, loci= ",n_batch);
+      REprintf("Inserting batch %i, loci= ",n_batch);
         for(i=is; i < ie ;i++){
-          printf("%i ",loci_insert_order[i]);
+          REprintf("%i ",loci_insert_order[i]);
          }
-         printf("\n");
+         REprintf("\n");
      }
 
      /* sort according to subj id, hap pair id, before insert & expand */
@@ -226,7 +226,7 @@ void haplo_em_pin(
 
   
     if(*verbose){
-      printf("\nhap_list after insert batch %i & set_post, before code haplo\n\n",n_batch);
+      REprintf("\nhap_list after insert batch %i & set_post, before code haplo\n\n",n_batch);
       write_hap_list(hap_list, n_hap);
     }
 
@@ -242,7 +242,7 @@ void haplo_em_pin(
      qsort(hap_list, n_hap, sizeof(HAP *), cmp_subId_hapPairId);
 
     if(*verbose){
-      printf("\nhap_list after code haplo, before EM\n\n",n_batch);
+      REprintf("\nhap_list after code haplo, before EM\n\n",n_batch);
       write_hap_list(hap_list, n_hap);
     }
 
@@ -262,11 +262,11 @@ void haplo_em_pin(
       n_trim = hap_posterior(n_hap, hap_list, prior, n_u_hap, *min_posterior, &lnlike);
 
       if(*verbose){
-        printf("\nprior probabilities\n\n");
+        REprintf("\nprior probabilities\n\n");
         write_prior(n_u_hap, prior);
-        printf("\nhap_list after compute posterior (n_trim = %ld))\n\n",n_trim);
+        REprintf("\nhap_list after compute posterior (n_trim = %ld))\n\n",n_trim);
         write_hap_list(hap_list, n_hap);
-        printf("     iter = %3i, max_iter=%3i, lnlike = %f\n",iter, *max_iter, lnlike);
+        REprintf("     iter = %3i, max_iter=%3i, lnlike = %f\n",iter, *max_iter, lnlike);
       }
 
        /* check for convergence */
@@ -297,7 +297,7 @@ void haplo_em_pin(
 
 
        if(*verbose){
-	 printf("\nhap_list after EM and after divideKeep \n\n",n_trim);
+	 REprintf("\nhap_list after EM and after divideKeep \n\n",n_trim);
 	 write_hap_list(hap_list, n_hap);
        }
      
@@ -308,7 +308,7 @@ void haplo_em_pin(
 
       if(*verbose){
         if( (*converge)==1){
-          printf("\n\nConverged after batch insertion, lnlike = %8.5f, n_iter = %i\n\n", lnlike, n_iter);
+          REprintf("\n\nConverged after batch insertion, lnlike = %8.5f, n_iter = %i\n\n", lnlike, n_iter);
         }
       }
 
@@ -344,8 +344,8 @@ void haplo_em_pin(
   unique_haps(n_hap, hap_list, u_hap_list, prior);
 
   if(*verbose){
-    printf("\nn_u_hap = %ld\n",n_u_hap);
-    printf("\nunique haps\n\n"); 
+    REprintf("\nn_u_hap = %ld\n",n_u_hap);
+    REprintf("\nunique haps\n\n"); 
     write_unique_hap_list(u_hap_list, n_u_hap); 
   }
 
@@ -357,7 +357,7 @@ void haplo_em_pin(
   ret_hap_list = hap_list;
 
   if(*verbose){
-    printf("ret_hap_list\n");
+    REprintf("ret_hap_list\n");
     write_hap_list(ret_hap_list, n_hap);
   }
 
@@ -382,8 +382,6 @@ void haplo_em_pin(
   }
   Free(geno);
   geno = NULL;
-
-
  
 }
 
@@ -416,27 +414,27 @@ static HAP* new_hap(int id, int pair_id, double wt, double prior, double post){
   return result;
 }
 
-/***********************************************************************************/
+/***************************************************************************/
 
 static void write_hap_list(HAP** so, int n_hap){
   int i,j;
 
-  printf("subID     wt hapPairID hapCode keep");
+  REprintf("subID     wt hapPairID hapCode keep");
   for(i=0;i<n_loci;i++){
      if(loci_used[i]==0) continue; 
-    printf(" L%2ld",i);
+    REprintf(" L%2ld",i);
   }
-  printf("    post\n");
+  REprintf("    post\n");
 
   for(i=0; i< n_hap ;i++){
-    printf("%5ld %6.4f %9ld %7ld %4i", so[i]->id, so[i]->wt, so[i]->pair_id,so[i]->code,so[i]->keep);
+    REprintf("%5ld %6.4f %9ld %7ld %4i", so[i]->id, so[i]->wt, so[i]->pair_id,so[i]->code,so[i]->keep);
     for(j=0;j<n_loci;j++){
        if(loci_used[j]==0) continue; 
-      printf("%4ld",so[i]->loci[j]);
+      REprintf("%4ld",so[i]->loci[j]);
     }
 
-    printf("    %6.4f", so[i]->post);
-    printf("\n");
+    REprintf("    %6.4f", so[i]->post);
+    REprintf("\n");
   }
 }
 
@@ -445,38 +443,38 @@ static void write_hap_list(HAP** so, int n_hap){
 static void write_unique_hap_list(HAPUNIQUE** so, int n_hap){
   int i,j;
 
-  printf("hapCode keep");
+  REprintf("hapCode keep");
   for(i=0;i<n_loci;i++){
      if(loci_used[i]==0) continue; 
-    printf(" L%2ld",i);
+    REprintf(" L%2ld",i);
   }
-  printf("  prior\n");
+  REprintf("  prior\n");
 
   for(i=0; i< n_hap ;i++){
-    printf("%6ld %4i",so[i]->code,so[i]->keep);
+    REprintf("%6ld %4i",so[i]->code,so[i]->keep);
     for(j=0;j<n_loci;j++){
        if(loci_used[j]==0) continue; 
-      printf("%4ld",so[i]->loci[j]);
+      REprintf("%4ld",so[i]->loci[j]);
     }
 
-    printf("    %6.4f", so[i]->prior);
-    printf("\n");
+    REprintf("    %6.4f", so[i]->prior);
+    REprintf("\n");
   }
 }
 
-/***********************************************************************************/
+/****************************************************************************/
 
 static void write_prior(int n, double *prior){
   int i;
 
-  printf("hapCode  prior\n");
+  REprintf("hapCode  prior\n");
   for(i=0;i<n;i++){
-    printf(" %5ld  %6.4f\n", i, prior[i]);
+    REprintf(" %5ld  %6.4f\n", i, prior[i]);
   }
 
 }
 
-/***********************************************************************************/
+/****************************************************************************/
 
 static int CDECL cmp_hap(const void *to_one, const void *to_two){
   int i;

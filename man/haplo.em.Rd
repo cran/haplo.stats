@@ -1,9 +1,12 @@
 % $Author: sinnwell $
-% $Date: 2011/11/10 15:29:41 $ 
-% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.em.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $ 
+% $Date: 2011/12/12 17:02:15 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.em.Rd,v 1.5 2011/12/12 17:02:15 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: haplo.em.Rd,v $
+%Revision 1.5  2011/12/12 17:02:15  sinnwell
+%notes about LC-COLLATE, and update see-also
+%
 %Revision 1.4  2011/11/10 15:29:41  sinnwell
 %major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
 %

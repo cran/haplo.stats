@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2011/11/10 15:29:40 $
-#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.em.q,v 1.18 2011/11/10 15:29:40 sinnwell Exp $
+#$Date: 2011/12/12 17:04:10 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.em.q,v 1.19 2011/12/12 17:04:10 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.em.q,v $
+#Revision 1.19  2011/12/12 17:04:10  sinnwell
+#fix lnlike.noLD in return list
+#
 #Revision 1.18  2011/11/10 15:29:40  sinnwell
 #major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
 #
