@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/05/09 16:08:46 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/README.haplo.stats,v 1.12 2007/05/09 16:08:46 sinnwell Exp $
+#$Date: 2008/10/03 15:10:39 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/README.haplo.stats,v 1.13 2008/10/03 15:10:39 sinnwell Exp $
 #$Locker:  $
 #$Log: README.haplo.stats,v $
+#Revision 1.13  2008/10/03 15:10:39  sinnwell
+#for version 1.4.0
+#
 #Revision 1.12  2007/05/09 16:08:46  sinnwell
 #for version 1.3.0
 #
@@ -30,19 +33,24 @@ named INDEX.haplo.stats and DESCRIPTION.haplo.stats.
 The main functions in Haplo Stats are:
 
 haplo.em
-	for the estimation of haplotype frequencies, and posterior 
-        probabilities of haplotype pairs for a subject, conditional 
-        on the observed marker data
+     for the estimation of haplotype frequencies, and posterior 
+     probabilities of haplotype pairs for a subject, conditional 
+     on the observed marker data
 
 haplo.glm
-	glm regression models for the regression of a trait on 
-        haplotypes, possibly including covariates and interactions
+     glm regression models for the regression of a trait on 
+     haplotypes, possibly including covariates and interactions
 
 haplo.score
-	score statistics to test associations between haplotypes 
-        and a wide variety of traits, including binary, ordinal,
-        quantitative, and Poisson.
- 
+     score statistics to test associations between haplotypes 
+     and a wide variety of traits, including binary, ordinal,
+     quantitative, and Poisson.
+
+seqhap
+     sequential haplotype scan methods to perform association analyses
+     for case-control data.  When evaluating each locus, loci that 
+     contribute additional information to haplotype associations with 
+     disease status will be added sequentially.
 
 =================================================================
 

@@ -1,8 +1,17 @@
 %  $Author: sinnwell $
-%  $Date: 2008/01/08 20:27:11 $
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.Rd,v 1.2 2008/01/08 20:27:11 sinnwell Exp $
+%  $Date: 2008/10/06 15:16:40 $
+%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.Rd,v 1.5 2008/10/06 15:16:40 sinnwell Exp $
 %  $Locker:  $ 
 %  $Log: plot.seqhap.Rd,v $
+%  Revision 1.5  2008/10/06 15:16:40  sinnwell
+%  rm n.sim from example
+%
+%  Revision 1.4  2008/05/16 18:38:02  sinnwell
+%  fix details about 0 perm pval
+%
+%  Revision 1.3  2008/05/09 20:59:41  sinnwell
+%  add minp parameter, more comments about ...
+%
 %  Revision 1.2  2008/01/08 20:27:11  sinnwell
 %  fix comments
 %
@@ -37,7 +46,8 @@ seqhap methods. Plots -log10(p-value) on the y-axis vs. the
 loci over which it was computed on the x-axis.
 }
 \usage{
-\method{plot}{seqhap}(x, pval="hap", single=TRUE, ...)
+\method{plot}{seqhap}(x, pval="hap", single=TRUE,
+minp=.Machine$double.eps, ...)
 }
 \arguments{
 \item{x}{
@@ -54,9 +64,15 @@ Logical, indicating whether to plot p-values for single-locus
 association tests. If TRUE, the pointwise p-values from the
 single-locus will be plotted using a dotted line.
 }
+\item{minp}{
+Smallest "allowable" p-value; any p-value smaller will be set to
+log10(minp).  The default is the value closest to zero that can be
+represented in Splus/R.
+}
 \item{\dots }{
 Dynamic parameter for the values of additional parameters for 
-the plot method.  Accept values that will apply to plot() and axis().
+the plot method.  Accept the ylim parameter for plot() and other
+parameters for lines(), points(), and axis().
 Recommended values to make locus labels vertical on the x-axis:
 for R:  las=2,  cex.axis=1.2
 for S+: srt=90, cex.axis=1.2, adj=1
@@ -76,8 +92,8 @@ loci combined. The start locus is indicated by a filled triangle and
 other loci combined with the start locus are indicated by an asterisk
 or circle.
 
-If the simulated p-value for a set of loci is zero, it is set to .5 /
-n.sim.
+If the permutation p-value is zero, for plotting purposes it is set to
+1/(n.sim+1).
 }
 \section{References}{
 Yu Z, Schaid DJ. (2007) Sequential haplotype scan methods for
@@ -92,7 +108,7 @@ setupData(seqhap.dat)
 mydata.y <- seqhap.dat[,1]
 mydata.x <- seqhap.dat[,-1]
 setupData(seqhap.pos)
-myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=seqhap.pos$pos, n.sim=100)
+myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=seqhap.pos$pos)
 plot(myobj)
 }
 \keyword{}

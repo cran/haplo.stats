@@ -1,8 +1,17 @@
 #$Author: sinnwell $
-#$Date: 2008/02/11 22:52:27 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.em.q,v 1.6 2008/02/11 22:52:27 sinnwell Exp $
+#$Date: 2009/04/08 18:40:58 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.em.q,v 1.9 2009/04/08 18:40:58 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.em.q,v $
+#Revision 1.9  2009/04/08 18:40:58  sinnwell
+#*** empty log message ***
+#
+#Revision 1.8  2009/04/08 17:52:05  sinnwell
+#use R's pchisq with lower.tail=FALSE for more signif digits
+#
+#Revision 1.7  2008/12/12 22:18:43  sinnwell
+#return invisible(df)
+#
 #Revision 1.6  2008/02/11 22:52:27  sinnwell
 #edit the message for missing rows
 #
@@ -67,8 +76,14 @@ print.haplo.em <- function(x, digits=max(options()$digits-2, 5), nlines=NULL, ..
   printBanner("Details")
 
   pval <- NA
-  if(x$df.lr > 0) pval = 1-pchisq(x$lr, x$df.lr)
-  
+  if(x$df.lr > 0) {
+    if(is.R()) {
+      pval = pchisq(x$lr, x$df.lr, lower.tail=FALSE)
+    } else {
+      pval = 1-pchisq(x$lr, x$df.lr)
+    }
+  }
+    
   cat("lnlike = ",round(x$lnlike,digits),"\n")
   cat("lr stat for no LD = ",round(x$lr,digits),", df = ",x$df.lr,", p-val = ",round(pval,digits),"\n")
 
@@ -76,5 +91,5 @@ print.haplo.em <- function(x, digits=max(options()$digits-2, 5), nlines=NULL, ..
      cat("\nResults may be incomplete because one or more subjects was removed\n")
    }
 
-  invisible()
+  invisible(df)
 }

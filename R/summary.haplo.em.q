@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/11/07 21:33:37 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summary.haplo.em.q,v 1.8 2007/11/07 21:33:37 sinnwell Exp $
+#$Date: 2008/11/25 22:11:00 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summary.haplo.em.q,v 1.9 2008/11/25 22:11:00 sinnwell Exp $
 #$Locker:  $
 #$Log: summary.haplo.em.q,v $
+#Revision 1.9  2008/11/25 22:11:00  sinnwell
+#return table of haps by invisible
+#
 #Revision 1.8  2007/11/07 21:33:37  sinnwell
 #add digits
 #
@@ -83,6 +86,5 @@ summary.haplo.em <- function(object, show.haplo=FALSE,
   } 
   print(table(x, object$nreps))
 
-
-  invisible()
+  invisible(df)
 }

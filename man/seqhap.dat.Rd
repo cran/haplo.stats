@@ -1,8 +1,14 @@
 %  $Author: sinnwell $ 
-%  $Date: 2007/05/17 16:24:13 $ 
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.dat.Rd,v 1.2 2007/05/17 16:24:13 sinnwell Exp $
+%  $Date: 2009/04/27 21:22:07 $ 
+%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.dat.Rd,v 1.8 2009/04/27 21:22:07 sinnwell Exp $
 %  $Locker:  $ 
-
+%  $Log: seqhap.dat.Rd,v $
+%  Revision 1.8  2009/04/27 21:22:07  sinnwell
+%  em to emph
+%
+%  Revision 1.7  2009/04/09 20:25:06  sinnwell
+%  add log keyword for RCS
+%
 
 \name{seqhap.dat}
 \alias{seqhap.dat}
@@ -21,19 +27,37 @@ data(seqhap.dat)
 data(seqhap.pos)
 }
 \format{
-\item{ }{
-seqhap.dat contains disease status and 20 columns for a 10-locus
-genotype matrix of SNPs.  seqhap.pos is a 1-column data.frame containing
-the chromosome positions of the 10 loci.  
+    A data frame with 1000 observations on the following 21 variables.
+  \describe{
+    \item{\code{disease}}{numeric, indicator of disease status 0=no, 1=yes}
+    \item{\code{m1.1}}{first allele of genotype}
+    \item{\code{m1.2}}{second allele of genotype}
+    \item{\code{m2.1}}{first allele of genotype}
+    \item{\code{m2.2}}{second allele of genotype}
+    \item{\code{m3.1}}{first allele of genotype}
+    \item{\code{m3.2}}{second allele of genotype}
+    \item{\code{m4.1}}{first allele of genotype}
+    \item{\code{m4.2}}{second allele of genotype}
+    \item{\code{m5.1}}{first allele of genotype}
+    \item{\code{m5.2}}{second allele of genotype}
+    \item{\code{m6.1}}{first allele of genotype}
+    \item{\code{m6.2}}{second allele of genotype}
+    \item{\code{m7.1}}{first allele of genotype}
+    \item{\code{m7.2}}{second allele of genotype}
+    \item{\code{m8.1}}{first allele of genotype}
+    \item{\code{m8.2}}{second allele of genotype}
+    \item{\code{m9.1}}{first allele of genotype}
+    \item{\code{m9.2}}{second allele of genotype}
+    \item{\code{m10.1}}{first allele of genotype}
+    \item{\code{m10.2}}{second allele of genotype}
+  }
+    
 }
+\references{
+ Yu Z, Schaid DJ (2007) Sequantial haplotype scan methods for
+association analysis.  \emph{Gen Epi}, in print.
 }
-\source{
-  
+\examples{
+data(seqhap.dat)
 }
-\section{References}{
-Yu Z, Schaid DJ (2007) Sequantial haplotype scan methods for
-association analysis.  {\em Gen Epi}, in print.
-}
-
 \keyword{datasets}
-% docclass is function

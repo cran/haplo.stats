@@ -1,8 +1,17 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 19:49:38 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.Rd,v 1.1 2008/01/09 19:49:38 sinnwell Exp $ 
+% $Date: 2008/10/06 15:26:39 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.Rd,v 1.4 2008/10/06 15:26:39 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: seqhap.Rd,v $
+% Revision 1.4  2008/10/06 15:26:39  sinnwell
+% *** empty log message ***
+%
+% Revision 1.3  2008/10/03 20:21:28  sinnwell
+% *** empty log message ***
+%
+% Revision 1.2  2008/09/26 20:12:20  sinnwell
+% remove n.sim, add sim.control
+%
 % Revision 1.1  2008/01/09 19:49:38  sinnwell
 % Initial revision
 %
@@ -48,9 +57,10 @@ only works with bialleleic loci (single nucleotide polymorphisms,
 or SNPs) and binary traits.
 }
 \usage{
-seqhap(y, geno, pos, locus.label=NA, n.sim=1000, weight=NULL, 
+seqhap(y, geno, pos, locus.label=NA, weight=NULL, 
        mh.threshold=3.84, r2.threshold=0.95, haplo.freq.min=0.005, 
-       miss.val=c(0, NA), control=haplo.em.control())
+       miss.val=c(0, NA), sim.control=score.sim.control(),
+       control=haplo.em.control())
 }
 \arguments{
 \item{y}{
@@ -71,12 +81,6 @@ etc.) doesn't affect the results.
 }
 \item{locus.label }{
 vector of labels for the set of loci 
-}
-\item{n.sim }{
-number of permutations that will be used to calculate permutation p-values. The
-default is 1000. If it is set to zero, permuted regional and
-pointwise p-values will not be available, but the pointwise p-values
-based on asymptotic chi-square distributions will still be provided. 
 }
 \item{weight}{
 weights for observations (rows of geno matrix).
@@ -100,8 +104,16 @@ association tests. The haplotype frequency is based on the EM
 algorithm that estimates haplotype frequencies independent of trait. 
 }
 \item{miss.val }{
- 
 vector of values that represent missing alleles.
+}
+\item{sim.control}{
+A list of control parameters to determine how simulations are
+performed for permutation p-values, similar to the strategy in
+haplo.score.  The list is created by the function
+score.sim.control and the default values of this function can be 
+changed as desired.  Permutations are performed until a p.threshold
+accuracy rate is met for the three region-based p-values calculated in
+seqhap. See score.sim.control for details.
 }
 \item{control}{
 A list of parameters that control the EM algorithm for estimating 
@@ -177,7 +189,8 @@ association analysis. Genet Epidemiol, in print.
 \seealso{
 \code{\link{haplo.em}},
 \code{\link{print.seqhap}},
-\code{\link{plot.seqhap}}
+\code{\link{plot.seqhap}},
+\code{\link{score.sim.control}}
 }
 \examples{
 # load example data with response and genotypes. 
