@@ -1,0 +1,71 @@
+\name{setupGeno}
+\alias{setupGeno}
+\title{
+  Create a group of locus objects from a genotype matrix, assign to
+'model.matrix' class.  
+}
+\description{
+The function makes each pair of columns a locus object, which
+recodes alleles to numeric and saves the original alleles as an
+attribute of the model.matrix. 
+}
+\usage{
+setupGeno(geno, miss.val=c(0,NA))
+}
+\arguments{
+\item{geno}{
+Matrix of alleles, such that each locus has a pair of adjacent
+columns of alleles, and the order of columns corresponds to the
+order of loci on a chromosome. If there are K loci, then
+ncol(geno) = 2*K. Rows represent alleles for each subject.
+}
+\item{miss.val }{
+A vector of codes denoting missing values for allele1 and
+allele2. Note that NA will always be treated as a missing value, even
+if not specified in miss.val.  Also note that if multiple missing
+value codes are specified, the original missing value code for a
+specific individual can not be retrieved from the loci object.
+}
+}
+\value{
+A 'model.matrix' object with the alleles recoded to numeric values,
+and the original values are stored in the 'unique.alleles' attribute.
+The ith item of the unique.alleles list is a vector of unique alleles
+for the ith locus.
+}
+\section{Side Effects}{
+
+}
+\details{
+
+}
+\section{References}{
+
+}
+\note{
+A matrix that contains all elements of mode character will be sorted
+in alphabetic order.
+}
+\seealso{
+locus, loci, haplo.glm
+}
+\examples{
+# Create some loci to work with
+a1 <- 1:6
+a2 <- 7:12
+
+b1 <- c("A","A","B","C","E","D")
+b2 <-c("A","A","C","E","F","G")
+
+c1 <- c("101","10","115","132","21","112")
+c2 <- c("100","101","0","100","21","110")
+
+myGeno <- data.frame(a1,a2,b1,b2,c1,c2)
+myGeno <- setupGeno(myGeno)
+myGeno
+
+attributes(myGeno)$unique.alleles
+}
+\keyword{}
+% docclass is function
+% Converted by Sd2Rd version 1.21.
