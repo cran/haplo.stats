@@ -1,3 +1,12 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:44:30 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/louis.info.Rd,v 1.1 2008/01/09 19:44:30 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: louis.info.Rd,v $
+% Revision 1.1  2008/01/09 19:44:30  sinnwell
+% Initial revision
+%
+
 \name{louis.info}
 \alias{louis.info}
 \title{

@@ -1,7 +1,17 @@
+
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:43:29 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/loci.Rd,v 1.1 2008/01/09 19:43:29 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: loci.Rd,v $
+% Revision 1.1  2008/01/09 19:43:29  sinnwell
+% Initial revision
+%
+%
 \name{loci}
 \alias{loci}
 \title{
-  Create a group of locus objects from a genotype matrix, assign to
+Create a group of locus objects from a genotype matrix, assign to
 'model.matrix' class.  
 }
 \description{

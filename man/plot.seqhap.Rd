@@ -1,3 +1,29 @@
+%  $Author: sinnwell $
+%  $Date: 2008/01/08 20:27:11 $
+%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.Rd,v 1.2 2008/01/08 20:27:11 sinnwell Exp $
+%  $Locker:  $ 
+%  $Log: plot.seqhap.Rd,v $
+%  Revision 1.2  2008/01/08 20:27:11  sinnwell
+%  fix comments
+%
+%  Revision 1.1  2008/01/08 17:14:28  sinnwell
+%  Initial revision
+%
+% Revision 1.5  2007/05/30 19:00:57  sinnwell
+% *** empty log message ***
+% 
+% Revision 1.4  2007/05/30 18:29:47  sinnwell
+% fix example to use setupData
+% 
+% Revision 1.3  2007/05/25 18:17:45  sinnwell
+% rm par optoins cex.axis and las, reserved for users in ...
+% 
+% Revision 1.2  2007/05/24 19:08:17  sinnwell
+% add detail about cex.axis
+% 
+% Revision 1.1  2007/05/23 17:41:56  sinnwell
+% Initial revision
+
 \name{plot.seqhap}
 \alias{plot.seqhap}
 \title{
@@ -11,7 +37,7 @@ seqhap methods. Plots -log10(p-value) on the y-axis vs. the
 loci over which it was computed on the x-axis.
 }
 \usage{
-plot.seqhap(x, pval="hap", single=TRUE, ...)
+\method{plot}{seqhap}(x, pval="hap", single=TRUE, ...)
 }
 \arguments{
 \item{x}{

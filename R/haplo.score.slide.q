@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/03/08 14:38:51 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.slide.q,v 1.8 2007/03/08 14:38:51 sinnwell Exp $
+#$Date: 2008/04/10 14:32:18 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.slide.q,v 1.9 2008/04/10 14:32:18 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.slide.q,v $
+#Revision 1.9  2008/04/10 14:32:18  sinnwell
+#add eps.svd
+#
 #Revision 1.8  2007/03/08 14:38:51  sinnwell
 #*** empty log message ***
 #
@@ -59,10 +62,10 @@
 # 
 
 haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
-                              offset = NA, x.adj = NA,
-                              haplo.effect="additive", min.count=5,
+                              offset = NA, x.adj = NA, min.count=5,
                               skip.haplo=min.count/(2*nrow(geno)),
                               locus.label=NA, miss.val=c(0,NA),
+                              haplo.effect="additive", eps.svd=1e-5,
                               simulate=FALSE, sim.control=score.sim.control(),
                               em.control=haplo.em.control())
   # Developed by Schaid, DJ; Sinnwell, JP 2003
@@ -98,7 +101,7 @@ haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
     temp <- haplo.score(y=y, geno=geno.slide, trait.type=trait.type,
                    offset = offset, x.adj = x.adj, haplo.effect=haplo.effect,
                    min.count=min.count, skip.haplo=skip.haplo,
-                   miss.val=miss.val, simulate=simulate, sim.control=sim.control,
+                   miss.val=miss.val, eps.svd=eps.svd, simulate=simulate, sim.control=sim.control,
                    em.control = em.control)
     # keep global, global.sim and max.sim p-values
     score.global.p[i] <- temp$score.global.p

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/05/25 18:17:15 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.q,v 1.2 2007/05/25 18:17:15 sinnwell Exp $
+#$Date: 2008/05/08 17:38:26 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.q,v 1.3 2008/05/08 17:38:26 sinnwell Exp $
 #$Locker:  $
 #$Log: plot.seqhap.q,v $
+#Revision 1.3  2008/05/08 17:38:26  sinnwell
+#allow ylim, set minimum p as 1e-10, issue warning if pval not valid
+#
 #Revision 1.2  2007/05/25 18:17:15  sinnwell
 #rm par options cex.axis and las/srt, reserve for users
 #
@@ -40,8 +43,7 @@
 # email: schaid@mayo.edu
 #
 
-plot.seqhap <- function(x, pval="hap", single=TRUE, ...)
-{
+plot.seqhap <- function(x, pval="hap", single=TRUE, ...) {
   # plot method of seqhap object
   #  1. x-axis: give locus labels in order, in "pos" chrom positions
   #  2. y-axis: plot the -log10 of the p-val chosen
@@ -50,52 +52,71 @@ plot.seqhap <- function(x, pval="hap", single=TRUE, ...)
   if(!inherits(x, "seqhap"))
 	    stop("Not a seqhap object")
 
+  ## Set p.small as the smallest "allowable" p-value.
+  ## Any p-value smaller will be set to log10(p.small)
+  small.p <- 1e-10
+  
+  ## if ylim is given in ..., pull it off and use it
+  dots <- as.list(substitute(list(...)))[-1]
+  ylim.indx <- match('ylim', names(dots))
+  ylim.user <- if(!is.na(ylim.indx)) eval(dots[ylim.indx]$ylim) else NULL
+
   single.p <- 1-pchisq(x$chi.stat,1)
 
+  if(is.na(match(pval, c("hap", "sum", "hap.sim", "sum.sim")))) {
+    warning("Invalid value for pval, set to default. \n")
+    pval <- "hap"
+  }
+  
   switch(pval,
          "hap"={seqp <- 1-pchisq(x$hap.stat,x$hap.df)
-                   ylabel <- '-log10(hap.pval)' 
+                ylabel <- '-log10(hap.pval)' 
                  },
          "sum"={seqp <- 1-pchisq(x$sum.stat,x$sum.df)
-                   ylabel <- '-log10(sum.pval)'
+                ylabel <- '-log10(sum.pval)'
                  },
          "hap.sim"={seqp <- x$hap.p.point
-                    if(any(seqp==0)) {
-                      warning("1 or more p-values are zero, set to .5 / n.sim")
-                      seqp[seqp==0] <- .5/x$n.sim
-                    }
-                   ylabel <- '-log10(hap.sim.pval)'
+                    ylabel <- '-log10(hap.sim.pval)'
                  },
          "sum.sim"={seqp <- x$sum.p.point
-                    if(any(seqp==0)) {
-                      warning("1 or more p-values are zero, set to .5 / n.sim")
-                      seqp[seqp==0] <- .5/x$n.sim
-                    }
                     ylabel <- '-log10(sum.sim.pval)'
                  })
- 
-  single.p <- -log10(single.p)
-  seqp <- -log10(seqp)
+
+  if(any(single.p < small.p)) {
+    cat("One or more single-marker p-values too small to plot, set to ", small.p, "\n")
+    single.p <- ifelse(single.p < small.p, small.p, single.p)
+  }
+  if(any(seqp < small.p)) {
+    cat("One or more multi-marker p-values too small to plot, set to ", small.p, "\n")
+    seqp <- ifelse(seqp < small.p, small.p, seqp)
+  }
+
+  log.single.p <- if(single) -log10(single.p) else NULL
+  log.seqp <- -log10(seqp)
   
-  plot(x$pos,single.p,ylim=c(0,max(single.p,seqp)),type="n",xaxt="n",
-       xlab='', ylab=ylabel, ...)
+  ylim <- if(is.null(ylim.user)) c(0, max(3, log.single.p, log.seqp)) else ylim.user
+  
+  plot(x$pos, log.single.p,ylim=ylim, type="n",xaxt="n",
+       xlab='', ylab=ylabel) #, ...)
 
   for(i in 1:length(x$pos))
     {
       # plot a filled triangle for locus i at heigh of -log10p[i]
-      points(x$pos[x$scanned.loci[i,1]], seqp[i], pch=17)
+      points(x$pos[x$scanned.loci[i,1]], log.seqp[i], pch=17)
       if(sum(x$scanned.loci[i,]>0)>1)
         {
           scanned.loci.i <- sort(x$scanned.loci[i,])
           scanned.loci.i <- scanned.loci.i[scanned.loci.i>0]
+          
           #plot a line for each set of combined loci at height of -log10p[i]
-          lines(c(x$pos[min(scanned.loci.i)],x$pos[max(scanned.loci.i)]),rep(seqp[i],2))
+          lines(c(x$pos[min(scanned.loci.i)],x$pos[max(scanned.loci.i)]),rep(log.seqp[i],2))
+          
           #plot an asterisk/circle on each locus combined at height of -log10p[i]
-          points(x$pos[setdiff(scanned.loci.i, x$scanned.loci[i,1])],rep(seqp[i],length(scanned.loci.i)-1), ...)
+          points(x$pos[setdiff(scanned.loci.i, x$scanned.loci[i,1])],rep(log.seqp[i],length(scanned.loci.i)-1), ...)
          }
     }
 
-  if(single) lines(x$pos,single.p,lty=2)
+  if(single) lines(x$pos,log.single.p,lty=2)
   if(is.R()) {  #mgp for title change
     axis(1,at=x$pos, labels=x$locus.label, ...) # adj=0, las=2, cex.axis=.8
   } else {

@@ -1,3 +1,29 @@
+% $Author: sinnwell $ -->
+% $Date: 2008/04/29 17:19:14 $ -->
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.control.Rd,v 1.3 2008/04/29 17:19:14 sinnwell Exp $ -->
+% $Locker:  $ -->
+% $Log: haplo.glm.control.Rd,v $
+% Revision 1.3  2008/04/29 17:19:14  sinnwell
+% change defaults of freq.min and min.count
+%
+% Revision 1.2  2008/04/01 16:20:22  sinnwell
+% default for haplo.min.count in call set to 5
+%
+% Revision 1.1  2008/01/08 22:39:25  sinnwell
+% Initial revision
+%
+%Revision 1.4  2004/03/12 18:04:08  sinnwell
+%add returns to usage
+%
+%Revision 1.3  2004/03/02 16:34:31  sinnwell
+%change T to TRUE
+%
+%Revision 1.2  2004/03/01 21:25:50  sinnwell
+%comment in an example
+%
+%Revision 1.1  2003/09/16 16:01:47  schaid
+%Initial revision
+
 \name{haplo.glm.control}
 \alias{haplo.glm.control}
 \title{
@@ -9,7 +35,7 @@ are passed to this function, then all default values are used.
 }
 \usage{
 haplo.glm.control(haplo.effect="add", haplo.base=NULL,
-                  haplo.min.count=NA, haplo.freq.min=NA,
+                  haplo.min.count=NA, haplo.freq.min=.01,
                   sum.rare.min=0.001, haplo.min.info=0.001, 
                   keep.rare.haplo=TRUE, glm.c=glm.control(maxit=500), 
                                                   em.c=haplo.em.control())

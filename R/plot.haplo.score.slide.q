@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/05/29 15:53:29 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.slide.q,v 1.11 2007/05/29 15:53:29 sinnwell Exp $
+#$Date: 2008/01/04 20:47:47 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.slide.q,v 1.12 2008/01/04 20:47:47 sinnwell Exp $
 #$Locker:  $
 #$Log: plot.haplo.score.slide.q,v $
+#Revision 1.12  2008/01/04 20:47:47  sinnwell
+#add ... to lines, allowing col(or) and lty specification.  Make exception calls to axis in R and S, S allows srt and doesn't use col; R doesn't allow srt and uses color to undesirably color the axis
+#
 #Revision 1.11  2007/05/29 15:53:29  sinnwell
 #take out las and cex.axis, left for user to pass in ...
 #
@@ -138,16 +141,14 @@ plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, ...)
   
   # plot outer region, then the axis with locus labels
   plot(x=c(1,x$n.loci),y=c(0,max(lnp)),type="n",ylab=ylabel,xlab="",xaxt="n", ...)
-  if(is.R()) {  #mgp for title change
-    axis(1,at=x.axis.vec, labels=x$locus.label, ...)
-  } else {
-    axis(1,at=x.axis.vec, labels=x$locus.label, ...)
-  }
+  if(is.R()) axis(1,at=x.axis.vec, labels=x$locus.label)
+  else axis(1,at=x.axis.vec, labels=x$locus.label, ...)
+
   
   # plot a line for each set of n.slide loci at height of -log10p[i]
   for (i in x$df$start.loc) {
     end.loc <- i + x$n.slide - 1
-    lines(c(x.axis.vec[i],x.axis.vec[end.loc]),c(lnp[i],lnp[i]))
+    lines(c(x.axis.vec[i],x.axis.vec[end.loc]),c(lnp[i],lnp[i]), ...)
   }
   invisible()
 

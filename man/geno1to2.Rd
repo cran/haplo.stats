@@ -1,3 +1,30 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/08 20:25:48 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno1to2.Rd,v 1.2 2008/01/08 20:25:48 sinnwell Exp $ 
+% $Locker:  $ 
+% 
+%$Log: geno1to2.Rd,v $
+%Revision 1.2  2008/01/08 20:25:48  sinnwell
+%change comments
+%
+%Revision 1.1  2008/01/08 19:54:32  sinnwell
+%Initial revision
+%
+%Revision 1.5  2007/04/24 16:27:09  sinnwell
+%rm link to unlistToMat, no longer used
+%
+%Revision 1.4  2007/04/20 15:08:59  sinnwell
+%rm na.code, update example
+%
+%Revision 1.3  2007/04/18 17:16:17  sinnwell
+%add locus.label arg
+%
+%Revision 1.2  2007/04/16 20:13:05  sinnwell
+%*** empty log message ***
+%
+%Revision 1.1  2006/08/11 21:53:53  sinnwell
+%Initial revision
+
 \name{geno1to2}
 \alias{geno1to2}
 \title{

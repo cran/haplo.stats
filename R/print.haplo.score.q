@@ -1,14 +1,23 @@
 #$Author: sinnwell $
 #
-#$Date: 2007/01/25 19:41:07 $
+#$Date: 2008/04/08 19:21:24 $
 #
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.q,v 1.14 2007/01/25 19:41:07 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.q,v 1.17 2008/04/08 19:21:24 sinnwell Exp $
 #
-#$Id: print.haplo.score.q,v 1.14 2007/01/25 19:41:07 sinnwell Exp $
+#$Id: print.haplo.score.q,v 1.17 2008/04/08 19:21:24 sinnwell Exp $
 #
 #$Locker:  $
 #
 #$Log: print.haplo.score.q,v $
+#Revision 1.17  2008/04/08 19:21:24  sinnwell
+#haplo.effect back in x$
+#
+#Revision 1.16  2008/04/08 16:45:08  sinnwell
+#haplo.effect now in x$control
+#
+#Revision 1.15  2008/04/04 16:14:28  sinnwell
+#return tbl with invisible
+#
 #Revision 1.14  2007/01/25 19:41:07  sinnwell
 #haplo.effect changed to x$haplo.effect
 #
@@ -140,6 +149,6 @@ print.haplo.score <- function(x, digits=max(options()$digits-2, 5), nlines=NULL,
    else print(tbl[1:nlines,,drop=FALSE], quote=FALSE, ...)
 
    cat("\n")
-   invisible(x)
+   invisible(tbl)
 
 }

@@ -1,3 +1,58 @@
+%$Author: sinnwell $ 
+%$Date: 2008/04/14 21:38:51 $ 
+%$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.Rd,v 1.5 2008/04/14 21:38:51 sinnwell Exp $ 
+%$Locker:  $ 
+%$Log: haplo.score.Rd,v $
+%Revision 1.5  2008/04/14 21:38:51  sinnwell
+%fix syntax error
+%
+%Revision 1.4  2008/04/14 20:00:33  sinnwell
+%change eps.svd comment
+%
+%Revision 1.3  2008/04/08 20:26:42  sinnwell
+%add svd.eps, undo control parameter change
+%
+%Revision 1.2  2008/04/08 14:18:21  sinnwell
+%move haplo.effect, sim.control, em.control to haplo.score.control with eps.svd
+%
+%Revision 1.1  2008/01/09 19:34:34  sinnwell
+%Initial revision
+%
+%Revision 1.20  2007/01/23 22:09:39  sinnwell
+%added parameters min.count and haplo.effect
+%Revision 1.19  2005/01/28 21:40:27  sinnwell
+%warn to not discard missings under standard usage
+%Revision 1.18  2004/12/29 18:51:13  sinnwell
+%update for skip.haplo default change
+%Revision 1.17  2004/03/22 20:00:05  sinnwell
+%limit simulations in example
+%Revision 1.16  2004/03/03 15:52:59  sinnwell
+%add labels in examples
+%Revision 1.15  2004/03/02 17:15:59  sinnwell
+%change sex to male of hla.demo
+%Revision 1.14  2004/03/01 21:47:26  sinnwell
+%fix examples
+%Revision 1.13  2004/02/16 17:28:07  sinnwell
+%change F to FALSE in call
+%Revision 1.12  2003/08/27 21:04:55  schaid
+%*** empty log message ***
+%Revision 1.11  2003/08/22 20:10:36  sinnwell
+%update for haplo.score version 1.2.0 with PIN and simulations updated
+%Revision 1.10  2003/08/13 21:52:00  sinnwell
+%update source cited
+%Revision 1.9  2003/01/17 16:57:06  sinnwell
+%revision for haplo.score version 1.2
+%Revision 1.8  2002/09/13 21:04:14  sinnwell
+%More commenting revisions
+%Revision 1.7  2002/09/13 19:44:16  sinnwell
+%Fix sgml commenting scheme
+%Revision 1.6  2002/09/13 17:00:55  sinnwell
+%Fixed RCS keywords to meet sgml rules
+%Revision 1.5  2002/09/13 14:26:10  sinnwell
+%Fix RCS keywords and comments.  
+%Revision 1.4  2002/09/12 21:20:24  det01
+%Added RCS keywords Author, Date, Header, Id, Locker, Log
+
 \name{haplo.score}
 \alias{haplo.score}
 \title{
@@ -10,10 +65,10 @@ phenotypes are observed among unrelated subjects. For now, only
 autosomal loci are considered.  
 }
 \usage{
-haplo.score(y, geno, trait.type="gaussian", offset = NA,
-            x.adj = NA, haplo.effect="additive", min.count=5, 
-            skip.haplo=min.count/(2*nrow(geno)), locus.label=NA,
-            miss.val=c(0,NA), simulate=FALSE, sim.control=score.sim.control(),
+haplo.score(y, geno, trait.type="gaussian", offset = NA, x.adj = NA,
+            min.count=5, skip.haplo=min.count/(2*nrow(geno)),
+            locus.label=NA, miss.val=c(0,NA), haplo.effect="additive",
+            eps.svd=1e-5, simulate=FALSE, sim.control=score.sim.control(),
             em.control=haplo.em.control())
 }
 \arguments{
@@ -40,13 +95,6 @@ Matrix of non-genetic covariates used to adjust the score
 statistics.  Note that intercept should not be included, 
 as it will be added in this function.
 }
-\item{haplo.effect }{
-The "effect" pattern of haplotypes on the response. This parameter
-determines the coding for scoring the haplotypes. 
-Valid coding options for heterozygous and homozygous carriers of a
-haplotype are "additive" (1, 2, respectively), "dominant" (1,1,
-respectively), and "recessive" (0, 1, respectively).
-}
 \item{min.count }{
 The minimum number of counts for a haplotype to be included in the
 model.  First, the haplotypes selected to score are chosen by minimum
@@ -69,21 +117,35 @@ Vector of labels for loci, of length K (see definition of geno matrix)
 \item{miss.val }{
 Vector of codes for missing values of alleles
 }
+\item{haplo.effect }{
+the "effect" of a haplotypes, which determines the covariate (x)
+coding of haplotypes. Valid options are "additive" (causing x = 0,
+1, or 2, the count of a  particular haplotype), "dominant" (causing
+x = 1 if heterozygous or homozygous carrier of a particular
+haplotype; x = 0 otherwise), and "recessive" (causing x = 1 if
+homozygous for a particular haplotype; x = 0 otherwise).
+}
+\item{eps.svd}{
+ epsilon value for singular value cutoff; to be used in the generalized
+ inverse calculation on the variance matrix of the score vector (see
+ help(Ginv) for details).  
+}
 \item{simulate}{
 Logical:  if FALSE, no empirical p-values are computed; if TRUE,
 simulations are performed. Specific simulation parameters
 can be controlled in the sim.control parameter list.  
 }
 \item{sim.control }{
-A list of control parameters to determine how simulations are performed for simulated
-p-values.  The list is created by the function
+A list of control parameters to determine how simulations are
+performed for simulated p-values.  The list is created by the function
 score.sim.control and the default values of this function can be
 changed as desired.  See score.sim.control for details.
 }
 \item{em.control }{
-A list of control parameters to determine how to perform the EM algorithm for
-estimating haplotype frequencies when phase is unknown.  The list is
-created by the function haplo.em.control - see this function for more details.
+A list of control parameters to determine how to perform the EM
+algorithm for estimating haplotype frequencies when phase is unknown.
+The list is created by the function haplo.em.control - see this function
+for more details.
 }
 }
 \value{
@@ -215,8 +277,8 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 # limit simulations to 500 in score.sim.control, default is 20000
   y.bin <-ifelse(y.ord==1,1,0)
   score.bin.sim <- haplo.score(y.bin, geno, trait.type = "binomial",
-                     locus.label=label, simulate=TRUE, sim.control=
-                     score.sim.control(min.sim=200,max.sim=500))
+                     locus.label=label, simulate=TRUE,
+                     sim.control=score.sim.control(min.sim=200,max.sim=500))
 
   print(score.bin.sim)
 

@@ -1,8 +1,14 @@
-#$Author: schaid $
-#$Date: 2007/02/27 20:14:03 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.control.q,v 1.5 2007/02/27 20:14:03 schaid Exp $
+#$Author: sinnwell $
+#$Date: 2008/02/05 16:31:18 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.control.q,v 1.7 2008/02/05 16:31:18 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.em.control.q,v $
+#Revision 1.7  2008/02/05 16:31:18  sinnwell
+#change default for min.posteror to 1e-9 for when all lowLD markers, sometimes a subject is completely removed.
+#
+#Revision 1.6  2007/10/16 19:08:30  sinnwell
+#put max.haps.limit back in, and make the max allowed by intMax by checkIntMax in C, set limit at 2e6 as that seemed to work in previous versions
+#
 #Revision 1.5  2007/02/27 20:14:03  schaid
 #removed max.haps.limit, which is now controlled by checkIntMax in haplo.em and in haplol_em_pin
 #
@@ -50,18 +56,19 @@
 # 
 haplo.em.control <- function(loci.insert.order=NULL,
                              insert.batch.size = 6,
-                             min.posterior=0.0000001,
+                             min.posterior=1e-9,
                              tol=0.00001,
                              max.iter=5000,
                              random.start=0,
                              n.try = 10,
                              iseed=NULL,
-                             verbose=0){
+                             max.haps.limit = 2e6,
+                             verbose=0) {
 
 
-  if(min.posterior < 0 | min.posterior > .9) {
-    warning("The value of min.posterior is out of range, the devault value of 0.0001 is used instead")
-    min.posterior <-  0.0001
+  if(min.posterior < 0 | min.posterior > .8) {
+    warning("The value of min.posterior is out of range, the devault value of 1e-9 is used instead")
+    min.posterior <-  1e-9
   }
 
   if(tol < 0 | tol > .5) {
@@ -85,7 +92,23 @@ haplo.em.control <- function(loci.insert.order=NULL,
     n.try <- 10
   }
 
+  # max.haps.limit is used to allow user to specify max number of hap pairs.
+  # -If run-time is an issue with a small data set, set to a low number
+  # -If set too-low for number of haplotypes, the C functions must request more, which takes extra time
+  
+  # Employ the system's intMax as the upper limit allowed by integer index (int representation in R)
+  # In most situations, the process is unable to allocate memory for intMax,
+  # which is roughly 5-6G of total memory in haplo.em test cases
+  intMax <- .C("checkIntMax",
+               intMax = as.integer(0),
+               PACKAGE="haplo.stats")$intMax
+  
+  if(max.haps.limit < 1000 | max.haps.limit > intMax) {
+    warning("The value of max.haps.limit is not valid, the default value of 2e6 is used instead")
+    max.haps.limit = 2e6
+  }
 
+  
   return(list(loci.insert.order=loci.insert.order, 
               insert.batch.size = insert.batch.size,
               min.posterior=min.posterior, 
@@ -94,6 +117,7 @@ haplo.em.control <- function(loci.insert.order=NULL,
               random.start=random.start,
               n.try=n.try,
               iseed=iseed,
+              max.haps.limit=max.haps.limit,
               verbose=verbose))
 }
 

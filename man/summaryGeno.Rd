@@ -1,3 +1,21 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/08 20:29:33 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summaryGeno.Rd,v 1.2 2008/01/08 20:29:33 sinnwell Exp $ 
+% $Locker:  $ 
+% 
+% $Log: summaryGeno.Rd,v $
+% Revision 1.2  2008/01/08 20:29:33  sinnwell
+% fix comments
+%
+% Revision 1.1  2008/01/08 18:25:51  sinnwell
+% Initial revision
+%
+% Revision 1.2  2004/03/02 15:17:29  sinnwell
+% take out example, simple usage
+%
+% Revision 1.1  2004/02/26 22:06:58  sinnwell
+% Initial revision
+
 \name{summaryGeno}
 \alias{summaryGeno}
 \title{

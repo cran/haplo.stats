@@ -1,3 +1,35 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:49:38 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.Rd,v 1.1 2008/01/09 19:49:38 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: seqhap.Rd,v $
+% Revision 1.1  2008/01/09 19:49:38  sinnwell
+% Initial revision
+%
+%Revision 1.8  2007/05/23 18:02:43  sinnwell
+%add pos and n.sim to result, add locus.label to input
+%
+%Revision 1.7  2007/04/27 21:28:22  sinnwell
+%minor updates
+%
+%Revision 1.6  2007/04/24 16:53:26  sinnwell
+%r2 to r-squared, not liked in Rd conversion to latex
+%
+%Revision 1.5  2007/04/24 16:36:14  sinnwell
+%changes recommended by Dan
+%
+%Revision 1.4  2007/04/16 20:11:44  sinnwell
+%fix example to run
+%
+%Revision 1.3  2007/04/13 18:49:58  sinnwell
+%*** empty log message ***
+%
+%Revision 1.2  2007/04/13 18:37:04  sinnwell
+%change some parameter descriptions to match haplo.score
+%
+%Revision 1.1  2007/04/06 19:31:18  sinnwell
+%Initial revision
+
 \name{seqhap}
 \alias{seqhap}
 \title{

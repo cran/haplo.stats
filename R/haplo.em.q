@@ -1,8 +1,15 @@
 #$Author: sinnwell $
-#$Date: 2007/04/03 21:08:36 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.q,v 1.15 2007/04/03 21:08:36 sinnwell Exp $
+#$Date: 2008/02/11 22:54:22 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.q,v 1.17 2008/02/11 22:54:22 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.em.q,v $
+#Revision 1.17  2008/02/11 22:54:22  sinnwell
+#include subjects removed by PIN steps (low-LD, rare haps) in rows.rem and issue a warning to reduce min.posterior
+#
+#Revision 1.16  2007/10/16 19:07:12  sinnwell
+#remove intMax check and go with max.haps.limit of 2e6 from control
+#intMax was the highest index for integers, but too much memory to allocate in C
+#
 #Revision 1.15  2007/04/03 21:08:36  sinnwell
 #add PACKAGE in checkIntMax .C call
 #
@@ -99,16 +106,19 @@ temp.geno <- loci(geno,locus.names=locus.label,miss.val=miss.val)
 max.pairs <- geno.count.pairs(temp.geno)
 max.haps <- 2*sum(max.pairs)
 
-intMax <- .C("checkIntMax",
-             intMax = as.integer(0),
-             PACKAGE="haplo.stats")$intMax
 
-if(max.haps > intMax) max.haps <- intMax
+## This system-max for integer values is used in haplo.em.control
+## for setting max.haps.limit
+    #intMax <- .C("checkIntMax",
+    #             intMax = as.integer(0),
+    #             PACKAGE="haplo.stats")$intMax
+
+if(max.haps > control$max.haps.limit) max.haps <- control$max.haps.limit
 
 # check whether to delete some rows - now defunct, but use 
 # dummy to not break code that uses this in returned list
 rows.rem <- numeric(0) 
-rows.keep <- subj.id
+
 
 geno.vec <- as.vector(temp.geno)
 geno.vec <- ifelse(is.na(geno.vec),0,geno.vec)
@@ -225,12 +235,11 @@ fit <- haplo.em.fitter(
     } 
   }
 
-
-
 tmp1 <- fit$tmp1
 tmp2 <- fit$tmp2
 
 u.hap <- matrix(tmp2$u.hap,nrow=tmp2$n.u.hap,byrow=TRUE)
+
 
 # code alleles for haplotpes with original labels
 # use I() to keep char vectors to factors in making a data.frame
@@ -263,7 +272,17 @@ uhap.df <- data.frame(uhapcode, tmp2$hap.prob, u.hap)
 names(uhap.df) <- c("hap.code","hap.prob",locus.label)
 
 indx.subj = tmp2$indx.subj + 1
-subj.used.id <-  subj.id[rows.keep][indx.subj]
+
+# in rare cases of very low LD, a subject gets removed by the trimming
+# of haplotypes add warning and offer options in this case
+
+if(length(unique(tmp2$indx.subj)) < n.subject) {
+  unique.subj <- unique(indx.subj)
+  rows.rem <- c(rows.rem, which(is.na(match(1:n.subject, unique.subj))))
+  warning("Subject(s) ", paste(rows.rem,sep=','), " removed in trimming steps.\n Try decreasing min.posterior control parameter to reduce trimming.\n")
+}
+
+subj.used.id <-  subj.id[indx.subj]
 
 
 # compute lnlike if no LD. This is a rough approximation which will

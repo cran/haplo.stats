@@ -1,3 +1,20 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:41:02 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/locator.haplo.Rd,v 1.1 2008/01/09 19:41:02 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: locator.haplo.Rd,v $
+% Revision 1.1  2008/01/09 19:41:02  sinnwell
+% Initial revision
+%
+%Revision 1.4  2004/03/02 21:55:33  sinnwell
+%comment out example
+%
+%Revision 1.3  2004/03/01 22:59:09  sinnwell
+%fix example
+%
+%Revision 1.2  2003/01/20 23:21:37  sinnwell
+%fixed RCS keywords
+
 \name{locator.haplo}
 \alias{locator.haplo}
 \title{

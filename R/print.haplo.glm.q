@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2005/03/29 14:18:47 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.glm.q,v 1.9 2005/03/29 14:18:47 sinnwell Exp $
+#$Date: 2008/04/04 16:10:18 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.glm.q,v 1.10 2008/04/04 16:10:18 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.glm.q,v $
+#Revision 1.10  2008/04/04 16:10:18  sinnwell
+#add show.missing and return coeffDF and hapDF by invisible
+#
 #Revision 1.9  2005/03/29 14:18:47  sinnwell
 #fix call to print within widths, different for R/Splus
 #®
@@ -32,7 +35,7 @@
 #Revision 1.1  2003/09/16 16:03:15  schaid
 #Initial revision
 #
-print.haplo.glm <- function(x, print.all.haplo=FALSE, digits = max(options()$digits - 4, 3), ...){
+print.haplo.glm <- function(x, print.all.haplo=FALSE, show.missing=FALSE, digits = max(options()$digits - 4, 3), ...){
 
   if(exists("is.R") && is.function(is.R) && is.R()) {
     x$call <- deparse(x$call, width.cutoff=40)
@@ -74,13 +77,15 @@ print.haplo.glm <- function(x, print.all.haplo=FALSE, digits = max(options()$dig
 
 #  printBanner("Regression Coefficients")
   cat("\nCoefficients:\n")
-  print(cbind(coef=coef, se=se, t.stat=t.stat, pval=pval), digits=digits)
+  coeff.df <- cbind(coef=coef, se=se, t.stat=t.stat, pval=pval)
+  print(coeff.df, digits=digits)
 
 #  cat("\n")
 #  printBanner("Hapoltypes and their Frequencies")
 
   cat("\nHaplotypes:\n")
-  print(haplo.df(x), digits=digits)
+  hap.df <- haplo.df(x)
+  print(hap.df, digits=digits)
   
 
   if(print.all.haplo){
@@ -97,5 +102,15 @@ print.haplo.glm <- function(x, print.all.haplo=FALSE, digits = max(options()$dig
 
     print(df)
   }
+
+  if(show.missing) {# & (nrow(miss.tbl) > 1)) {
+
+    cat("\nSubjects removed by NAs in y or x, or all NA in geno\n")
+    miss.tbl <- apply(1*x$missing, 2, sum)
+    print(miss.tbl)
+  }
+  
+  invisible(list(coeffDF=coeff.df, hapDF=hap.df))
+
 }
 

@@ -1,15 +1,18 @@
 Ginv                    Compute Generalized Inverse of Input Matrix
-allele.recode           Recode allele values to integer ranks
-dglm.fit                Density function for GLM fit
+chisq.power             Power and sample size for the chi-square
+                        distribution
+f.power                 Power and sample size for the F distribution
+find.haplo.beta.qt      Find beta's for risk haplotypes, for specified
+                        r2
 geno.count.pairs        Counts of Total Haplotype Pairs Produced by
                         Genotypes
-geno.recode             Recode Genotypes
+geno.recode             Internal functions for the HaploStats package
 geno1to2                convert genotype matrix from 1-column 2-column
+get.hapPair             Get a list of objects for haplotype pairs
 glm.fit.nowarn          Modified from glm.fit function to not warn
                         users for binomial non-integer weights.
 haplo.cc                Haplotype Association Analysis in a
                         Case-Control design
-haplo.chistat           Calculate a score test statistic for haplotypes
 haplo.design            Build a design matrix for haplotypes
 haplo.em                EM Computation of Haplotype Probabilities, with
                         Progressive Insertion of Loci
@@ -17,30 +20,23 @@ haplo.em.control        Create the Control Parameters for the EM
                         Computation of Haplotype Probabilities, with
                         Progressive Insertion of Loci
 haplo.em.fitter         Compute engine for haplotype EM algorithm
-haplo.enum              Enumerate all possible pairs of haplotypes that
-                        are consistent with a set of un-phased
-                        multilocus markers
 haplo.glm               GLM Regression of Trait on Ambiguous Haplotypes
 haplo.glm.control       Create list of control parameters for haplo.glm
 haplo.group             Frequencies for Haplotypes by Grouping Variable
 haplo.hash              Integer Rank Codes for Haplotypes
 haplo.model.frame       Sets up a model frame for haplo.glm
+haplo.power.cc          Compute either power or sample size for
+                        haplotype associations in a case-control study.
+haplo.power.qt          Compute either power or sample size for
+                        haplotype associations with a quantitative
+                        trait.
 haplo.scan              Search for a trait-locus by sliding a
                         fixed-width window over each marker locus and
                         scanning all possible haplotype lengths within
                         the window
-haplo.scan.obs          For observed data, slide a fixed-width window
-                        over each marker locus and scan all possible
-                        haplotypes within the window
-haplo.scan.sim          For simulated data, slide a fixed-width window
-                        over each marker locus and scan all possible
-                        haplotypes within the window
 haplo.score             Score Statistics for Association of Traits with
                         Haplotypes
-haplo.score.glm         Compute haplotype score statistics for GLM
 haplo.score.merge       Merge haplo.score And haplo.group Objects
-haplo.score.podds       Compute Haplotype Score Statistics for Ordinal
-                        Traits with Proportional Odds Model
 haplo.score.slide       Score Statistics for Association of Traits with
                         Haplotypes
 hla.demo                HLA Loci and Serologic Response to Measles
@@ -51,8 +47,6 @@ loci                    Create a group of locus objects from a genotype
                         matrix, assign to 'model.matrix' class.
 locus                   Creates an object of class "locus"
 louis.info              Louis Information for haplo.glm
-mf.gindx                Model Frame Genotype Index to Account for
-                        Missing Data in haplo.glm
 na.geno.keep            Remove rows with NA in covariates, but keep
                         genotypes with NAs
 plot.haplo.score        Plot Haplotype Frequencies versus Haplotype
@@ -73,7 +67,6 @@ print.haplo.score.slide
                         object
 print.seqhap            Print Contents of a Seqhap Object
 printBanner             Print a nice banner
-residScaledGlmFit       Scaled Residuals for GLM fit
 score.sim.control       Create the list of control parameters for
                         simulations in haplo.score
 seqhap                  Sequential Haplotype Scan Association Analysis
@@ -83,11 +76,7 @@ setupData               Set up an example dataset provided within the
                         library.
 setupGeno               Create a group of locus objects from a genotype
                         matrix, assign to 'model.matrix' class.
-sr.class                Return or set the class attribute of an object,
-                        compatible for both R and S-PLUS
-sr.strsplit             Split a vector of strings by a single character
 summary.haplo.em        Summarize contents of a haplo.em object
 summaryGeno             Summarize Full Haplotype Enumeration on
                         Genotype Matrix
-varfunc.glm.fit         Variance Function for GLM
 x.sexcheck              consistency checks for x.linked locus

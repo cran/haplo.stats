@@ -1,3 +1,9 @@
+% $Author: sinnwell $
+% $Date: 2008/01/04 22:16:54 $
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/setupData.Rd,v 1.1 2008/01/04 22:16:54 sinnwell Exp $
+% $Locker:  $ 
+% $Log:
+
 \name{setupData}
 \alias{setupData}
 \title{

@@ -1,7 +1,19 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 21:21:56 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/setupGeno.Rd,v 1.2 2008/01/09 21:21:56 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: setupGeno.Rd,v $
+% Revision 1.2  2008/01/09 21:21:56  sinnwell
+% *** empty log message ***
+%
+% Revision 1.1  2008/01/09 19:54:34  sinnwell
+% Initial revision
+%
+
 \name{setupGeno}
 \alias{setupGeno}
 \title{
-  Create a group of locus objects from a genotype matrix, assign to
+Create a group of locus objects from a genotype matrix, assign to
 'model.matrix' class.  
 }
 \description{

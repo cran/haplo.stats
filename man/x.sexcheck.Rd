@@ -1,3 +1,12 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:57:03 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/x.sexcheck.Rd,v 1.1 2008/01/09 19:57:03 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: x.sexcheck.Rd,v $
+% Revision 1.1  2008/01/09 19:57:03  sinnwell
+% Initial revision
+%
+
 \name{x.sexcheck}
 \alias{x.sexcheck}
 \title{

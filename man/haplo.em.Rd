@@ -1,3 +1,42 @@
+% $Author: sinnwell $
+% $Date: 2008/01/08 20:21:53 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.Rd,v 1.1 2008/01/08 20:21:53 sinnwell Exp $ 
+% $Locker:  $ 
+% 
+%$Log: haplo.em.Rd,v $
+%Revision 1.1  2008/01/08 20:21:53  sinnwell
+%Initial revision
+%
+%Revision 1.15  2004/03/16 22:35:51  sinnwell
+%added empty space in example
+%
+%Revision 1.14  2004/03/16 15:56:04  sinnwell
+%alter returns for ps file
+%
+%Revision 1.13  2004/03/01 21:14:27  sinnwell
+%add example
+%
+%Revision 1.12  2004/02/26 22:53:55  sinnwell
+%remove alias-ed topics
+%
+%Revision 1.11  2004/02/23 20:26:07  sinnwell
+%add summary and print as topics, works as /alias for Rd
+%
+%Revision 1.10  2004/02/06 16:46:48  sinnwell
+%add parameter weights
+%
+%Revision 1.9  2003/10/15 14:28:48  schaid
+%*** empty log message ***
+%
+%Revision 1.8  2003/10/15 14:24:17  schaid
+%*** empty log message ***
+%
+%Revision 1.7  2003/09/19 21:40:48  schaid
+%*** empty log message ***
+%
+%Revision 1.6  2003/08/26 20:58:00  schaid
+%Major update of haplo.em, with new version using progressive insertion, and this helpfile reflecting the many changes in terms of parameters and returned values
+
 \name{haplo.em}
 \alias{haplo.em}
 \title{

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/04/06 20:40:00 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summary.haplo.em.q,v 1.7 2004/04/06 20:40:00 sinnwell Exp $
+#$Date: 2007/11/07 21:33:37 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summary.haplo.em.q,v 1.8 2007/11/07 21:33:37 sinnwell Exp $
 #$Locker:  $
 #$Log: summary.haplo.em.q,v $
+#Revision 1.8  2007/11/07 21:33:37  sinnwell
+#add digits
+#
 #Revision 1.7  2004/04/06 20:40:00  sinnwell
 #use nlines to limit lines in vignettes
 #
@@ -54,7 +57,8 @@
 # fax:      507-284-9542
 # email: schaid@mayo.edu
 # 
-summary.haplo.em <- function(object, show.haplo=FALSE, nlines=NULL, ...){
+summary.haplo.em <- function(object, show.haplo=FALSE,
+                             digits=max(options()$digits-2, 5), nlines=NULL, ...){
   
   printBanner("Subjects: Haplotype Codes and Posterior Probabilities")
 
@@ -62,10 +66,10 @@ summary.haplo.em <- function(object, show.haplo=FALSE, nlines=NULL, ...){
      hap1 <- object$haplotype[object$hap1code,]
      hap2 <- object$haplotype[object$hap2code,]
      df <- data.frame(subj.id=object$subj.id, hap1=hap1, hap2=hap2,
-                    posterior=round(object$post,5))
+                    posterior=round(object$post,digits))
   }  else{
      df <- data.frame(subj.id=object$subj.id, hap1code=object$hap1code, hap2code=object$hap2code,
-                    posterior=round(object$post,5))
+                    posterior=round(object$post, digits))
   }
   if(is.null(nlines)) print(df)
   else print(df[1:nlines,])

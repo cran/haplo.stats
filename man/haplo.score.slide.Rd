@@ -1,3 +1,48 @@
+% $Author: sinnwell $ 
+% $Date: 2008/04/14 19:54:34 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.slide.Rd,v 1.3 2008/04/14 19:54:34 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: haplo.score.slide.Rd,v $
+% Revision 1.3  2008/04/14 19:54:34  sinnwell
+% change eps.svd note
+%
+% Revision 1.2  2008/04/10 14:36:49  sinnwell
+% add eps.svd
+%
+% Revision 1.1  2008/01/09 19:38:58  sinnwell
+% Initial revision
+%
+%Revision 1.11  2007/04/12 21:52:57  sinnwell
+%add \s-arg
+%Revision 1.10  2007/01/25 22:45:26  sinnwell
+%add haplo.effect and min.count
+%
+%Revision 1.9  2005/03/03 20:50:55  sinnwell
+%change default for skip.haplo
+%
+%Revision 1.8  2004/03/24 14:40:26  sinnwell
+%comment out examples, except data setup, so users may uncomment and run
+%
+%Revision 1.7  2004/03/22 20:17:58  sinnwell
+%shorten example
+%
+%Revision 1.6  2004/03/16 22:27:33  sinnwell
+%put plot examples here to consolidate running the function
+%
+%Revision 1.5  2004/03/03 15:40:18  sinnwell
+%add labels in example function calls
+%
+%Revision 1.4  2004/03/02 20:27:28  sinnwell
+%binomial to ordinal in second example call
+%Revision 1.3  2004/03/01 22:46:41  sinnwell
+%fix examples
+%
+%Revision 1.2  2004/02/16 17:32:06  sinnwell
+%change F to FALSE
+%
+%Revision 1.1  2003/08/22 20:04:58  sinnwell
+%Initial revision
+
 \name{haplo.score.slide}
 \alias{haplo.score.slide}
 \title{
@@ -12,10 +57,10 @@ simulated p-values.
 }
 \usage{
 haplo.score.slide(y, geno, trait.type="gaussian", n.slide=2,
-                  offset = NA, x.adj = NA, 
-                  haplo.effect="additive", min.count=5,
+                  offset = NA, x.adj = NA, min.count=5,
                   skip.haplo=min.count/(2*nrow(geno)),
                   locus.label=NA, miss.val=c(0,NA),
+                  haplo.effect="additive", eps.svd=1e-5,
                   simulate=FALSE, sim.control=score.sim.control(),
                   em.control=haplo.em.control())
 }
@@ -49,13 +94,6 @@ Matrix of non-genetic covariates used to adjust the score
 statistics.  Note that intercept should not be included, 
 as it will be added in this function. 
 }
-\item{haplo.effect }{
-The "effect" pattern of haplotypes on the response. This parameter
-determines the coding for scoring the haplotypes. 
-Valid coding options for heterozygous and homozygous carriers of a
-haplotype are "additive" (1, 2, respectively), "dominant" (1,1,
-respectively), and "recessive" (0, 1, respectively).
-}
 \item{min.count }{
 The minimum number of counts for a haplotype to be included in the
 model.  First, the haplotypes selected to score are chosen by minimum
@@ -76,6 +114,17 @@ Vector of labels for loci, of length K (see definition of geno matrix).
 }
 \item{miss.val }{
 Vector of codes for missing values of alleles.
+}
+\item{haplo.effect }{
+The "effect" pattern of haplotypes on the response. This parameter
+determines the coding for scoring the haplotypes. 
+Valid coding options for heterozygous and homozygous carriers of a
+haplotype are "additive" (1, 2, respectively), "dominant" (1,1,
+respectively), and "recessive" (0, 1, respectively).
+}
+\item{eps.svd}{
+ epsilon value for singular value cutoff; to be used in the generalized
+ inverse calculation on the variance matrix of the score vector. 
 }
 \item{simulate}{
 Logical, if [F]alse (default) no empirical p-values are computed.

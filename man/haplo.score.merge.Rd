@@ -1,3 +1,24 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:36:04 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.merge.Rd,v 1.1 2008/01/09 19:36:04 sinnwell Exp $ 
+% $Locker:  $
+% $Log: haplo.score.merge.Rd,v $
+% Revision 1.1  2008/01/09 19:36:04  sinnwell
+% Initial revision
+%
+%Revision 1.4  2004/03/01 22:36:18  sinnwell
+%fix example
+%
+%Revision 1.3  2003/06/25 15:40:52  sinnwell
+%parameter names fixed in examples
+%
+%Revision 1.2  2003/03/12 22:33:13  sinnwell
+%fix comments%
+%
+%Revision 1.1  2003/01/17 16:57:06  sinnwell
+%Initial revision
+
+
 \name{haplo.score.merge}
 \alias{haplo.score.merge}
 \title{

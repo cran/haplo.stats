@@ -1,3 +1,35 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 20:56:47 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno.count.pairs.Rd,v 1.1 2008/01/09 20:56:47 sinnwell Exp $ 
+% $Locker:  $
+% $Log: geno.count.pairs.Rd,v $
+% Revision 1.1  2008/01/09 20:56:47  sinnwell
+% Initial revision
+%
+%Revision 1.8  2004/03/17 16:53:36  sinnwell
+%raided to raised
+%
+%Revision 1.7  2004/03/15 15:53:57  sinnwell
+%summary.geno to summaryGeno
+%
+%Revision 1.6  2004/03/12 17:49:44  sinnwell
+%change 2^(h-1) to 2 raised (h-1) for Rd errors
+%
+%Revision 1.5  2004/03/01 21:09:47  sinnwell
+%make example run-able
+%
+%Revision 1.4  2003/04/21 20:15:26  sinnwell
+%correct usage section
+%
+%Revision 1.3  2003/04/15 12:59:30  schaid
+%updated description of details
+%
+%Revision 1.2  2003/04/14 13:41:14  sinnwell
+%description change
+%
+%Revision 1.1  2003/04/09 18:43:50  sinnwell
+%Initial revision
+
 \name{geno.count.pairs}
 \alias{geno.count.pairs}
 \title{

@@ -1,3 +1,45 @@
+% $Author: sinnwell $ 
+% $Date: 2008/03/24 21:13:26 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.Rd,v 1.3 2008/03/24 21:13:26 sinnwell Exp $
+% $Locker:  $ 
+% $Log: haplo.glm.Rd,v $
+% Revision 1.3  2008/03/24 21:13:26  sinnwell
+% rm allele.lev and miss.val, recommend setupGeno in details, add missing in return object
+%
+% Revision 1.2  2008/03/19 21:32:38  sinnwell
+% change converge.em description
+%
+% Revision 1.1  2008/01/08 22:39:02  sinnwell
+% Initial revision
+%
+%Revision 1.9  2004/03/16 22:34:30  sinnwell
+%reduce data to make run faster
+%
+%Revision 1.8  2004/03/16 16:59:50  sinnwell
+%add return chars
+%
+%Revision 1.7  2004/03/12 18:02:10  sinnwell
+%add returns in usage
+%
+%Revision 1.6  2004/03/11 15:52:18  sinnwell
+%fix more with setupGeno
+%
+%Revision 1.5  2004/03/10 15:54:16  sinnwell
+%comments for allele.lev, final use of setupGeno and allele.lev in example
+%
+%Revision 1.4  2004/03/03 22:14:18  schaid
+%added allele.lev
+%
+%Revision 1.3  2004/03/01 21:22:57  sinnwell
+%fix example
+%
+%Revision 1.2  2004/02/16 17:26:08  sinnwell
+%change T/F to TRUE/FALSE for R code-doc agreement
+%
+%Revision 1.1  2003/09/16 16:02:02  schaid
+%Initial revision
+
+
 \name{haplo.glm}
 \alias{haplo.glm}
 \title{
@@ -12,8 +54,8 @@ coefficients used to update the posterior probabilities.
 }
 \usage{
 haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
-           weights, na.action="na.geno.keep", start=eta, miss.val=c(0,NA),
-           locus.label=NA, allele.lev=NULL, control=haplo.glm.control(), 
+           weights, na.action="na.geno.keep", start=eta, 
+           locus.label=NA, control=haplo.glm.control(), 
            method="glm.fit", model=FALSE, x=FALSE, y=TRUE, 
            contrasts=NULL, ...)
 }
@@ -39,13 +81,13 @@ haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
   columns of alleles, and the order of columns corresponds to 
   the order of loci on a chromosome.  If there are K loci, then 
   ncol(geno) = 2*K. Rows represent the alleles for each subject. It is
-  also CRITICAL that this matrix is defined as a model.matrix, in order
-  to keep the columns of the matrix packaged together into the single
+  also CRITICAL that this matrix is defined as a model.matrix, so
+  the columns of the matrix are packaged together into a single
   matrix object. If geno is a matrix of alleles, then before adding it to
-  the data frame, use the following command to convert it to a
-  model.matrix:  oldClass(geno) <- "model.matrix". If geno is a data.frame of
-  alleles, you must first convert geno to a matrix, using geno <-
-  as.matrix(geno), and then convert it to a model.matrix.
+  the data frame, use the setupGeno() function, which will assign this
+  correct class.  The function will also recode alleles to numeric
+  starting from 1, while saving the original alleles in the unique.alleles
+  attribute.  This attribute is required in haplo.glm.
 }
 \item{weights}{
   the weights for observations (rows of the data frame). By default, all
@@ -54,8 +96,8 @@ haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
 \item{na.action }{
   a function to filter missing data. This is applied to the
   model.frame. The default value of na.action=na.geno.keep will keep
-  observations with missing alleles, but exclude observations missing
-  any other data (e.g., response variable, other covariates,
+  observations with some (but not all) missing alleles, but exclude
+  observations missing any other data (e.g., response variable, other covariates,
   weight). The EM algorithm for ambiguous haplotypes accounts
   for missing alleles. Similar to the usual glm, na.fail creates an error if any
   missing values are found, and a third possible alternative is na.exclude,
@@ -66,19 +108,8 @@ haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
   a vector of initial values on the scale of the linear
   predictor.
 }
-\item{miss.val }{
-  vector of values that represent missing alleles in geno matrix.
-}
 \item{locus.label }{
   vector of labels for loci.
-}
-\item{allele.lev }{
-This argument is optional ONLY for S-PLUS, but is REQUIRED for
-R. This is a list of vectors, each vector giving the labels of alleles
-for each locus. The list is made an attribute of geno<-setupGeno(geno). This is
-required to account for the differences in which S-PLUS and R handle
-character data (allele labels) in a model.frame.  See its use in the example
-below.
 }
 \item{control}{
   list of control parameters. The default is constructed by the function
@@ -100,7 +131,6 @@ below.
   default, x=FALSE.
 }
 \item{y}{
- 
   a logical flag. The default value of y=TRUE causes the response
   variable to be returned.
 }
@@ -257,8 +287,7 @@ the initial estimates of haplotype frequencies, based on the EM
   using the regression model to update the haplotype frequencies.
 }
 \item{converge.em}{
-T/F whether the initial EM algorithm for estimating haplo.freq.init
-  converged.
+T/F whether the EM-glm steps converged
 }
 \item{haplo.common}{
 the indices of the haplotypes determined to be "common" enough to
@@ -307,12 +336,19 @@ the indices of the haplotypes eliminated from the info and var.mat
   minimum haplotype frequency required for computation of the
   information matrix - see haplo.glm.control)
 }
+\item{missing}{
+a matrix of logical values, indicating whether rows of data were
+removed for missing values in either genotype matrix (genomiss) or
+any other variables (yxmiss), such as y, other covariates, or weights.  
+}
 \item{rank.info}{
 rank of information (info) matrix.
 }
 }
 \details{
-
+  To properly prepare the data frame, the genotype matrix must be
+  processed by setupGeno, and then included in the data frame with the
+  response and other variables.
 }
 \section{References}{
   Lake S, Lyon H, Silverman E, Weiss S, Laird N, Schaid D (2002)

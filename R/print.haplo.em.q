@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2004/04/06 20:39:39 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.em.q,v 1.4 2004/04/06 20:39:39 sinnwell Exp $
+#$Date: 2008/02/11 22:52:27 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.em.q,v 1.6 2008/02/11 22:52:27 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.em.q,v $
+#Revision 1.6  2008/02/11 22:52:27  sinnwell
+#edit the message for missing rows
+#
+#Revision 1.5  2007/11/07 21:03:39  sinnwell
+#add digits
+#
 #Revision 1.4  2004/04/06 20:39:39  sinnwell
 #use nlines to limit printouts in vignettes
 #
@@ -44,11 +50,12 @@
 # phone: 507-284-0639
 # fax:      507-284-9542
 # email: schaid@mayo.edu
-# 
-print.haplo.em <- function(x, nlines=NULL, ...){
+#
+
+print.haplo.em <- function(x, digits=max(options()$digits-2, 5), nlines=NULL, ...){
 
   printBanner("Haplotypes")
-  df <- data.frame(x$haplotype,round(x$hap.prob,5))
+  df <- data.frame(x$haplotype,round(x$hap.prob,digits))
   names(df) <- c(x$locus.label, "hap.freq")
   if(is.null(nlines)) print(df)
   else print(df[1:nlines,])
@@ -62,13 +69,11 @@ print.haplo.em <- function(x, nlines=NULL, ...){
   pval <- NA
   if(x$df.lr > 0) pval = 1-pchisq(x$lr, x$df.lr)
   
-  cat("lnlike = ",round(x$lnlike,6),"\n")
-  cat("lr stat for no LD = ",round(x$lr,6),", df = ",x$df.lr,", p-val = ",round(pval,6),"\n")
-  n.rem <- length(x$rows.rem)
-  if(n.rem > 0) {
-     cat("\nRow number of subjects removed because max number of pairs of haplotypes > enum.limit\n")
-     tbl <- data.frame(row.num=x$rows.rem, max.pairs=x$max.pairs[x$rows.rem])
-    
+  cat("lnlike = ",round(x$lnlike,digits),"\n")
+  cat("lr stat for no LD = ",round(x$lr,digits),", df = ",x$df.lr,", p-val = ",round(pval,digits),"\n")
+
+  if(length(x$rows.rem > 0)) {
+     cat("\nResults may be incomplete because one or more subjects was removed\n")
    }
 
   invisible()

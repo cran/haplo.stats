@@ -1,8 +1,15 @@
 #$Author: sinnwell $
-#$Date: 2007/02/01 20:25:29 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.q,v 1.15 2007/02/01 20:25:29 sinnwell Exp $
+#$Date: 2008/04/14 19:46:26 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.q,v 1.17 2008/04/14 19:46:26 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.q,v $
+#Revision 1.17  2008/04/14 19:46:26  sinnwell
+#make exception if yxmiss not added in na.geno.keep b/c no NAs
+#
+#Revision 1.16  2008/03/24 21:22:25  sinnwell
+#rm allele.lev, miss.val parameters, re-work model.frame code, yet leave old ode there.
+#return missing info from na.geno.keep
+#
 #Revision 1.15  2007/02/01 20:25:29  sinnwell
 #starting values for eta taken out of fit.null and updated correctly
 #at each step of while loop
@@ -53,15 +60,14 @@
 #Revision 1.1  2003/09/16 16:01:54  schaid
 #Initial revision
 #
+
 haplo.glm     <- function(formula = formula(data),
                           family = gaussian, 
                           data = sys.parent(),
                           weights,
                           na.action="na.geno.keep",
                           start = eta,
-                          miss.val=c(0,NA),
                           locus.label=NA,
-                          allele.lev = NULL,
                           control = haplo.glm.control(),
                           method = "glm.fit",
                           model = FALSE,
@@ -71,25 +77,62 @@ haplo.glm     <- function(formula = formula(data),
                           ...) {
   
   call <- match.call()
-
-  m <- match.call(expand.dots = FALSE)
-
-  if(is.null(m$na.action)) m$na.action=as.list(args(haplo.glm))$na.action
-
-  m$family <- m$miss.val <-  m$locus.label <- m$control <- m$method <- m$model <- m$x <- m$y <- NULL
-  m$contrasts <- m$print.iter <- m$allele.lev <- m$... <- NULL
-
-  m$drop.unused.levels <- TRUE
-
-  m[[1]] <- as.name("model.frame")
   
-  m <- eval(m, sys.parent())
-  Terms <- attr(m, "terms")
+## JPS added new model.frame code
 
+  # Create a model.frame call with formula elements only 
+  frame.call <- call('model.frame', formula=formula)
+
+  # Steps to assign args to model.frame call, Terry Therneau 7/2005
+  # assign desired parameters from Call to frame.call
+  k=length(frame.call)
+
+    # because R doesn't automatically name model.frame column names
+    # let k keep track of index of last element of frame.call,
+    # and assign the name (only when using R)
+
+  for(i in c('data', 'weights', 'subset', 'na.action', 'drop.unused.levels'))
+    {
+      if(!is.null(call[[i]])) {
+        frame.call[[i]] <- call[[i]]
+        k <- k+1
+        if(is.R()) names(frame.call)[k]=i
+      }
+
+    }
+
+  # if no drop.unused.levels or na.action given, assign them
+  if(is.null(frame.call$drop.unused.levels)) frame.call$drop.unused.levels <- TRUE
+  if(is.null(frame.call$na.action)) frame.call$na.action=as.list(args(haplo.glm))$na.action
+  
+  # evaluate the call
+  m <- eval(frame.call, sys.parent())
+
+  Terms <- attr(m, "terms")
+  
+
+# OLD model.frame code
+  
+#  m <- match.call(expand.dots = FALSE)
+  
+#  if(is.null(m$na.action)) m$na.action=as.list(args(haplo.glm))$na.action
+
+#  m$family <- m$miss.val <-  m$locus.label <- m$control <- m$method <- m$model <- m$x <- m$y <- NULL
+#  m$contrasts <- m$print.iter <- m$allele.lev <- m$... <- NULL
+
+#  m$drop.unused.levels <- TRUE
+  
+#  m[[1]] <- as.name("model.frame") 
+#  m <- eval(m, sys.parent())
+#  Terms <- attr(m, "terms")
+
+  # save missing value information from model.frame, na.action
+  if(!is.null(attributes(m)$yxmiss) & !is.null(attributes(m)$gmiss)) 
+     missing <- data.frame(yxmiss=attributes(m)$yxmiss, genomiss=attributes(m)$gmiss)
+  
   # set design matrix contrasts
-  contrasts.tmp <- c(factor="contr.treatment", ordered = "contr.poly")
   contrasts.old <- options()$contrasts
-  options(contrasts = contrasts.tmp)
+  options(contrasts = c(factor="contr.treatment", ordered = "contr.poly"))
   on.exit(options(contrasts=contrasts.old))
 
   # Extract  weights per subject
@@ -106,20 +149,20 @@ haplo.glm     <- function(formula = formula(data),
   else if(any(wt.subj < 0))
     stop("negative weights not allowed")
 
+
   # for control, base minimum haplotype frequencies on haplo.min.count
   # as precedent over haplo.freq.min, the min count is 5
   if(is.na(control$haplo.freq.min))
-    control$haplo.freq.min <- control$haplo.min.count/(2*nrow(data))
-  
+    control$haplo.freq.min <- control$haplo.min.count/(2*nrow(m))
+
   ####### Modify model.frame ####################################################
   # Translate from unphased genotype matrix to haplotype design matrix
   # Use haplo.model.frame to modify the model.frame. Note that haplo.model.frame
   # calls haplo.em to estimate haplotype frequencies.
+  
+  haplo.mf <- haplo.model.frame(m, locus.label=locus.label, control=control)
 
-  haplo.mf <- haplo.model.frame(m, locus.label=locus.label, allele.lev = allele.lev, 
-                                miss.val=miss.val, control=control)
-
-
+  
   # Now extract the model.frame created by haplo.model.frame
   m <- haplo.mf$m.frame
 
@@ -197,7 +240,6 @@ haplo.glm     <- function(formula = formula(data),
         xvars <- xvars[-yvar]
    } 
 
-
   if(length(xvars) > 0) {
     xlevels <- lapply(m[xvars], levels)
     xlevels <- xlevels[!sapply(xlevels, is.null)]
@@ -215,11 +257,10 @@ haplo.glm     <- function(formula = formula(data),
     Y <- model.extract(m, response)
   }
 
-
   X <- model.matrix(Terms, m, contrasts)
 
   start <- model.extract(m, start)
-
+  
   if(exists("is.R") && is.function(is.R) && is.R()) {
       offset <- model.offset(m)
    } else{
@@ -257,10 +298,10 @@ haplo.glm     <- function(formula = formula(data),
 
   if(exists("is.R") && is.function(is.R) && is.R()) {
     
-    # switch fitter for binomial because it gives unneeded warnings
+     # switch fitter for binomial because it gives unneeded warnings
     if(family$family=="binomial") glm.fitter=glm.fit.nowarn
-
-    # get the null fit
+    
+     # get the null fit
     fit.null <- glm.fitter(x = X[, "(Intercept)", drop = FALSE],
                             y = Y, 
                             weights = w, 
@@ -268,7 +309,7 @@ haplo.glm     <- function(formula = formula(data),
                             offset = offset, 
                             family = family, 
                             control=glm.control(maxit = control$maxit, epsilon = control$epsilon))
-   } else{
+  } else {
      fit.null <- glm.fitter(x = X[, "(Intercept)", drop = FALSE],
                             y = Y, 
                             w = w,
@@ -276,10 +317,8 @@ haplo.glm     <- function(formula = formula(data),
                             offset = offset, 
                             family = family, 
                             maxit = control$maxit, 
-                            epsilon = control$epsilon)   
-  }
-
-
+                            epsilon = control$epsilon)
+   }
 
   dfit <- dglm.fit(fit.null)
 
@@ -446,6 +485,7 @@ haplo.glm     <- function(formula = formula(data),
   fit$var.mat <- tmp$var.mat
   fit$haplo.elim <- tmp$haplo.elim
   fit$rank.info <- tmp$rank
+  fit$missing <- missing
   
   if(!x) fit$x <- NULL
 

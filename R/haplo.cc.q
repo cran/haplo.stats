@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2007/03/30 20:02:39 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.cc.q,v 1.12 2007/03/30 20:02:39 sinnwell Exp $
+#$Date: 2008/04/10 20:58:36 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.cc.q,v 1.13 2008/04/10 20:58:36 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.cc.q,v $
+#Revision 1.13  2008/04/10 20:58:36  sinnwell
+#add eps.svd, only allow haplo.min.count in control()
+#
 #Revision 1.12  2007/03/30 20:02:39  sinnwell
 #control random seed values before each call
 #
@@ -45,8 +48,8 @@
 ## Mayo Clinic, Rochester MN
 ## 1/2004
 
-haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
-                     miss.val=c(0,NA), weights=NULL, simulate=FALSE,
+haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
+                     miss.val=c(0,NA), weights=NULL, eps.svd=1e-5, simulate=FALSE,
                      sim.control=score.sim.control(),
                      control=haplo.glm.control())
 
@@ -90,17 +93,20 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
   
   # set skip.haplo and hap.freq.min for haplo.glm to be the same, meeting
   # min. number of expected counts per haplotypes
-  if(haplo.min.count < 1)
-    warning("haplo.min.count may be too small for reliable results\n")
+  haplo.min.count <- control$haplo.min.count
+  haplo.freq.min <- control$haplo.freq.min
+  if(is.na(haplo.min.count)) haplo.min.count <- haplo.freq.min*2*nrow(geno)
   
-  skip.haplo <- control$haplo.freq.min <- haplo.min.count/(2*n.subj)
-  control$haplo.min.count=haplo.min.count
- 
+  if( !is.null(haplo.min.count) && haplo.min.count < 1)
+    warning("haplo.min.count may be too small for reliable results\n")
+
   set.seed(control$em.control$iseed)
   score.lst <- haplo.score(y=y, geno=geno, trait.type="binomial",
-                           skip.haplo=skip.haplo, locus.label=locus.label,
-                           miss.val=miss.val, simulate=simulate,
-                           sim.control=sim.control, em.control=control$em.c)
+                        min.count=haplo.min.count, 
+                        locus.label=locus.label,
+                        miss.val=miss.val, haplo.effect=control$haplo.effect,
+                        eps.svd=eps.svd, simulate=simulate,
+                        sim.control=sim.control, em.control=control$em.c)
                            
   # get haplotype frequency estimates within the two groups
   set.seed(control$em.control$iseed)
@@ -121,8 +127,7 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
   # prepare data for haplo.glm with binomial family logit link.
   # extract for Odds Ratios, exp(betas)
   geno.glm <- setupGeno(geno, miss.val=miss.val)
-  save.alleles <- attributes(geno.glm)$unique.alleles
-#  oldClass(geno) <- "model.matrix"
+  
   glm.data <- data.frame(geno.glm, y=y)
 
 # weights are not supported for haplo.glm in S-PLUS--take out for now
@@ -131,8 +136,8 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
   # will only get OR's for haplotypes with freq > haplo.freq.min, based on min.count
   # should be set same as skip.haplo so 1:1 merge of haps from merge.lst
   set.seed(control$em.control$iseed)
-  fit.lst <- haplo.glm(y~geno.glm, family=binomial, data=glm.data, # weights=weights
-                       locus.label=locus.label, allele.lev=save.alleles,
+  fit.lst <- haplo.glm(y~geno.glm, family=binomial, data=glm.data, 
+                       locus.label=locus.label,
                        miss.val=miss.val, control=control)
 
   ncoef <- length(fit.lst$coef)
