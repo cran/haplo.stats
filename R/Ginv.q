@@ -1,22 +1,34 @@
 #$Author: sinnwell $
 #
-#$Date: 2005/03/31 15:18:08 $
+#$Date: 2005/09/19 14:36:11 $
 #
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/Ginv.q,v 1.7 2005/03/31 15:18:08 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/Ginv.q,v 1.11 2005/09/19 14:36:11 sinnwell Exp $
 #
-#$Id: Ginv.q,v 1.7 2005/03/31 15:18:08 sinnwell Exp $
+#$Id: Ginv.q,v 1.11 2005/09/19 14:36:11 sinnwell Exp $
 #
 #$Locker:  $
 #
 #$Log: Ginv.q,v $
+#Revision 1.11  2005/09/19 14:36:11  sinnwell
+#explain change to svd.Matrix
+#
+#Revision 1.10  2005/09/09 13:36:06  sinnwell
+#make exception to only attach Matrix if not in search()
+#
+#Revision 1.9  2005/08/09 15:12:52  sinnwell
+#allow 1-d matrix, just 1/x and rank is 1
+#
+#Revision 1.8  2005/06/20 19:40:38  sinnwell
+#for Splus give Ginv class matrix, not Matrix, dene
+#
 #Revision 1.7  2005/03/31 15:18:08  sinnwell
 #re-new Matrix class Ginv, problem was in haplo.score
-#
 #
 #Revision 1.6  2005/03/30 16:35:02  sinnwell
 #revert to version 1.4, errors with Matrix class
 #
 #Revision 1.5  2005/03/17 22:35:02  sinnwell
+# because of numerical error 120 in haplo.scan svd.default with LINPACK
 #use LAPACK version of svd Splus: svd.Matrix; R it is svd(LINPACK=FALSE)
 #
 #Revision 1.4  2003/08/26 16:39:04  sinnwell
@@ -62,27 +74,52 @@
 # email: schaid@mayo.edu
 #
 
-Ginv<-function(x){
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-    savesvd <- svd(x, LINPACK=FALSE)
-    U.svd<-savesvd$u
-    V.svd<-savesvd$v
-    d.svd<-savesvd$d
+Ginv<-function(x) {
 
-  } else{
-    library(Matrix)
-    savesvd<-svd.Matrix(x)
-    U.svd<-savesvd$vectors$left
-    V.svd<-savesvd$vectors$right
-    d.svd<-savesvd$values
+  # We use Matrix class svd method because haplo.scan(HaploStats had num.
+  # error 120 with svd.default, which uses LINPACK
+  # svd.Matrix uses LAPACK svd method, the new standard
+  # in R, default is LAPACK svd.
+
+  # Check if Matrix is attached, if not, attach and detach at the end.
+  # if attached, use svd.Matrix
+  needMatrix <- TRUE
+  if(length(x)>1) {
+    if(exists("is.R") && is.function(is.R) && is.R()) {
+      savesvd <- svd(x, LINPACK=FALSE)
+      U.svd<-savesvd$u
+      V.svd<-savesvd$v
+      d.svd<-savesvd$d
+      
+    } else{
+      needMatrix <- TRUE
+      needMatrix <- is.na(match("Matrix", search()))
+      if(needMatrix)
+        library(Matrix)
+      
+      savesvd<-svd.Matrix(x)
+      U.svd<-savesvd$vectors$left
+      V.svd<-savesvd$vectors$right
+      d.svd<-savesvd$values
+    }
+
+    eps<- 1e-6
+    maxd<-max(d.svd)
+    w<-ifelse((d.svd/maxd) < eps, rep(0,length(d.svd)), 1/d.svd)
+    df<-sum(d.svd/maxd >= eps)
+
+    Ginv <- V.svd %*% diag(w) %*% t(U.svd)
+
+    if(!(exists("is.R") && is.function(is.R) && is.R())) {
+      Ginv <- matrix(as.vector(Ginv),ncol=ncol(Ginv))
+      if(needMatrix)
+        detach("Matrix")
+    }
+  }else {
+    # x is 1 by 1
+    Ginv <- 1/x
+    df=1
   }
   
-  eps<- 1e-6
-  maxd<-max(d.svd)                                  
-  w<-ifelse((d.svd/maxd) < eps, rep(0,length(d.svd)), 1/d.svd)
-  df<-sum(d.svd/maxd >= eps)
-
-  Ginv <- V.svd %*% diag(w) %*% t(U.svd)
-
   list(Ginv=Ginv,rank=df)
 }

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2005/03/10 17:36:16 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.cc.q,v 1.7 2005/03/10 17:36:16 sinnwell Exp $
+#$Date: 2005/06/03 14:32:58 $
+#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.cc.q,v 1.8 2005/06/03 14:32:58 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.cc.q,v $
+#Revision 1.8  2005/06/03 14:32:58  sinnwell
+#adjust haplo.rare if l.t. haplo.min.info
+#
 #Revision 1.7  2005/03/10 17:36:16  sinnwell
 #make haplo.min.count persist in haplo.glm
 #
@@ -130,8 +133,11 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
   hap.OR <- c(1,exp(hap.coef))
   OR.df <- cbind(lower.ci, hap.OR, upper.ci)
   
+  ## when a rare haplotype is below haplo.min.info, & not part of model
+  ## need to remove from haplo.rare    --JPS 6/2005
+  fit.lst$haplo.rare <- fit.lst$haplo.rare[fit.lst$haplo.freq[fit.lst$haplo.rare] > control$haplo.min.info]
+
   ## combine haps, OR's and CI's in a data.frame 
-    
   fit.df <- as.data.frame(fit.lst$haplo.unique)[c(fit.lst$haplo.base,
                                           fit.lst$haplo.common, fit.lst$haplo.rare),]
 
