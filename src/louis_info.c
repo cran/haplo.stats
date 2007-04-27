@@ -1,9 +1,12 @@
 /* $Author: schaid $ */
-/* $Date: 2004/02/02 17:08:41 $ */
-/* $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/louis_info.c,v 1.7 2004/02/02 17:08:41 schaid Exp $ */
+/* $Date: 2007/02/27 20:18:43 $ */
+/* $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/louis_info.c,v 1.8 2007/02/27 20:18:43 schaid Exp $ */
 /* $Locker:  $ */
 /* 
  * $Log: louis_info.c,v $
+ * Revision 1.8  2007/02/27 20:18:43  schaid
+ * changed long to int
+ *
  * Revision 1.7  2004/02/02 17:08:41  schaid
  * removed some dead code
  *
@@ -31,9 +34,9 @@
 #include <string.h>
 #include <S.h>
 
-static double **double_vec_to_mat(double *Yvec, long nrow, long ncol);
-static double **double_matrix(long nrow, long ncol);
-static double *double_vec(long n);
+static double **double_vec_to_mat(double *Yvec, int nrow, int ncol);
+static double **double_matrix(int nrow, int ncol);
+static double *double_vec(int n);
 static void errmsg(char *string);
 
 /* Louis Information matrix for GLM regression coefficients and 
@@ -41,17 +44,17 @@ static void errmsg(char *string);
 
 
 void louis_info(
-     long *len_tot,      /* total length of: indx_subj, resid, vfunc, wt, h1, h2 */
-     long *indx_subj,    /* vec of subj indices                                  */
+     int *len_tot,      /* total length of: indx_subj, resid, vfunc, wt, h1, h2 */
+     int *indx_subj,    /* vec of subj indices                                  */
      double *resid,      /* vec of standardized residuals                        */
      double *vfunc,      /* vec of var function                                  */
      double *wt,         /* vec of weights                                       */
      double *xvec,       /* vec of xmatrix, col-major order (len=len_tot * ncov) */
-     long *ncov,         /* number of glm covariates                             */
-     long *h1,           /* vec of haplo index code for subjects' first haplo    */
-     long *h2,           /* vec of haplo index code for subjects' second haplo   */
-     long *hap_base,     /* scalar baseline haplotype index                      */
-     long *nhap,         /* number of haplotypes (including base) = len hap_freq */
+     int *ncov,         /* number of glm covariates                             */
+     int *h1,           /* vec of haplo index code for subjects' first haplo    */
+     int *h2,           /* vec of haplo index code for subjects' second haplo   */
+     int *hap_base,     /* scalar baseline haplotype index                      */
+     int *nhap,         /* number of haplotypes (including base) = len hap_freq */
      double *hap_freq,   /* vec of haplo frequencies                             */
      double *info11,     /* infor matrix of GLM coefs, as vector col-major       */
      double *info12,     /* info matrix of GLM coef, hap freq, in vec col-major  */
@@ -63,7 +66,7 @@ void louis_info(
   double *tempvec1, *tempvec2;
 
   double t1, t2, t3, t4, baseFrqSqr;
-  long i, r, r2, c, c1, c2, h, indx_start, indx_end, subj_id, nh, size_max;
+  int i, r, r2, c, c1, c2, h, indx_start, indx_end, subj_id, nh, size_max;
 
   /* set up working vectors and matrices */
 
@@ -404,9 +407,9 @@ void louis_info(
 
 /***********************************************************************************/
 
-static double **double_vec_to_mat(double *Yvec, long nrow, long ncol){
+static double **double_vec_to_mat(double *Yvec, int nrow, int ncol){
 
-   long i,j,k;
+   int i,j,k;
    double **Y;
 
    Y=double_matrix(nrow,ncol);
@@ -423,9 +426,9 @@ static double **double_vec_to_mat(double *Yvec, long nrow, long ncol){
 
 /*********************************************************************************/
 
-static double **double_matrix(long nrow, long ncol){
+static double **double_matrix(int nrow, int ncol){
 /* allocate double matrix with subscript range m[0 ..(nrow-1)][0..(ncol-1)] */
-        long i;
+        int i;
         double **m;
 
         /* allocate pointers to rows */
@@ -444,7 +447,7 @@ static double **double_matrix(long nrow, long ncol){
 
 /*********************************************************************************/
 
-static double *double_vec(long n){
+static double *double_vec(int n){
 /* allocate double vec with subscript range v[0 ..(nrow-1)] */
         double *v;
         v =(double *) Calloc(n, double);

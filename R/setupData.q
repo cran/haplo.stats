@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2004/03/01 20:57:36 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/setupData.q,v 1.1 2004/03/01 20:57:36 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/setupData.q,v 1.1 2004/03/01 20:57:36 sinnwell Exp $
 #$Locker:  $
 #$Log: setupData.q,v $
 #Revision 1.1  2004/03/01 20:57:36  sinnwell

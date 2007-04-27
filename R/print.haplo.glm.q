@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2005/03/29 14:18:47 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/print.haplo.glm.q,v 1.9 2005/03/29 14:18:47 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.glm.q,v 1.9 2005/03/29 14:18:47 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.glm.q,v $
 #Revision 1.9  2005/03/29 14:18:47  sinnwell

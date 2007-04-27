@@ -10,7 +10,8 @@ binary (case-control) trait and the haplotypes relevant to the
 unrelated individuals' genotypes.
 }
 \usage{
-haplo.cc(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95, miss.val=c(0,NA),
+haplo.cc(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95, 
+                     miss.val=c(0,NA), weights=NULL,
                      simulate=FALSE, sim.control=score.sim.control(),
                      control=haplo.glm.control())
 }
@@ -38,6 +39,11 @@ Vector of labels for loci, of length K (see definition of geno matrix)
 }
 \item{miss.val }{
 Vector of codes for missing values of alleles
+}
+\item{weights}{
+the weights for observations (rows of the data frame). By default, all
+observations are weighted equally.  One use is to correct for
+over-sampling of cases in a case-control sample.
 }
 \item{simulate}{
 Logical:  if [F]alse, no empirical p-values are computed; if [T]rue,
@@ -138,4 +144,4 @@ ambiguous. Human Heredity. 55 (2003):  56-65
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

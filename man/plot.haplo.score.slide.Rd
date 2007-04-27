@@ -55,6 +55,11 @@ line at the height of -log10(p-value) drawn across the loci over which
 it was calculated.  Therefore a p-value of 0.001 for the first 3 loci
 will plot as a horizontal line plotted at y=3 covering the first three
 tick marks.  
+If the p-value for a set of loci is zero or very near zero, it is set
+to a minimum.  Global asymptotic p-values of zero are set to the
+minimum of an epsilon or the lowest non-zero p-value in the region.
+Simulated p-values equal to zero are set to 0.5 divided by the total number of
+simulations performed.
 }
 \section{References}{
 Schaid DJ, Rowland CM, Tines DE, Jacobson RM,  Poland  GA.
@@ -65,7 +70,7 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 \code{\link{haplo.score.slide}}
 }
 \examples{
-# This example has a long run time, therefore it is commented
+# This example has a long run-time, therefore it is commented
 
 #   setupData(hla.demo)
 #   attach(hla.demo)
@@ -85,4 +90,4 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

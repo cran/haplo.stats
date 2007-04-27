@@ -48,4 +48,4 @@ printBanner("This is a pretty banner", banner.width=40, char.perline=30)
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

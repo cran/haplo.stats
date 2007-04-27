@@ -1,8 +1,20 @@
 #$Author: sinnwell $
-#$Date: 2005/06/03 14:32:58 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.cc.q,v 1.8 2005/06/03 14:32:58 sinnwell Exp $
+#$Date: 2007/03/30 20:02:39 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.cc.q,v 1.12 2007/03/30 20:02:39 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.cc.q,v $
+#Revision 1.12  2007/03/30 20:02:39  sinnwell
+#control random seed values before each call
+#
+#Revision 1.11  2007/03/23 19:08:37  sinnwell
+#take out weights for haplo.glm, they don't work for haplo.glm in Splus
+#
+#Revision 1.10  2007/03/22 20:08:46  sinnwell
+#insert line to check weights for NULL before passing to haplo.glm
+#
+#Revision 1.9  2007/03/13 18:14:40  sinnwell
+#add weights parameter
+#
 #Revision 1.8  2005/06/03 14:32:58  sinnwell
 #adjust haplo.rare if l.t. haplo.min.info
 #
@@ -34,7 +46,7 @@
 ## 1/2004
 
 haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
-                     miss.val=c(0,NA), simulate=FALSE,
+                     miss.val=c(0,NA), weights=NULL, simulate=FALSE,
                      sim.control=score.sim.control(),
                      control=haplo.glm.control())
 
@@ -55,14 +67,21 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
   if(n.subj != nrow(geno))
     stop("Different number of rows for y and geno!")
  
-  exclude <- (1:length(y))[is.na(y)]
-  tmp <- (1:n.subj)[apply(is.na(geno),1,all)]
+  exclude <- which(is.na(y))
+  tmp <- which(apply(is.na(geno),1,all))
   exclude <- unique(c(exclude,tmp))
   if(length(exclude)) {
+    warning(paste("Subjects ", exclude,
+                  " removed for missing y or all alleles missing."))
     geno <- geno[-exclude,]
     y <- y[-exclude]
   }
-  
+
+  if(is.null(control$em.control$iseed)) {
+    runif(1) # use a random number, so the next .Random.seed value is used
+    control$em.control$iseed <- .Random.seed
+  }
+ 
   # check y to be 0's and 1's
   if(!all(y==0 | y==1))
     stop("y must be binary with 0=controls and 1=cases")
@@ -76,15 +95,18 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
   
   skip.haplo <- control$haplo.freq.min <- haplo.min.count/(2*n.subj)
   control$haplo.min.count=haplo.min.count
-  
+ 
+  set.seed(control$em.control$iseed)
   score.lst <- haplo.score(y=y, geno=geno, trait.type="binomial",
                            skip.haplo=skip.haplo, locus.label=locus.label,
                            miss.val=miss.val, simulate=simulate,
                            sim.control=sim.control, em.control=control$em.c)
                            
   # get haplotype frequency estimates within the two groups
+  set.seed(control$em.control$iseed)
   group.lst <- haplo.group(group=y, geno=geno, locus.label=locus.label,
-                           miss.val=miss.val, control=control$em.c)
+                           miss.val=miss.val, weight=weights,
+                           control=control$em.c)
   
   group.count <- group.lst$group.count
   names(group.count) <- c("control", "case")
@@ -103,11 +125,13 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
 #  oldClass(geno) <- "model.matrix"
   glm.data <- data.frame(geno.glm, y=y)
 
-# if (is.na(weights)) weights=rep(1,n.subj)
-  
+# weights are not supported for haplo.glm in S-PLUS--take out for now
+#  if (is.null(weights)) weights=rep(1,n.subj)
+   
   # will only get OR's for haplotypes with freq > haplo.freq.min, based on min.count
   # should be set same as skip.haplo so 1:1 merge of haps from merge.lst
-  fit.lst <- haplo.glm(y~geno.glm, family=binomial, data=glm.data, #weights=weights,
+  set.seed(control$em.control$iseed)
+  fit.lst <- haplo.glm(y~geno.glm, family=binomial, data=glm.data, # weights=weights
                        locus.label=locus.label, allele.lev=save.alleles,
                        miss.val=miss.val, control=control)
 
@@ -159,12 +183,12 @@ haplo.cc <- function(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95,
 
   cc.df <- merge(merge.df, fit.df,by=1:n.loci,all.x=TRUE,all.y=TRUE)
   cc.lst <- list(cc.df=cc.df, group.count=group.count, score.lst=score.lst,
-                 fit.lst=fit.lst, ci.prob=ci.prob)
+                 fit.lst=fit.lst, ci.prob=ci.prob, exclude.subj=exclude)
   
   ## returned score and glm objects in the returned list for
   ## additional applications
   
-  oldClass(cc.lst) <- "haplo.cc"
+  sr.class(cc.lst) <- "haplo.cc"
   cc.lst
   
 }

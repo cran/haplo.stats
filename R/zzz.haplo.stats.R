@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2004/07/02 14:18:11 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/zzz.haplo.stats.R,v 1.1 2004/07/02 14:18:11 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/zzz.haplo.stats.R,v 1.1 2004/07/02 14:18:11 sinnwell Exp $
 #$Locker:  $
 #$Log: zzz.haplo.stats.R,v $
 #Revision 1.1  2004/07/02 14:18:11  sinnwell

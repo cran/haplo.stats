@@ -1,8 +1,11 @@
 #$Author: schaid $
-#$Date: 2005/03/02 15:12:31 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.control.q,v 1.4 2005/03/02 15:12:31 schaid Exp $
+#$Date: 2007/02/27 20:14:03 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.control.q,v 1.5 2007/02/27 20:14:03 schaid Exp $
 #$Locker:  $
 #$Log: haplo.em.control.q,v $
+#Revision 1.5  2007/02/27 20:14:03  schaid
+#removed max.haps.limit, which is now controlled by checkIntMax in haplo.em and in haplol_em_pin
+#
 #Revision 1.4  2005/03/02 15:12:31  schaid
 #changed max.iter to 5000
 #
@@ -45,9 +48,16 @@
 # fax:      507-284-9542
 # email: schaid@mayo.edu
 # 
-haplo.em.control <- function(loci.insert.order=NULL, insert.batch.size = 6,
-                              min.posterior=0.0000001, tol=0.00001, max.iter=5000, random.start=0,
-                              n.try = 10, iseed=NULL, max.haps.limit = 2e6, verbose=0){
+haplo.em.control <- function(loci.insert.order=NULL,
+                             insert.batch.size = 6,
+                             min.posterior=0.0000001,
+                             tol=0.00001,
+                             max.iter=5000,
+                             random.start=0,
+                             n.try = 10,
+                             iseed=NULL,
+                             verbose=0){
+
 
   if(min.posterior < 0 | min.posterior > .9) {
     warning("The value of min.posterior is out of range, the devault value of 0.0001 is used instead")
@@ -75,10 +85,6 @@ haplo.em.control <- function(loci.insert.order=NULL, insert.batch.size = 6,
     n.try <- 10
   }
 
-  if(max.haps.limit < 1000 | max.haps.limit > 1e12){
-    warning("The value of max.haps.limit is not valid, the default value of 2e6 is used instead")
-      max.haps.limit = 2e6
-  }
 
   return(list(loci.insert.order=loci.insert.order, 
               insert.batch.size = insert.batch.size,
@@ -88,7 +94,6 @@ haplo.em.control <- function(loci.insert.order=NULL, insert.batch.size = 6,
               random.start=random.start,
               n.try=n.try,
               iseed=iseed,
-              max.haps.limit = max.haps.limit, 
               verbose=verbose))
 }
 

@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2004/01/15 22:09:38 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/glm.fit.nowarn.R,v 1.2 2004/01/15 22:09:38 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/glm.fit.nowarn.R,v 1.2 2004/01/15 22:09:38 sinnwell Exp $
 #$Locker:  $
 #$Log: glm.fit.nowarn.R,v $
 #Revision 1.2  2004/01/15 22:09:38  sinnwell

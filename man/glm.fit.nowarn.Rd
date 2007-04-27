@@ -1,6 +1,6 @@
 %  $Author: sinnwell $ 
 %  $Date: 2004/03/12 17:56:54 $
-%  $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/glm.fit.nowarn.Rd,v 1.3 2004/03/12 17:56:54 sinnwell Exp $
+%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/glm.fit.nowarn.Rd,v 1.3 2004/03/12 17:56:54 sinnwell Exp $
 %  $Locker:  $ 
 
 \name{glm.fit.nowarn}

@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2004/07/09 14:36:22 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.em.q,v 1.13 2004/07/09 14:36:22 sinnwell Exp $
+#$Date: 2007/04/03 21:08:36 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.q,v 1.15 2007/04/03 21:08:36 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.em.q,v $
+#Revision 1.15  2007/04/03 21:08:36  sinnwell
+#add PACKAGE in checkIntMax .C call
+#
+#Revision 1.14  2007/02/27 20:16:21  schaid
+# control max.haps.limit with checkIntMax (see haplo_em_pin)
+#
 #Revision 1.13  2004/07/09 14:36:22  sinnwell
 #warning for n.loci < 2
 #
@@ -55,8 +61,7 @@
 # email: schaid@mayo.edu
 # 
 haplo.em  <- function(geno, locus.label=NA, miss.val=c(0,NA), weight=NULL, 
-                          control = haplo.em.control()  ){
-
+                      control = haplo.em.control()  ){
 
 
 n.loci <- ncol(geno)/2
@@ -94,8 +99,11 @@ temp.geno <- loci(geno,locus.names=locus.label,miss.val=miss.val)
 max.pairs <- geno.count.pairs(temp.geno)
 max.haps <- 2*sum(max.pairs)
 
-if(max.haps > control$max.haps.limit ) max.haps <- control$max.haps.limit
+intMax <- .C("checkIntMax",
+             intMax = as.integer(0),
+             PACKAGE="haplo.stats")$intMax
 
+if(max.haps > intMax) max.haps <- intMax
 
 # check whether to delete some rows - now defunct, but use 
 # dummy to not break code that uses this in returned list

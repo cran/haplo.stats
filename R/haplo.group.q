@@ -1,8 +1,14 @@
 #  $Author: sinnwell $
-#  $Date: 2003/12/08 20:10:59 $ -->
-#  $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.group.q,v 1.10 2003/12/08 20:10:59 sinnwell Exp $ -->
+#  $Date: 2007/03/22 15:41:32 $ -->
+#  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.group.q,v 1.12 2007/03/22 15:41:32 sinnwell Exp $ -->
 #  $Locker:  $  
 #   $Log: haplo.group.q,v $
+#   Revision 1.12  2007/03/22 15:41:32  sinnwell
+#   fix call to haplo.em
+#
+#   Revision 1.11  2007/03/13 15:56:53  sinnwell
+#   add weight for haplo.em on all people
+#
 #   Revision 1.10  2003/12/08 20:10:59  sinnwell
 #    changed T,F to TRUE,FALSE
 #
@@ -64,7 +70,8 @@
 # email: schaid@mayo.edu
 # 
 
-haplo.group <- function(group, geno, locus.label=NA, miss.val=0,
+haplo.group <- function(group, geno, locus.label=NA,
+                        miss.val=0, weight=NULL,
                         control=haplo.em.control())
     ## Developed by JP Sinnwell  & DJ Schaid ##
     ## Mayo HSR Biostatistics  ##
@@ -97,7 +104,7 @@ haplo.group <- function(group, geno, locus.label=NA, miss.val=0,
   geno <- geno[!miss.group,]
 
  # Create a haplo object (using haplo.em) using size-evaluation criteria
-  haplo.all <- haplo.em(geno, locus.label, miss.val=miss.val,
+  haplo.all <- haplo.em(geno, locus.label, miss.val=miss.val, weight=weight,
                         control=control)
 
    # Check convergence of EM
@@ -117,6 +124,7 @@ haplo.group <- function(group, geno, locus.label=NA, miss.val=0,
   haplo.freq <- data.frame(haplotype.all, prob.all)
 
  # Subset haplotypes by group variable
+ # Do not weight because sub-samples are not over-sampled.
   ugroup <-  sort(unique(group))
   gnames <- character(0)
   for (i.group in ugroup) {

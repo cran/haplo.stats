@@ -1,8 +1,30 @@
 #$Author: sinnwell $
-#$Date: 2005/03/31 15:18:41 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.score.q,v 1.16 2005/03/31 15:18:41 sinnwell Exp $
+#$Date: 2007/02/26 22:01:12 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.q,v 1.22 2007/02/26 22:01:12 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.q,v $
+#Revision 1.22  2007/02/26 22:01:12  sinnwell
+#remove row.rem code, it was deprecated in haplo.em
+#rows.rem is now miss, the index of rows removed in y, x.adj b/c of NA
+#
+#
+#Revision 1.21  2007/01/25 19:41:27  sinnwell
+#include haplo.effect for additive, recessive, dominant
+#include min.count as parameter, base skip.haplo on it.
+#Added a few comments for readability
+#
+#Revision 1.20  2006/10/25 15:09:54  sinnwell
+#rm Matrix library call, only done in Ginv.q
+#
+#Revision 1.19  2006/05/02 15:09:25  sinnwell
+#improve error messages
+#
+#Revision 1.18  2006/01/27 16:25:47  sinnwell
+#enforce dependency of Ginv on Matrix
+#
+#Revision 1.17  2005/11/01 14:49:22  sinnwell
+#*** empty log message ***
+#
 #Revision 1.16  2005/03/31 15:18:41  sinnwell
 #for g.inv of class Matrix, must have t(u.score)%*% g.inv
 #
@@ -78,12 +100,16 @@
 # 
 
 haplo.score <- function(y, geno, trait.type="gaussian",
-                         offset = NA, x.adj = NA, skip.haplo=5/(2*nrow(geno)),
-                         locus.label=NA, miss.val=c(0,NA),
-                         simulate=FALSE, sim.control=score.sim.control(),
-                         em.control = haplo.em.control())
+                        offset = NA, x.adj = NA,
+                        haplo.effect="additive",
+                        min.count=5, skip.haplo=min.count/(2*nrow(geno)),
+                        locus.label=NA, miss.val=c(0,NA),
+                        simulate=FALSE, sim.control=score.sim.control(),
+                        em.control = haplo.em.control())
 {
 
+  call <- match.call()
+  
 # Choose trait type:
    trait.int <- charmatch(trait.type, c("gaussian", "binomial", "poisson",
                           "ordinal"))
@@ -92,54 +118,46 @@ haplo.score <- function(y, geno, trait.type="gaussian",
    if(trait.int == 0)   stop("Ambiguous trait type")
 
 # Check dims of y and geno
-  if(length(y)!=nrow(geno)) stop("Dims of y and geno are not compatible")
+  if(length(y)!=nrow(geno)) stop("length of y does not match number of rows in geno")
   n.loci <- ncol(geno)/2
-  if(n.loci != (floor(ncol(geno)/2)) )stop("Odd number of cols of geno")
+  if(n.loci != (floor(ncol(geno)/2)) )stop("geno has odd number of columns, need 2 columns per locus")
 
 # Check if Adjusted by Reg
   adjusted <- TRUE
-  if( all(is.na(x.adj)) ) adjusted <- FALSE
+  if(all(is.na(x.adj)) ) adjusted <- FALSE
   if(adjusted){
     x.adj <- as.matrix(x.adj)
-    if(nrow(x.adj)!=length(y)) stop("Dims of y and x.adj are not compatible")
+    if(nrow(x.adj)!=length(y)) stop("length of y does not match number of rows in x.adj")
   }
      
-
+# Check haplo.effect parameter, match to 3 options
+  effCode <- charmatch(haplo.effect, c("additive", "dominant", "recessive"))
+  if(is.na(effCode)) stop("Invalid haplo.effect")
+   
 # General checks for missing data
-   miss <- is.na(y) 
-   if(adjusted) miss <- miss | apply(is.na(x.adj),1,any)
-
+   miss <- which(is.na(y))
+   if(adjusted) miss <- unique(c(miss,  which(apply(is.na(x.adj),1,any))))
+   
 # If Poisson, check for errors and missing offset
    if(trait.int==3) {
        if(all(is.na(offset))) stop("Missing offset")
-       miss <- miss | is.na(offset)
+       miss <- unique(c(miss,  which(is.na(offset))))
    }
-
+  
 # Subset to non-missing values:
-       y <- as.numeric(y[!miss])
-       geno <- geno[!miss,]
-       if(adjusted) x.adj <- x.adj[!miss,,drop=FALSE]
-       if(trait.int==3) offset <- offset[!miss]
-
+  if(length(miss)) {
+    y <- as.numeric(y[-miss])
+    geno <- geno[-miss,]
+    if(adjusted) x.adj <- x.adj[-miss,,drop=FALSE]
+    if(trait.int==3) offset <- offset[-miss]
+  }
+     
 # Create a haplo object (using EMhaps)
    haplo <- haplo.em(geno, locus.label, miss.val=miss.val, 
                      control = em.control)
 
 # Check convergence of EM
    if(!haplo$converge) stop("EM for haplo failed to converge")
-
-# Need to check if any rows of geno were removed.
-# this could be due to excessive number of haplotype pairs and/or 
-# because rm.geno.na was chosen as true.
-# If any removed, need to remove corresonding values
-# in y and rows of x.adj, and offset for poisson
-   rows.rem <- haplo$rows.rem
-   if(length(rows.rem) > 0){
-     keep <- !apply(outer((1:length(y)),rows.rem,"=="),1,any)
-     y <- y[keep]
-     if(adjusted) x.adj <- x.adj[keep,,drop=FALSE]
-     if(trait.int==3) offset <- offset[keep]
-   }
 
 # If binomial, check for errors
    if(trait.int==2) {
@@ -157,8 +175,9 @@ haplo.score <- function(y, geno, trait.type="gaussian",
 
    n.subj <- length(y)
 
-# Compute haplotype score statistics
+# Computations for haplotype score statistics
 
+   # code haplotypes per subject
    hap1 <- haplo$hap1code
    hap2 <- haplo$hap2code
    indx <- haplo$indx.subj
@@ -166,13 +185,26 @@ haplo.score <- function(y, geno, trait.type="gaussian",
    nreps <- as.vector(haplo$nreps)
    uhap  <- sort(unique(c(hap1,hap2)))
 
-# Don't score haplotypes that have probabilities <  skip.haplo
-
-   which.haplo <- haplo$hap.prob >= skip.haplo
+# Choose to score haplotypes that have probabilities > skip.haplo
+   which.haplo <- which(haplo$hap.prob >= skip.haplo)
    uhap <- uhap[which.haplo]
 
    x <- outer(hap1,uhap,"==") + outer(hap2,uhap,"==")
 
+   # code x for additive haplotype effects
+   x <- (1*outer(hap1,uhap,"==")) + (1*outer(hap2,uhap,"=="))
+
+   if(effCode==2) {
+       # translate x to dominant effect
+     x <- 1*(x > 0)
+   }
+     
+   if(effCode==3){    
+     # translate x to recessive effect
+     x <- (x > 1) * 1
+   }
+
+   # apply posterior probs of the haplotype pair to the coding
    n.x <- ncol(x)
    x.post <- matrix(rep(NA, n.subj * n.x), ncol=n.x)
 
@@ -180,7 +212,24 @@ haplo.score <- function(y, geno, trait.type="gaussian",
       x.post[,j] <- tapply(x[,j]*post, indx, sum)
    }
 
-# Scores for GLM's
+   # dominant and recessive models may have insufficient haplotype counts
+   # if so, don't score them
+   if(effCode > 1) {
+     misshaps <- apply(x.post,2,sum) < min.count
+   
+     ##WARN for no haplotypes left to score
+     if(all(misshaps))
+       stop(paste("Too few occurrences of haplotypes for model haplo.effect: ", haplo.effect, "\n"))
+
+     # subset appropriate objects to reflect the reduction in haplotypes   
+     x.post <- x.post[,!misshaps,drop=FALSE]
+     x <- x[,!misshaps,drop=FALSE]
+     which.haplo <- which.haplo[!misshaps]
+ 
+   }
+   
+
+# SCORES FOR GLM's
 
    if(trait.int <= 3){
 
@@ -425,8 +474,9 @@ haplo.score <- function(y, geno, trait.type="gaussian",
        haplotype=haplo$haplotype[which.haplo,],
        hap.prob=haplo$hap.prob[which.haplo],
        locus.label=locus.label, simulate=simulate,
+       haplo.effect=haplo.effect, call=call,
        sim.control=sim.control, n.val.global=n.val.global,
-       n.val.haplo=n.val.haplo, rows.rem=rows.rem))
+       n.val.haplo=n.val.haplo, rows.rem=miss))
 
    if(exists("is.R") && is.function(is.R) && is.R()) {
      class(obj) <- "haplo.score"

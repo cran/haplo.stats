@@ -2,7 +2,7 @@
 #
 #$Date: 2003/12/08 19:42:08 $
 #
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.score.podds.q,v 1.4 2003/12/08 19:42:08 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.podds.q,v 1.4 2003/12/08 19:42:08 sinnwell Exp $
 #
 #$Id: haplo.score.podds.q,v 1.4 2003/12/08 19:42:08 sinnwell Exp $
 #

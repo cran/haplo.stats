@@ -85,4 +85,4 @@ Biometrika.  78, no. 2 (1991): 301-304.
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

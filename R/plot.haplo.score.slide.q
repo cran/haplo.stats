@@ -1,8 +1,18 @@
 #$Author: sinnwell $
-#$Date: 2005/03/31 19:23:35 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/plot.haplo.score.slide.q,v 1.6 2005/03/31 19:23:35 sinnwell Exp $
+#$Date: 2007/04/25 20:32:45 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.slide.q,v 1.9 2007/04/25 20:32:45 sinnwell Exp $
 #$Locker:  $
 #$Log: plot.haplo.score.slide.q,v $
+#Revision 1.9  2007/04/25 20:32:45  sinnwell
+#*** empty log message ***
+#
+#Revision 1.8  2007/04/12 20:49:51  sinnwell
+#re-set zero p-values for global to epsilon = 1e-10
+#
+#Revision 1.7  2007/04/03 21:10:06  sinnwell
+#use epsilon as minimum p-value
+#give warnings if pval<epsilon and what it is set to for that test
+#
 #Revision 1.6  2005/03/31 19:23:35  sinnwell
 #global.p.sim and max.p.sim names remove 'score' from them
 #
@@ -62,7 +72,6 @@ plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, cex=.8
   #  2. y-axis: plot the -log10 of the p-val chosen
   #  3. the pval parameter selects which ("global","global.sim","max.sim") to plot
 
-
   if(!inherits(x, "haplo.score.slide"))
 	    stop("Not a haplo.score.slide object")
  
@@ -80,22 +89,35 @@ plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, cex=.8
 
   if(p.int > 1 && !x$simulate)
     stop("\nRequested to plot simulated p-values, but no simulations performed!")
-  
+
+  #if p-values are close to zero ( < epsilon) then find some minimum to plot
+  # minimum depends on which pval choice
+  epsilon <- 1e-10
+    
   switch(pval,
          global = {
-           lnp <- (-1)*log10(x$df$score.global.p)
+           p <- x$df$score.global.p
+           if(min(p[p>0]) < epsilon) epsilon <- min(p[p>0])
+           if(sum((p > epsilon)) < length(p)) cat(paste("Some p-values equivalent to zero, plotted as ", epsilon, "\n"))
+           lnp <- (-1)*log10(ifelse(p < epsilon, epsilon, p))
            ylabel="-log10(score.global.p)"
          },
          global.sim = {
-           eq.zero <- (1:length(x$df[[1]]))[x$df$global.p.sim==0]
+           eq.zero <- which(x$df$global.p.sim == 0)
            lnp <- (-1)*log10(x$df$global.p.sim)
-           lnp[eq.zero] <- (-1)*log10(.5/x$n.val.global[eq.zero])
+           if(length(eq.zero)) {
+             cat(paste("Some p-values are equivalent to zero, set to 0.5 / nsim \n"))
+             lnp[eq.zero] <- (-1)*log10(.5/x$n.val.global[eq.zero])
+           }
            ylabel="-log10(global.p.sim)"
          },
          max.sim = {
-           eq.zero <- (1:length(x$df[[1]]))[x$df$max.p.sim==0]
+           eq.zero <- which(x$df$max.p.sim == 0)
            lnp <- (-1)*log10(x$df$max.p.sim)
-           lnp[eq.zero] <- (-1)*log10(.5/x$n.val.haplo[eq.zero])
+           if(length(eq.zero)) {
+             cat(paste("Some p-values are equivalent to zero, set to 0.5 / nsim \n"))
+             lnp[eq.zero] <- (-1)*log10(.5/x$n.val.haplo[eq.zero])
+           }
            ylabel="-log10(max.p.sim)"
          })
 

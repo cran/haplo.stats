@@ -1,7 +1,7 @@
 #$Author: sinnwell $
 #$Date: 2005/04/01 20:34:25 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/README.haplo.stats,v 1.11 2005/04/01 20:34:25 sinnwell Exp $
-#$Locker:  $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/README.haplo.stats,v 1.11 2005/04/01 20:34:25 sinnwell Exp sinnwell $
+#$Locker: sinnwell $
 #$Log: README.haplo.stats,v $
 #Revision 1.11  2005/04/01 20:34:25  sinnwell
 #ready for 1.2.0
@@ -89,7 +89,7 @@ system-wide 'library' location designated by a system administrator.
 
 S-PLUS Installation (unix-like systems)
 
-The haplo.stats S-PLUS functions are written for S-PLUS version 6.2.
+The haplo.stats S-PLUS functions are written for S-PLUS version 7.0.6.
 
 To install the software for local use in S-PLUS, move 
 haplo.stats_x.y.z_S.tar.gz to your chosen installation directory and 
@@ -99,11 +99,12 @@ follow the series of commands:
 2) tar -xvf haplo.stats_x.y.z_S.tar
 3) cd haplo.stats
 4) cd src
-5) Splus CHAPTER -m
-6) Splus make -f makefile.haplo.stats
+5) Splus CHAPTER
+6) Splus make
+7) mv .Data ..
+8) mv S.so ..
 
-NOTE: It is important to use the '-m' option for CHAPTER, to prevent
-over-writing the supplied makefile.
+*Installation instructions for S-PLUS 8 are more like the R installation
 
 --------------------------------------------------------------
 
@@ -122,7 +123,7 @@ website (http://www.r-project.org).
 
 User Documenation:
 
-A manual (manualHaploStats.pdf) is provided in the haplo.stats/docs
+A manual (manualHaploStats.pdf) is provided in the haplo.stats/doc
 directory. Information on the supplied functions can be found within
 both the S-PLUS and R systems by typing help(function), where
 'function' is the name of the procedure of interest (no quotes

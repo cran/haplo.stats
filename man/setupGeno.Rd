@@ -10,7 +10,7 @@ recodes alleles to numeric and saves the original alleles as an
 attribute of the model.matrix. 
 }
 \usage{
-setupGeno(geno, miss.val=c(0,NA))
+setupGeno(geno, miss.val=c(0,NA), locus.label=NULL)
 }
 \arguments{
 \item{geno}{
@@ -25,6 +25,9 @@ allele2. Note that NA will always be treated as a missing value, even
 if not specified in miss.val.  Also note that if multiple missing
 value codes are specified, the original missing value code for a
 specific individual can not be retrieved from the loci object.
+}
+\item{locus.label}{
+vector of labels for the loci
 }
 }
 \value{
@@ -68,4 +71,4 @@ attributes(myGeno)$unique.alleles
 }
 \keyword{}
 % docclass is function
-% Converted by Sd2Rd version 1.21.
+% Converted by Sd2Rd version 37351.

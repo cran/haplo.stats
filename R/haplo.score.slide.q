@@ -1,8 +1,20 @@
 #$Author: sinnwell $
-#$Date: 2005/03/30 17:40:33 $
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo.score.slide.q,v 1.4 2005/03/30 17:40:33 sinnwell Exp $
+#$Date: 2007/03/08 14:38:51 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.slide.q,v 1.8 2007/03/08 14:38:51 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.slide.q,v $
+#Revision 1.8  2007/03/08 14:38:51  sinnwell
+#*** empty log message ***
+#
+#Revision 1.7  2007/01/25 20:31:42  sinnwell
+#add haplo.effect and min.count, new features in haplo.score
+#
+#Revision 1.6  2006/10/25 15:09:15  sinnwell
+#rm Matrix library call, only done in Ginv
+#
+#Revision 1.5  2006/01/27 16:26:08  sinnwell
+#dependency of Ginv on Matrix
+#
 #Revision 1.4  2005/03/30 17:40:33  sinnwell
 #shorten df column names
 #
@@ -47,7 +59,9 @@
 # 
 
 haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
-                              offset = NA, x.adj = NA, skip.haplo=5/(2*nrow(geno)),
+                              offset = NA, x.adj = NA,
+                              haplo.effect="additive", min.count=5,
+                              skip.haplo=min.count/(2*nrow(geno)),
                               locus.label=NA, miss.val=c(0,NA),
                               simulate=FALSE, sim.control=score.sim.control(),
                               em.control=haplo.em.control())
@@ -55,6 +69,7 @@ haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
   # Mayo Clinic Rochester, Div of Biostatistics
 {
 
+  
 # check that n.slide <= n.loci
   n.loci <- ncol(geno)/2
 
@@ -81,7 +96,8 @@ haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
     geno.slide <-  geno[, (col.start:col.end)]
 
     temp <- haplo.score(y=y, geno=geno.slide, trait.type=trait.type,
-                   offset = offset, x.adj = x.adj, skip.haplo=skip.haplo,
+                   offset = offset, x.adj = x.adj, haplo.effect=haplo.effect,
+                   min.count=min.count, skip.haplo=skip.haplo,
                    miss.val=miss.val, simulate=simulate, sim.control=sim.control,
                    em.control = em.control)
     # keep global, global.sim and max.sim p-values
@@ -95,11 +111,16 @@ haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
   
   score.slide <- list(df=data.frame(start.loc=start.locus, score.global.p,
                       global.p.sim=score.global.p.sim, max.p.sim=score.max.p.sim),
-                      n.loci=n.loci, simulate=simulate,
-                      n.slide=n.slide, locus.label=locus.label,
+                      n.loci=n.loci, haplo.effect=haplo.effect,
+                      simulate=simulate, n.slide=n.slide, locus.label=locus.label,
                       n.val.haplo=n.val.haplo, n.val.global=n.val.global)
 
-  oldClass(score.slide) <- "haplo.score.slide"
+  if(exists("is.R") && is.function(is.R) && is.R()) {
+     class(score.slide) <- "haplo.score.slide"
+   } else {
+     oldClass(score.slide) <- "haplo.score.slide"
+   }
+
   return(score.slide)
 
 }

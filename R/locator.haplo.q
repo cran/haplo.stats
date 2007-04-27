@@ -2,7 +2,7 @@
 #
 #$Date: 2003/10/15 17:17:35 $
 #
-#$Header: /people/biostat3/sinnwell/Rdir/Make/RCS/locator.haplo.q,v 1.4 2003/10/15 17:17:35 schaid Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/locator.haplo.q,v 1.4 2003/10/15 17:17:35 schaid Exp $
 #
 #$Id: locator.haplo.q,v 1.4 2003/10/15 17:17:35 schaid Exp $
 #

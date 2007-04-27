@@ -1,6 +1,6 @@
 /* $Author: schaid $ */
-/* $Date: 2005/03/01 23:05:34 $ */
-/* $Header: /people/biostat3/sinnwell/Rdir/Make/RCS/haplo_em_pin.c,v 1.16 2005/03/01 23:05:34 schaid Exp $ */
+/* $Date: 2007/02/27 20:17:01 $ */
+/* $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo_em_pin.c,v 1.17 2007/02/27 20:17:01 schaid Exp $ */
 /* $Locker:  $ */
 /*
  * $Log:
@@ -41,6 +41,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <limits.h>
+
 #include <S.h> 
 #include "haplo_em_pin.h"
 
@@ -50,55 +52,55 @@
 
 /*************** Global vars ******************************************************/
 
-static long n_loci, *loci_used;               /* used for qsort functions         */   
+static int n_loci, *loci_used;               /* used for qsort functions         */   
 static HAP **ret_hap_list;                    /* stored for later return to S+    */
 static HAPUNIQUE **ret_u_hap_list;
-static long ret_n_hap, ret_n_u_hap, ret_max_haps;
+static int ret_n_hap, ret_n_u_hap, ret_max_haps;
 
 /**********************************************************************************/
 
 void haplo_em_pin(
-   long    *S_n_loci,             /* number of loci                                 */
-   long    *n_subject,            /* number of subjects                             */
+   int    *S_n_loci,             /* number of loci                                 */
+   int    *n_subject,            /* number of subjects                             */
    double  *weight,               /* weight per subject                             */
-   long    *geno_vec,             /* vector of genotypes,  col-major from           */
+   int    *geno_vec,             /* vector of genotypes,  col-major from           */
                                   /* n_subject x 2*n_loci matrix                    */
-   long    *n_alleles,            /* vector of number alleles per locus,            */
+   int    *n_alleles,            /* vector of number alleles per locus,            */
 				  /* length=n_loci                                  */
-   long    *max_haps,             /* number of maximum haplotypes over all subjects */
+   int    *max_haps,             /* number of maximum haplotypes over all subjects */
 				  /*  - CRITICAL for memory alloc                   */
-   long    *max_iter,             /* max num. iters for each EM loop                */
-   long    *loci_insert_order,    /* vector for order of insert of loci for         */
+   int    *max_iter,             /* max num. iters for each EM loop                */
+   int    *loci_insert_order,    /* vector for order of insert of loci for         */
                                   /* progressive insertion; length = n_loci         */
    double  *min_prior,            /* trim haplo's with prior < min_prior            */
    double  *min_posterior,        /* trim subject's pair of haplos if               */
 				  /* post < min_posterior                           */
    double  *tol,                  /* convergence tolerance for change in lnlike in  */ 
 				  /*  EM loop                                       */
-   long    *insert_batch_size,    /* number of loci to insert in a batch before     */
+   int    *insert_batch_size,    /* number of loci to insert in a batch before     */
                                   /*  each EM loop; order of inserted               */
                                   /* loci determined by loci_insert_order           */
-   long    *converge,             /* convergence indicator for EM                   */
+   int    *converge,             /* convergence indicator for EM                   */
    double  *S_lnlike,             /* lnlike from final EM                           */
-   long    *S_n_u_hap,            /* number of unique haplotypes                    */
-   long    *n_hap_pairs,          /* total number of pairs of haplotypes over all   */
+   int    *S_n_u_hap,            /* number of unique haplotypes                    */
+   int    *n_hap_pairs,          /* total number of pairs of haplotypes over all   */
                                   /* subjects                                       */
-   long    *random_start,         /* indicator of random posteriors should be       */
+   int    *random_start,         /* indicator of random posteriors should be       */
 				  /* generated at the start of each EM loop.        */
                                   /* 1 = Yes, 0 = No                                */
-   long    *iseed1,               /* seeds for AS183 random unif                    */
-   long    *iseed2,	
-   long    *iseed3,
-   long    *verbose)              /* indicator if verbose pringing during  run,     */
+   int    *iseed1,               /* seeds for AS183 random unif                    */
+   int    *iseed2,	
+   int    *iseed3,
+   int    *verbose)              /* indicator if verbose pringing during  run,     */
                                   /* for debugging. verbose=0 means no printing     */
                                   /* verbose=1 means lots of printing to screen     */
 {
 
 
-  long i, j, k, iter, n_iter, insert_loc;
-  long is, ie, n_batch;
-  long n_u_hap, n_hap, n_trim, pair_id, len_hap_list, indx1, indx2;
-  long **geno;
+  int i, j, k, iter, n_iter, insert_loc;
+  int is, ie, n_batch;
+  int n_u_hap, n_hap, n_trim, pair_id, len_hap_list, indx1, indx2;
+  int **geno;
   double lnlike, lnlike_old;
   double *prior;
 
@@ -109,7 +111,7 @@ void haplo_em_pin(
   /* convert from S vecs to  C structures */
 
   n_loci = *S_n_loci;
-  geno = long_vec_to_mat(geno_vec, *n_subject, 2*n_loci);
+  geno = int_vec_to_mat(geno_vec, *n_subject, 2*n_loci);
 
 
   if(*verbose){
@@ -129,7 +131,7 @@ void haplo_em_pin(
   }
 
   /* array to keep track of loci used at any point in time */
-  loci_used = (long *) Calloc(n_loci, long);
+  loci_used = (int *) Calloc(n_loci, int);
   if(loci_used==NULL){
     errmsg("could not alloc mem for loci_used");
   }
@@ -387,9 +389,9 @@ void haplo_em_pin(
 
 /***********************************************************************************/
 
-static HAP* new_hap(long id, long pair_id, double wt, double prior, double post){
+static HAP* new_hap(int id, int pair_id, double wt, double prior, double post){
   HAP *result;
-  long *loc;
+  int *loc;
 
   result = (HAP *) Calloc(1, HAP);
  
@@ -403,7 +405,7 @@ static HAP* new_hap(long id, long pair_id, double wt, double prior, double post)
   result->post  = post;
   result->keep = 1;
 
-  loc = (long *) Calloc(n_loci, long);
+  loc = (int *) Calloc(n_loci, int);
   if (!loc) {
     errmsg("could not alloc mem for new hap");
     Free(result);
@@ -416,8 +418,8 @@ static HAP* new_hap(long id, long pair_id, double wt, double prior, double post)
 
 /***********************************************************************************/
 
-static void write_hap_list(HAP** so, long n_hap){
-  long i,j;
+static void write_hap_list(HAP** so, int n_hap){
+  int i,j;
 
   printf("subID     wt hapPairID hapCode keep");
   for(i=0;i<n_loci;i++){
@@ -440,8 +442,8 @@ static void write_hap_list(HAP** so, long n_hap){
 
 /***********************************************************************************/
 
-static void write_unique_hap_list(HAPUNIQUE** so, long n_hap){
-  long i,j;
+static void write_unique_hap_list(HAPUNIQUE** so, int n_hap){
+  int i,j;
 
   printf("hapCode keep");
   for(i=0;i<n_loci;i++){
@@ -464,8 +466,8 @@ static void write_unique_hap_list(HAPUNIQUE** so, long n_hap){
 
 /***********************************************************************************/
 
-static void write_prior(long n, double *prior){
-  long i;
+static void write_prior(int n, double *prior){
+  int i;
 
   printf("hapCode  prior\n");
   for(i=0;i<n;i++){
@@ -477,9 +479,9 @@ static void write_prior(long n, double *prior){
 /***********************************************************************************/
 
 static int CDECL cmp_hap(const void *to_one, const void *to_two){
-  long i;
-  long *loc1, *loc2;
-  long a1, a2;
+  int i;
+  int *loc1, *loc2;
+  int a1, a2;
   HAP *one, *two;
   one = * (HAP **) to_one;
   two = * (HAP **) to_two;
@@ -533,7 +535,7 @@ static int CDECL cmp_subId_hapPairId(const void *to_one, const void *to_two){
 
 /***********************************************************************************/
 
-static void unique_haps(long n_hap, HAP **hap_list, HAPUNIQUE **u_hap_list,
+static void unique_haps(int n_hap, HAP **hap_list, HAPUNIQUE **u_hap_list,
                         double *prior) {
 
  /* assumes hap_list is sorted by either haplotype (cmp_hap)
@@ -559,13 +561,13 @@ static void unique_haps(long n_hap, HAP **hap_list, HAPUNIQUE **u_hap_list,
 
 static HAPUNIQUE* copy_hap_unique(HAP *old, double *prior) {
   HAPUNIQUE *result;
-  long i;
+  int i;
   result = (HAPUNIQUE *) Calloc(1, HAPUNIQUE);
   if (result) {
     result->code    = old->code;
     result->prior   = prior[old->code];
     result->keep    = old->keep;
-    result->loci = (long *) Calloc(n_loci, long);
+    result->loci = (int *) Calloc(n_loci, int);
     if (result->loci==NULL) {
       errmsg("could not alloc mem for copy_hap_unique");
       Free(result);
@@ -579,13 +581,13 @@ static HAPUNIQUE* copy_hap_unique(HAP *old, double *prior) {
 
 /***********************************************************************************/
 
-static long code_haps(long n_hap, HAP **hap_list) {
+static int code_haps(int n_hap, HAP **hap_list) {
 
   /* assumes hap_list is sorted by either haplotype (cmp_hap)
      or haplotype code (cmp_trim) */
 
   HAP **hs, **he, **h;
-  long res = 0;
+  int res = 0;
   hs = hap_list;
   he = hap_list + n_hap;
   while (hs < he) {
@@ -601,13 +603,13 @@ static long code_haps(long n_hap, HAP **hap_list) {
 }
 /***********************************************************************************/
 
-static long count_unique_haps(long n_hap, HAP **hap_list) {
+static int count_unique_haps(int n_hap, HAP **hap_list) {
 
   /* assumes hap_list is sorted by either haplotype (cmp_hap)
      or haplotype code (cmp_hap_code) */
 
   HAP **hs, **he, **h;
-  long res = 0;
+  int res = 0;
   hs = hap_list;
   he = hap_list + n_hap;
   while (hs < he) {
@@ -624,11 +626,11 @@ static long count_unique_haps(long n_hap, HAP **hap_list) {
 
 /***********************************************************************************/
 
-static long hap_enum(HAP ***hap_list_ptr, double **prior_ptr, long *max_haps, long *n_alleles, long insert_loc, 
-                long n_hap, long *pair_id_ptr){
+static int hap_enum(HAP ***hap_list_ptr, double **prior_ptr, int *max_haps, int *n_alleles, int insert_loc, 
+                int n_hap, int *pair_id_ptr){
 
-  long i,j, a_poss,a1_poss,a2_poss, a1, a2,a1_new,a2_new;
-  long n_al, n_miss;
+  int i,j, a_poss,a1_poss,a2_poss, a1, a2,a1_new,a2_new;
+  int n_al, n_miss;
   HAP *h1, *h2, *h1_new, *h2_new;
  
   j = n_hap - 1;
@@ -767,7 +769,7 @@ static long hap_enum(HAP ***hap_list_ptr, double **prior_ptr, long *max_haps, lo
 
 static HAP* copy_hap(HAP *old) {
   HAP *result;
-  long i;
+  int i;
   result = (HAP *) Calloc(1, HAP);
   if (result) {
     result->id      = old->id;
@@ -776,7 +778,7 @@ static HAP* copy_hap(HAP *old) {
     result->post    = old->post;
     result->code    = old->code;
     result->keep    = old->keep;
-    result->loci = (long *) Calloc(n_loci, long);
+    result->loci = (int *) Calloc(n_loci, int);
     if (result->loci==NULL) {
       errmsg("could not alloc mem for copy_hap");
       Free(result);
@@ -790,8 +792,8 @@ static HAP* copy_hap(HAP *old) {
 
 /***********************************************************************************/
 
-static long num_het(HAP* h1, HAP* h2){
-  long i, nhet;
+static int num_het(HAP* h1, HAP* h2){
+  int i, nhet;
   nhet = 0;
   for(i=0;i<n_loci;i++){
     if( (loci_used[i]==1) && (h1->loci[i]!=h2->loci[i]) )
@@ -802,11 +804,11 @@ static long num_het(HAP* h1, HAP* h2){
 
 /***********************************************************************************/
 
-static void hap_prior(long n_hap, HAP** hap_list, double *prior, long n_u_hap,
+static void hap_prior(int n_hap, HAP** hap_list, double *prior, int n_u_hap,
                       double min_prior) {
 
   double total, a;
-  long i;
+  int i;
 
   for(i=0; i<n_u_hap; i++){
     prior[i] = 0.0;
@@ -834,15 +836,15 @@ static void hap_prior(long n_hap, HAP** hap_list, double *prior, long n_u_hap,
 
 /***********************************************************************************/
 
-static long hap_posterior(long n_hap, HAP **hap_list, double *prior, 
-                         long n_u_hap, double min_posterior, double *lnlike) {
+static int hap_posterior(int n_hap, HAP **hap_list, double *prior, 
+                         int n_u_hap, double min_posterior, double *lnlike) {
 
 
   HAP **hs, **he, **hn, **h, **h2;
-  long id;
+  int id;
   double subtotal, gp, tmp_wt;
-  long keep;
-  long n_trim, total_trim;
+  int keep;
+  int n_trim, total_trim;
 
   hs = hap_list;
   he = hap_list + n_hap;
@@ -916,10 +918,10 @@ static long hap_posterior(long n_hap, HAP **hap_list, double *prior,
 }
 
 /*********************************************************************************/
-static void set_posterior(long n_hap, HAP **hap_list, long *random_start){
+static void set_posterior(int n_hap, HAP **hap_list, int *random_start){
   HAP **hs, **he, **hn, **h, **h1, **h2;
   double u, subtotal, post;
-  long id;
+  int id;
 
   hs = hap_list;
   he = hap_list + n_hap;
@@ -983,19 +985,19 @@ static void set_posterior(long n_hap, HAP **hap_list, long *random_start){
 
 /*********************************************************************************/
 
-static long **long_matrix(long nrow, long ncol){
-/* allocate long matrix with subscript range m[0 ..(nrow-1)][0..(ncol-1)] */
-        long i;
-        long **m;
+static int **int_matrix(int nrow, int ncol){
+/* allocate int matrix with subscript range m[0 ..(nrow-1)][0..(ncol-1)] */
+        int i;
+        int **m;
 
         /* allocate pointers to rows */
-        m=(long **) Calloc(nrow, long *);
-        if (!m) errmsg("mem alloc failure 1 in long_matrix");
+        m=(int **) Calloc(nrow, int *);
+        if (!m) errmsg("mem alloc failure 1 in int_matrix");
   
 	/* allocate vec of memory for each row */
         for(i=0;i<nrow;i++) {
-          m[i]=(long *) Calloc(ncol, long);
-          if(!m[i]) errmsg("mem alloc failure 2 in long_matrix");
+          m[i]=(int *) Calloc(ncol, int);
+          if(!m[i]) errmsg("mem alloc failure 2 in int_matrix");
 	}
 
         /* return pointer to array of pointers to rows */
@@ -1004,12 +1006,12 @@ static long **long_matrix(long nrow, long ncol){
 
 /***********************************************************************************/
 
-static long **long_vec_to_mat(long *Yvec, long nrow, long ncol){
+static int **int_vec_to_mat(int *Yvec, int nrow, int ncol){
 
-   long i,j,k;
-   long **Y;
+   int i,j,k;
+   int **Y;
 
-   Y=long_matrix(nrow,ncol);
+   Y=int_matrix(nrow,ncol);
    k=0;
    for (j=0;j<ncol;j++){
       for (i=0;i<nrow;i++){
@@ -1023,21 +1025,21 @@ static long **long_vec_to_mat(long *Yvec, long nrow, long ncol){
 /***********************************************************************************/
 
 void haplo_em_ret_info(
-   long   *n_u_hap,      /* number of unique hapoltypes                           */
-   long   *S_n_loci,     /* number of loci                                        */
-   long   *n_pairs,      /* number of pairs of loci over all subjects             */
+   int   *n_u_hap,      /* number of unique hapoltypes                           */
+   int   *S_n_loci,     /* number of loci                                        */
+   int   *n_pairs,      /* number of pairs of loci over all subjects             */
    double *hap_prob,     /* probabilities for unique haplotypes, length= n_u_hap  */
-   long   *u_hap,        /* unique haplotype, length=n_u_hap * n_loci             */
-   long   *u_hap_code,   /* code for unique haplotypes, length=n_u_hap            */
-   long   *subj_id,      /* subject id = index of subject                         */
+   int   *u_hap,        /* unique haplotype, length=n_u_hap * n_loci             */
+   int   *u_hap_code,   /* code for unique haplotypes, length=n_u_hap            */
+   int   *subj_id,      /* subject id = index of subject                         */
    double *post,         /* posterior probability of pair of haplotypes           */
-   long   *hap1_code,    /* code for haplotype-1 of a pair, length=n_pairs        */
-   long   *hap2_code     /* code for haplotype-2 of a pair, length=n_pairs        */
+   int   *hap1_code,    /* code for haplotype-1 of a pair, length=n_pairs        */
+   int   *hap2_code     /* code for haplotype-2 of a pair, length=n_pairs        */
   )
 {
 
 
-  long i,j,k;
+  int i,j,k;
   HAP **h;
   k= -1;
   for(i=0;i<*n_u_hap;i++){
@@ -1069,7 +1071,7 @@ void haplo_free_memory(void){
 
   /* free memory saved for returned info */
 
-  long i;
+  int i;
 
 
   for(i=0;i<ret_max_haps;i++){
@@ -1111,13 +1113,15 @@ void haplo_free_memory(void){
      ix, iy and iz should be set to integer values between 1 and
      30000 before the first entry. To do this, 
      first call ranAS183_seed(iseed1,iseed2,iseed3), where iseed#
-     are 3 long int seeds between 1 and 30000. The 3  seeds are
+     are 3 int seeds between 1 and 30000. The 3  seeds are
      saved, but ix,iy,iz can change.
+
+     NOTE: Feb 23, 2007 DJS changed long to int
 
     Translated from fortran to C.
 */
 
-static long ix, iy, iz;
+static int ix, iy, iz;
 
 static int ranAS183_seed(int iseed1, int iseed2, int iseed3)
 {
@@ -1158,11 +1162,11 @@ static void errmsg(char *string){
 
 /***********************************************************************************/
 
-static void divideKeep(HAP **hap_list, long n, long *nReturn)
+static void divideKeep(HAP **hap_list, int n, int *nReturn)
 {
-  long i,j;
+  int i,j;
   HAP *temp;
-  long nValid = 0;
+  int nValid = 0;
 
 
  i = -1;
@@ -1190,9 +1194,26 @@ static void divideKeep(HAP **hap_list, long n, long *nReturn)
 
 /***********************************************************************************/
 
-static void add_more_memory(HAP ***hap_list, double **prior,long *max_haps){
+static void add_more_memory(HAP ***hap_list, double **prior,int *max_haps){
 
-  *max_haps = 2 * (*max_haps);
+
+  /* check that max_haps will not exceed max limit for an int on a 32-bit processor */
+
+
+  if(*max_haps ==  INT_MAX)
+    {
+      errmsg("cannot increase max_haps, already at max limit");
+    }
+
+  if((*max_haps) > INT_MAX/2)
+    {
+      *max_haps = INT_MAX;
+    } 
+  else 
+    {
+      *max_haps = 2 * (*max_haps);
+    }
+
 
   *prior =  (double *) Realloc(*prior, *max_haps, double);
   if(prior==NULL){
@@ -1210,10 +1231,10 @@ static void add_more_memory(HAP ***hap_list, double **prior,long *max_haps){
 /***********************************************************************************/
 
 static void insert_new_hap_pair(HAP ***hap_list_ptr, double **prior_ptr, 
-                                long *max_haps, long insert_loc,
+                                int *max_haps, int insert_loc,
                                 HAP *h1_old, HAP *h2_old, 
-                                long a1_new, long a2_new,
-                                long *pair_id_ptr, long *j){  
+                                int a1_new, int a2_new,
+                                int *pair_id_ptr, int *j){  
 
   loci_used[insert_loc] = 1;
 
@@ -1277,7 +1298,7 @@ static void insert_new_hap_pair(HAP ***hap_list_ptr, double **prior_ptr,
 
 static void overwrite_hap(HAP *new, HAP *old) {
 
-    long i;
+    int i;
 
     new->id      = old->id;
     new->pair_id = old->pair_id;
@@ -1288,7 +1309,7 @@ static void overwrite_hap(HAP *new, HAP *old) {
  
 
     if(new->loci == NULL){
-       new->loci = (long *) Calloc(n_loci, long);
+       new->loci = (int *) Calloc(n_loci, int);
     }
     if(new->loci == NULL) {
       errmsg("could not alloc mem for overwrite_hap");
@@ -1297,4 +1318,13 @@ static void overwrite_hap(HAP *new, HAP *old) {
     for (i=0; i<n_loci; i++){
 	new->loci[i] = old->loci[i];
     }
+}
+
+/***********************************************************************************/
+
+void checkIntMax(int *intMax) {
+
+  *intMax = INT_MAX;
+
+  return ;
 }
