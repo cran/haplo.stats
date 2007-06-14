@@ -1,6 +1,9 @@
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.seqhap.q,v 1.2 2007/04/16 20:11:29 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.seqhap.q,v 1.3 2007/05/25 15:38:20 sinnwell Exp $
 #$Locker:  $
 #$Log: print.seqhap.q,v $
+#Revision 1.3  2007/05/25 15:38:20  sinnwell
+#change inlist to scanned.loci
+#
 #Revision 1.2  2007/04/16 20:11:29  sinnwell
 #add ...
 #
@@ -8,7 +11,7 @@
 #Initial revision
 #
 #$Author: sinnwell $
-#$Date: 2007/04/16 20:11:29 $
+#$Date: 2007/05/25 15:38:20 $
 
 # License: 
 # 
@@ -62,10 +65,10 @@ print.seqhap <- function(x, digits=max(options()$digits-2, 5), ...)
       
       printBanner("Sequential Scan")     
       cat("Loci Combined in Sequential Analysis\n")
-      inlist <- x$inlist
-      for(i in 1:dim(inlist)[1]){
+      scanned.loci <- x$scanned.loci
+      for(i in 1:dim(scanned.loci)[1]){
         cat('seq-')
-        cat(x$locus.label[i], inlist[i,inlist[i,]!=0],sep=" ","\n")}
+        cat(x$locus.label[i], scanned.loci[i,scanned.loci[i,]!=0],sep=" ","\n")}
       cat("\n\n")
 
       printBanner("Sequential Haplotype Test")

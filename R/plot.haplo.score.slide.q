@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2007/04/25 20:32:45 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.slide.q,v 1.9 2007/04/25 20:32:45 sinnwell Exp $
+#$Date: 2007/05/29 15:53:29 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.slide.q,v 1.11 2007/05/29 15:53:29 sinnwell Exp $
 #$Locker:  $
 #$Log: plot.haplo.score.slide.q,v $
+#Revision 1.11  2007/05/29 15:53:29  sinnwell
+#take out las and cex.axis, left for user to pass in ...
+#
+#Revision 1.10  2007/05/22 20:32:39  sinnwell
+#change cex to cex.axis, las does what srt did in Splus, 1=horizontal, 2-vertical
+#
 #Revision 1.9  2007/04/25 20:32:45  sinnwell
 #*** empty log message ***
 #
@@ -61,7 +67,8 @@
 # fax:      507-284-9542
 # email: schaid@mayo.edu
 # 
-plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, cex=.8, srt=270, ...)
+plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, ...)
+
 ##################################  
 # Schaid DJ, Sinnwell JP  5/2003 #
 # Mayo Clinic Biostatistics      #
@@ -124,11 +131,19 @@ plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, cex=.8
   # prepare x.axis marks for the loci, based on dist.vec
   x.axis.vec <- dist.vec-min(dist.vec)
   x.axis.vec <- x.axis.vec*(x$n.loci-1)/max(x.axis.vec) + 1
+
+  # for R, las controls label rotation on the x-axis labels
+  # for Splus x-axis, convert las to srt (degrees) 1=horizontal (0deg) 2=perpendicular (90deg)
+  # set below where necessary
   
   # plot outer region, then the axis with locus labels
-  plot(x=c(1,x$n.loci),y=c(0,max(lnp)),type="n",ylab=ylabel,xlab="",xaxt="n", cex=cex, ...)
-  axis(1,at=x.axis.vec, labels=x$locus.label, adj=0, srt=srt, cex=cex) # mgp for title
-
+  plot(x=c(1,x$n.loci),y=c(0,max(lnp)),type="n",ylab=ylabel,xlab="",xaxt="n", ...)
+  if(is.R()) {  #mgp for title change
+    axis(1,at=x.axis.vec, labels=x$locus.label, ...)
+  } else {
+    axis(1,at=x.axis.vec, labels=x$locus.label, ...)
+  }
+  
   # plot a line for each set of n.slide loci at height of -log10p[i]
   for (i in x$df$start.loc) {
     end.loc <- i + x$n.slide - 1

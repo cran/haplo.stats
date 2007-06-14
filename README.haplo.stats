@@ -1,45 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2005/04/01 20:34:25 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/README.haplo.stats,v 1.11 2005/04/01 20:34:25 sinnwell Exp sinnwell $
-#$Locker: sinnwell $
+#$Date: 2007/05/09 16:08:46 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/README.haplo.stats,v 1.12 2007/05/09 16:08:46 sinnwell Exp $
+#$Locker:  $
 #$Log: README.haplo.stats,v $
-#Revision 1.11  2005/04/01 20:34:25  sinnwell
-#ready for 1.2.0
+#Revision 1.12  2007/05/09 16:08:46  sinnwell
+#for version 1.3.0
 #
-#Revision 1.10  2004/11/19 19:41:21  sinnwell
-#make independent of version, versions all x.y.z.
-#
-#Revision 1.9  2004/03/25 20:40:16  sinnwell
-#update to version 1.1.1
-#
-#Revision 1.8  2004/02/19 23:10:16  sinnwell
-#add comments for UserManTest.R working as demo
-#
-#Revision 1.7  2004/02/18 21:35:14  sinnwell
-#add comments of demo(UserManTest) for R dist
-#
-#Revision 1.6  2004/01/21 18:56:44  sinnwell
-#update filenames _1.1.0_R/S and insert section breaks
-#
-#Revision 1.5  2004/01/13 16:20:50  sinnwell
-#minor update
-#
-#Revision 1.4  2004/01/12 21:46:21  sinnwell
-#minor wording changes
-#
-#Revision 1.3  2003/11/10 18:54:06  sinnwell
-#add infor on README, DESCRIPTION.haplo.stats, and INDEX.haplo.stats
-#
-#Revision 1.2  2003/10/27 15:56:43  schaid
-#*** empty log message ***
-#
-#Revision 1.1  2003/10/02 21:51:38  sinnwell
-#Initial revision
-#
-#Revision 1.1  2003/09/29 14:09:37  sinnwell
-#Initial revision
-#
-#===================================================================
+
+
+===================================================================
 
 Brief Description:
 
@@ -89,11 +58,12 @@ system-wide 'library' location designated by a system administrator.
 
 S-PLUS Installation (unix-like systems)
 
-The haplo.stats S-PLUS functions are written for S-PLUS version 7.0.6.
+The haplo.stats S-PLUS functions are written for S-PLUS versions 7.0.6
+and 8.0.1.
 
-To install the software for local use in S-PLUS, move 
-haplo.stats_x.y.z_S.tar.gz to your chosen installation directory and 
-follow the series of commands:
+To install the software for local use in S-PLUS versions prior to
+8.0.1, move haplo.stats_x.y.z_S.tar.gz to your chosen installation 
+directory and follow the series of commands:
 
 1) gunzip haplo.stats_x.y.z_S.tar.gz
 2) tar -xvf haplo.stats_x.y.z_S.tar
@@ -104,7 +74,8 @@ follow the series of commands:
 7) mv .Data ..
 8) mv S.so ..
 
-*Installation instructions for S-PLUS 8 are more like the R installation
+Installation instructions for S-PLUS 8 are more like the R installation
+See www.csan.insightful.com for more details
 
 --------------------------------------------------------------
 
@@ -126,7 +97,7 @@ User Documenation:
 A manual (manualHaploStats.pdf) is provided in the haplo.stats/doc
 directory. Information on the supplied functions can be found within
 both the S-PLUS and R systems by typing help(function), where
-'function' is the name of the procedure of interest (no quotes
+"function" is the name of the procedure of interest (no quotes
 needed). The S-PLUS/R commands used within the user manual are
 supplied as a script within the haplo.stats/demo directory. This file
 can be used to test the various functions to check the computed output

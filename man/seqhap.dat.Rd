@@ -1,6 +1,6 @@
 %  $Author: sinnwell $ 
-%  $Date: 2007/04/17 22:03:56 $ 
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.dat.Rd,v 1.1 2007/04/17 22:03:56 sinnwell Exp $
+%  $Date: 2007/05/17 16:24:13 $ 
+%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.dat.Rd,v 1.2 2007/05/17 16:24:13 sinnwell Exp $
 %  $Locker:  $ 
 
 
@@ -32,7 +32,7 @@ the chromosome positions of the 10 loci.
 }
 \section{References}{
 Yu Z, Schaid DJ (2007) Sequantial haplotype scan methods for
-association analysis.  To appear in {\em Gen Epi}.
+association analysis.  {\em Gen Epi}, in print.
 }
 
 \keyword{datasets}

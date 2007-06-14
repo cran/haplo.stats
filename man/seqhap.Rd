@@ -16,7 +16,7 @@ only works with bialleleic loci (single nucleotide polymorphisms,
 or SNPs) and binary traits.
 }
 \usage{
-seqhap(y, geno, pos, n.sim=1000, weight=NULL, 
+seqhap(y, geno, pos, locus.label=NA, n.sim=1000, weight=NULL, 
        mh.threshold=3.84, r2.threshold=0.95, haplo.freq.min=0.005, 
        miss.val=c(0, NA), control=haplo.em.control())
 }
@@ -36,6 +36,9 @@ represent the alleles for each subject. Currently, only bi-allelic loci
 vector of physical positions (or relative physical positions) for
 loci. If there are K loci, length(pos)=K. The scale (in kb, bp, or
 etc.) doesn't affect the results.
+}
+\item{locus.label }{
+vector of labels for the set of loci 
 }
 \item{n.sim }{
 number of permutations that will be used to calculate permutation p-values. The
@@ -82,7 +85,13 @@ indicator of convergence of the EM algorithm (see haplo.em);
 1 = converge, 0=failed
 }
 \item{locus.label}{
-vector of labels for loci, of length K.
+vector of labels for loci
+}
+\item{pos}{
+chromosome positions for loci, same as input.
+}
+\item{n.sim}{
+number of permutations performed for emperical p-values
 }
 \item{inlist}{
 matrix that shows which loci are combined for association analysis in
@@ -135,7 +144,8 @@ association analysis. Genet Epidemiol, in print.
 }
 \seealso{
 \code{\link{haplo.em}},
-\code{\link{print.seqhap}}
+\code{\link{print.seqhap}},
+\code{\link{plot.seqhap}}
 }
 \examples{
 # load example data with response and genotypes. 
