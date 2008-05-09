@@ -1,8 +1,20 @@
 #$Author: sinnwell $
-#$Date: 2007/02/26 22:01:12 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.q,v 1.22 2007/02/26 22:01:12 sinnwell Exp $
+#$Date: 2008/04/08 20:26:22 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.q,v 1.26 2008/04/08 20:26:22 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.q,v $
+#Revision 1.26  2008/04/08 20:26:22  sinnwell
+#add eps.svd, undo last changes with haplo.effect and control
+#
+#Revision 1.25  2008/04/07 21:54:51  sinnwell
+#make control parameter have eps.svd, haplo.effect, sim.control, em.control
+#
+#Revision 1.24  2008/04/04 14:15:17  sinnwell
+#change Ginv eps to 1e-5, sometimes gives full rank for v.score, when should  be n.score-1
+#
+#Revision 1.23  2008/04/01 20:53:07  sinnwell
+#added epsilon par to Ginv
+#
 #Revision 1.22  2007/02/26 22:01:12  sinnwell
 #remove row.rem code, it was deprecated in haplo.em
 #rows.rem is now miss, the index of rows removed in y, x.adj b/c of NA
@@ -101,9 +113,9 @@
 
 haplo.score <- function(y, geno, trait.type="gaussian",
                         offset = NA, x.adj = NA,
-                        haplo.effect="additive",
                         min.count=5, skip.haplo=min.count/(2*nrow(geno)),
                         locus.label=NA, miss.val=c(0,NA),
+                        haplo.effect="additive", eps.svd=1e-5,
                         simulate=FALSE, sim.control=score.sim.control(),
                         em.control = haplo.em.control())
 {
@@ -130,9 +142,9 @@ haplo.score <- function(y, geno, trait.type="gaussian",
     if(nrow(x.adj)!=length(y)) stop("length of y does not match number of rows in x.adj")
   }
      
-# Check haplo.effect parameter, match to 3 options
-  effCode <- charmatch(haplo.effect, c("additive", "dominant", "recessive"))
-  if(is.na(effCode)) stop("Invalid haplo.effect")
+  # get haplo.effect
+  effCode <- charmatch(casefold(haplo.effect), c("additive", "dominant", "recessive"))
+  
    
 # General checks for missing data
    miss <- which(is.na(y))
@@ -301,7 +313,7 @@ haplo.score <- function(y, geno, trait.type="gaussian",
    
 # Compute Score Statistics:
 
-   tmp <- Ginv(v.score)
+   tmp <- Ginv(v.score, eps=eps.svd)
    df <- tmp$rank
    g.inv <- tmp$Ginv
    score.global <- t(u.score)%*% g.inv %*%u.score
@@ -392,7 +404,7 @@ haplo.score <- function(y, geno, trait.type="gaussian",
          
          # Now compute score statistics
      
-         tmp <- Ginv(v.score)
+         tmp <- Ginv(v.score, eps=eps.svd)
          g.inv <- tmp$Ginv  
          score.global.sim <- t(u.score) %*% g.inv %*% u.score
 
@@ -474,8 +486,8 @@ haplo.score <- function(y, geno, trait.type="gaussian",
        haplotype=haplo$haplotype[which.haplo,],
        hap.prob=haplo$hap.prob[which.haplo],
        locus.label=locus.label, simulate=simulate,
-       haplo.effect=haplo.effect, call=call,
-       sim.control=sim.control, n.val.global=n.val.global,
+       call=call, haplo.effect=haplo.effect,
+       n.val.global=n.val.global,
        n.val.haplo=n.val.haplo, rows.rem=miss))
 
    if(exists("is.R") && is.function(is.R) && is.R()) {

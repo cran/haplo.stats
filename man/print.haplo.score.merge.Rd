@@ -1,3 +1,52 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/08 21:55:44 $
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.merge.Rd,v 1.2 2008/01/08 21:55:44 sinnwell Exp $
+% $Locker:  $
+% 
+%$Log: print.haplo.score.merge.Rd,v $
+%Revision 1.2  2008/01/08 21:55:44  sinnwell
+%add comments
+%
+%Revision 1.14  2004/03/16 17:03:59  sinnwell
+%check return chars
+%
+%Revision 1.13  2004/03/12 18:07:20  sinnwell
+%add returns to usage
+%
+%Revision 1.12  2004/03/02 15:08:22  sinnwell
+%remove example, refer to haplo.score.merge.sgml
+%
+%Revision 1.11  2004/02/16 17:39:45  sinnwell
+%change F to FALSE in the call
+%
+%Revision 1.10  2004/02/06 19:08:27  sinnwell
+%*** empty log message ***
+%
+%Revision 1.9  2004/02/06 18:52:10  sinnwell
+%add comments for extra parameters
+%
+%Revision 1.8  2004/02/06 17:45:06  sinnwell
+%add '...' comment
+%
+%Revision 1.7  2003/06/19 22:04:36  sinnwell
+%update for parameter changes in the print method
+%
+%Revision 1.6  2003/03/19 16:08:42  sinnwell
+%remove spaces after sgml keywords for Rd conversion
+%
+%Revision 1.5  2003/03/13 21:50:43  sinnwell
+%fix examples again
+%
+%Revision 1.3  2003/03/13 21:26:04  sinnwell
+%fix sgml comments and try to find error for Rd
+%
+%Revision 1.2  2003/03/13 14:10:25  sinnwell
+%take out comments
+%
+%Revision 1.1  2003/01/17 16:58:56  sinnwell
+%Initial revision
+
+
 \name{print.haplo.score.merge}
 \alias{print.haplo.score.merge}
 \title{
@@ -7,7 +56,7 @@
 Method function to print a class of type haplo.score.merge
 }
 \usage{
-print.haplo.score.merge(x, order.by="score", all.haps=FALSE, 
+\method{print}{haplo.score.merge}(x, order.by="score", all.haps=FALSE, 
                 digits=max(options()$digits-2, 5), nlines=NULL, ...)
 }
 \arguments{
@@ -16,7 +65,7 @@ The object returned from haplo.score.merge (which has old class \{S\}
 haplo.score.merge).
 }
 \item{order.by}{
-Column of the haplo.score.merge object by which to order the results.
+Column of the haplo.score.merge object by which to order the results
 }
 \item{all.haps}{
 Logical, if (T)rue prints a row for all haplotypes.  If (F)alse, the

@@ -1,7 +1,38 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 21:18:10 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.scan.Rd,v 1.2 2008/01/09 21:18:10 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: haplo.scan.Rd,v $
+% Revision 1.2  2008/01/09 21:18:10  sinnwell
+% fixed alias for haplo.scan.obs
+%
+% Revision 1.1  2008/01/09 19:30:31  sinnwell
+% Initial revision
+%
+%Revision 1.6  2005/03/31 16:37:16  sinnwell
+%code-doc agree on param order
+%
+%Revision 1.5  2005/03/28 22:23:03  sinnwell
+%*** empty log message ***
+%
+%Revision 1.4  2005/03/24 16:45:10  schaid
+%*** empty log message ***
+%
+%Revision 1.3  2005/03/24 16:08:13  schaid
+%*** empty log message ***
+%
+%Revision 1.2  2005/03/24 14:41:32  sinnwell
+%add the max.loc vector
+%
+%Revision 1.1  2005/03/23 18:07:44  sinnwell
+%Initial revision
+
 \name{haplo.scan}
 \alias{haplo.scan}
+\alias{haplo.scan.obs}
+\alias{haplo.scan.sim}
 \title{
-  Search for a trait-locus by sliding a fixed-width window over each marker locus
+Search for a trait-locus by sliding a fixed-width window over each marker locus
 and scanning all possible haplotype lengths within the window
 }
 \description{
@@ -20,10 +51,18 @@ Permutations of the trait are used to compute p-values.
 haplo.scan(y, geno, width=4, miss.val=c(0, NA),
           em.control=haplo.em.control(),
           sim.control=score.sim.control())
+
+haplo.scan.obs(y, em.obj, width)
+
+haplo.scan.sim(y.reord, save.lst, nloci)
+
 }
 \arguments{
 \item{y}{
 Vector of binary trait values, must be 1 for cases and 0 for controls.
+}
+\item{y.reord}{
+Same as y, except the order is permuted
 }
 \item{geno}{
 Matrix of alleles, such that each locus has a pair of adjacent
@@ -50,6 +89,18 @@ function score.sim.control and the default values of this
 function can be changed as desired. See score.sim.control for
 details.
 }
+\item{em.obj}{
+Object returned from haplo.em, performed on geno
+}
+
+\item{save.lst}{
+  Information on haplotypes needed for haplo.scan.sim, already
+  calculated in haplo.scan
+}
+\item{nloci}{
+number of markers
+}
+
 }
 \value{
 A list that has class haplo.scan, which contains the following items:

@@ -1,12 +1,139 @@
+
 =================================================================
 #                    HAPLO STATS News File
 #                     
-#        This file documents software changes up to version 1.3.0
+#        This file documents software changes up to version 1.3.8
 #
-#        format is as such
-#        ---------------------
-#        function.name:  title for issue
+#        format is as follows
+#        ---------------------------
+#        [change/add]: function.name  title for issue
 #        explanation of issue, status, and recommendations 
+
+
+===================================================
+### changes made between releases 1.3.6 and 1.3.8
+===================================================
+
+---------------------------------
+change: plot.seqhap
+Handle very small p-values better by having a minimum allowable
+p-value of 1e-10.  It will also handle a ylim value if passed.
+Add more useful warning messages.
+
+----------------------------------
+change: haplo.score  -add eps.svd
+In some assocation tests from haplo.score, we have observed extremely
+significant values for the global association test statistic. The
+degrees of freedom for the global test is the rank of the score
+vector's variance matrix.  We found the source of the problem was
+having too low a cutoff (epsilon) for svd values for 
+determining rank of the variance matrix.  We increased the default for
+the epsilon from 1e-6 to 1e-5 and allow it to be changed by the user
+as the eps.svd parameter in any function that uses haplo.score
+(haplo.score.slide, haplo.cc).
+
+---------------------------------------
+change: haplo.cc parameters
+We remove haplo.min.count as a top-level parameter; it can only
+be used in the control() function, just as in haplo.glm.
+Note that haplo.freq.min can also be used.  
+The eps.svd parameter is also added, as noted for haplo.score.
+
+
+===================================================
+### changes made between releases 1.3.0 and 1.3.6
+===================================================
+
+----------------------------------
+add: haplo.power.qt and haplo.power.cc:
+Power and sample size calculations for haplotype association studies.
+Calculations are performed given a set of haplotypes, their freqs, and
+their beta coefficients, which can be converted by log(OR) for 
+case-control (cc) or calculated for quantitative trait (qt) by R2 
+variance explained by gene association.  For qt, use the
+find.haplo.beta.qt to get these beta coefficients.  
+
+-------------------------
+added: dataset hapPower.demo
+An example data set hapPower.demo is included in the package for
+demonstrating the haplo.power.qt/cc functions in example() and in the manual.
+
+------------------------------
+change: haplo.em
+In past versions, a change was made to pre-calculate how much memory
+would be needed for all haplotype pairs, and issued a warning if that
+memory could not be allocated.  It stopped calculations
+that could have been completed by progressive insertion & trimming
+steps because rare haplotypes are trimmed off and memory rarely meets
+the max.  So the warning is taken off.
+
+------------------------------
+change: haplo.em.control:   min.posterior
+The old default for min.posterior was set at 1e-7.  In rare cases of some
+datasets that had low LD and 10 or more markers, the trimming steps
+actually trimmed away all haplotypes for a given person and the person
+was removed.  We have changed min.posterior to 1e-9 and put in
+warnings and check for this occuring.  Note, we have only observed this in
+simulated data on very rare occasions.
+
+-------------------------------
+change: haplo.glm  remove allele.lev and miss.val parameters
+We used to require the use of allele.lev as a parameter for haplo.glm,
+and allow miss.val to specify codes for missing alleles in the
+genotype matrix.  However, we require using setupGeno to prepare the
+genotype matrix to be used in haplo.glm, after it is added to the
+data.frame to be passed to haplo.glm.  miss.val is completely taken
+care of there, and allele.lev is assigned as an attribute of geno.  
+We have re-worked the formula and na.geno.keep to recognize these
+values when it finds geno in the formula; therefore, these parameters
+are not required in haplo.glm.
+
+----------------------------
+change: na.geno.keep
+We used to keep all subjects who were missing any number of
+alleles. However, if a subject is missing all alleles, they both slow
+the calcualtions down, and don't add any information to the analysis.
+This function still removes subjects missing y or covariate values,
+and now removes subjects missing all their alleles.  After the
+removal, the attributes of the genotype matrix are re-calculated and
+retained for its use in haplo.model.frame.  
+
+-------------------------
+changes: haplo.model.frame
+Get allele.lev from geno in m[[]], not as passed paremeter from haplo.glm.
+
+
+---------------------------
+change: haplo.glm.control
+enforce the default setting for haplo.min.count and haplo.freq.min in
+the function delcaration.  In the declaration they were NA, but a
+default min.count of 5 was enforced.  We have changed the default of
+haplo.freq.min of .01 to be enforced, and the delcaration now reflects the
+enforced default.
+
+-------------------------
+changes: Ginv.q and Ginv.R
+Nothing has changed for R.  Splus version 8.0.1 has a problem in its
+use of the svd fortran function, as called by svd.Matrix.  We
+contacted Insightful and they fixed it for version 8.0.4.  We include
+the svd.Matrix function from version 7 and 8.0.4 in the Ginv.q file,
+but only load it if the Splus version matches 8.0.1.
+
+-------------------------------
+change: louis.info.c
+Prior efforts to make all long integer values as int was not completed
+for this function.  The result was the package didn't work on linux
+64bit machines.  Now it doesn't use long, and it should work on most
+platforms.
+
+--------------------------
+change: louis.info.q  
+When the variance of a quantitative trait is so high that the the
+information matrix becomes ill-conditioned, the Ginv determines the
+information matrix singular, and the standard errors are
+incorrect. Change the epsilon parameter for the generalized inverse to
+about 1e-8, versus the old default in Ginv of 1e-6.  
+
 
 =========================================================
 #### changes made between release 1.2.5 and 1.3.0  #####

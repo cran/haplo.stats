@@ -1,3 +1,30 @@
+% $Author: sinnwell $ 
+% $Date: 2008/04/10 20:45:41 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.cc.Rd,v 1.3 2008/04/10 20:45:41 sinnwell Exp $ 
+% $Locker:  $ 
+% 
+%$Log: haplo.cc.Rd,v $
+%Revision 1.3  2008/04/10 20:45:41  sinnwell
+%add eps.svd, leave haplo.min.count in haplo.glm.control
+%
+%Revision 1.2  2008/01/08 20:23:26  sinnwell
+%comments from ~~ to %
+%
+%Revision 1.1  2008/01/08 19:56:18  sinnwell
+%Initial revision
+%
+%Revision 1.4  2007/03/13 18:14:34  sinnwell
+%add weights
+%
+%Revision 1.3  2005/01/28 21:49:42  sinnwell
+%comment out example
+%
+%Revision 1.2  2005/01/04 20:22:17  sinnwell
+%change min.count to haplo.min.count
+%
+%Revision 1.1  2004/04/23 21:25:19  sinnwell
+%Initial revision
+
 \name{haplo.cc}
 \alias{haplo.cc}
 \title{
@@ -10,10 +37,10 @@ binary (case-control) trait and the haplotypes relevant to the
 unrelated individuals' genotypes.
 }
 \usage{
-haplo.cc(y, geno, haplo.min.count=5, locus.label=NA, ci.prob=0.95, 
-                     miss.val=c(0,NA), weights=NULL,
-                     simulate=FALSE, sim.control=score.sim.control(),
-                     control=haplo.glm.control())
+haplo.cc(y, geno, locus.label=NA, ci.prob=0.95, 
+         miss.val=c(0,NA), weights=NULL, eps.svd=1e-5,
+         simulate=FALSE, sim.control=score.sim.control(),
+         control=haplo.glm.control())
 }
 \arguments{
 \item{y}{
@@ -25,10 +52,6 @@ adjacent columns of alleles, and the order of columns
 corresponds to the order of loci on a chromosome.  If
 there are K loci, then ncol(geno) = 2*K. Rows represent
 alleles for each subject.
-}
-\item{haplo.min.count }{
-The minimum number of expected counts for a haplotype in the sample
-based on estimated frequencies. 
 }
 \item{ci.prob }{
 Probability level for confidence interval on the Odds Ratios of
@@ -44,6 +67,16 @@ Vector of codes for missing values of alleles
 the weights for observations (rows of the data frame). By default, all
 observations are weighted equally.  One use is to correct for
 over-sampling of cases in a case-control sample.
+}
+\item{eps.svd}{
+epsilon value for singular value cutoff; to be used in the generalized
+inverse calculation on the variance matrix of the score vector.  The
+degrees of freedom for the global score test is 1 less than the number of
+haplotypes that are scored (k-1).  The degrees of freedom is
+calculated from the rank of the variance matrix for the score vector.
+In some instances of numeric instability, the singular value
+decomposition indicates full rank (k).  One remedy has been to give a
+larger epsilon value.
 }
 \item{simulate}{
 Logical:  if [F]alse, no empirical p-values are computed; if [T]rue,

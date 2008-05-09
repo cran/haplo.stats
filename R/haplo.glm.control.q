@@ -1,8 +1,17 @@
 #$Author: sinnwell $
-#$Date: 2005/01/04 17:36:47 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.control.q,v 1.4 2005/01/04 17:36:47 sinnwell Exp $
+#$Date: 2008/04/04 15:56:23 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.control.q,v 1.7 2008/04/04 15:56:23 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.control.q,v $
+#Revision 1.7  2008/04/04 15:56:23  sinnwell
+#fix typo of haplo.min.count
+#
+#Revision 1.6  2008/04/04 15:48:18  sinnwell
+#enforce haplo.freq.min as .01, and override haplo.min.count
+#
+#Revision 1.5  2008/04/01 21:23:40  sinnwell
+#manage haplo.freq.min, which is overriden by haplo.min.count
+#
 #Revision 1.4  2005/01/04 17:36:47  sinnwell
 #use haplo.min.count as more important than haplo.freq.min
 #
@@ -18,7 +27,7 @@
 haplo.glm.control <- function(haplo.effect="add",
                               haplo.base = NULL,
                               haplo.min.count=NA,
-                              haplo.freq.min=NA,
+                              haplo.freq.min=.01,
                               sum.rare.min=0.001,
                               haplo.min.info=0.001,
                               keep.rare.haplo=TRUE,
@@ -29,27 +38,41 @@ haplo.glm.control <- function(haplo.effect="add",
   chk <- charmatch(haplo.effect, c("additive", "dominant", "recessive"))
   if(is.na(chk)) stop("Invalid haplo.effect")
 
+  if(haplo.min.info < 0 | haplo.min.info > .9) {
+    warning("The value of haplo.min.info is out of range, the default value of 0.001 is used instead")
+    haplo.min.info <- 0.001
+  }
+  
   # 1/2005 JPS
   # enourage the use of selecting haplotypes to model by a minimum expected count of 5
-  if(is.na(haplo.min.count)) haplo.min.count=5
+  if(!is.null(match.call()$haplo.freq.min)) {
+    if(haplo.freq.min < haplo.min.info | haplo.freq.min >= 1) {
+      warning("invalid value for haplo.freq.min, setting to default of .01")
+      haplo.freq.min <- .01
+    }
 
-  if(!is.na(haplo.freq.min)) {
-    if(haplo.freq.min < 0 | haplo.freq.min >= 1) {
-      warning("The value of haplo.freq.min is out of range, the frequency will default to 5/(2*n.subjects)")
+    if(!is.null(match.call()$haplo.min.count)) {
+      warning("Both control parameters haplo.freq.min and haplo.min.count given; haplo.freq.min will be used")
+      haplo.min.count <- NA
+    }
+
+  } else {
+    if(!is.na(haplo.min.count)) {
       haplo.freq.min <- NA
+      if(haplo.min.count <= 1) {
+        warning("The value of haplo.min.count is too small, the count will default to 5/(2*n.subjects)")
+        haplo.freq.min <- NA
+        haplo.min.count <- 5
+      }
     }
   }
-     
+    
   if(sum.rare.min < 0 | sum.rare.min > .9) {
     warning("The value of sum.rare.min is out of range, the default value of 0.001 is used instead")
     sum.rare.min <- 0.001
   }
 
- if(haplo.min.info < 0 | haplo.min.info > .9) {
-    warning("The value of haplo.min.info is out of range, the default value of 0.001 is used instead")
-    haplo.min.info <- 0.001
-  }
-
+  
   if(keep.rare.haplo!=TRUE & keep.rare.haplo!=FALSE){
     warning("The value of keep.rare.haplo is invalid, the default value of TRUE is used instead")
     keep.rare.haplo=TRUE

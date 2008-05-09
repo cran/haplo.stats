@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/02/26 22:07:13 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summaryGeno.q,v 1.1 2004/02/26 22:07:13 sinnwell Exp $
+#$Date: 2008/01/04 21:18:59 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summaryGeno.q,v 1.2 2008/01/04 21:18:59 sinnwell Exp $
 #$Locker:  $
 #$Log: summaryGeno.q,v $
+#Revision 1.2  2008/01/04 21:18:59  sinnwell
+#change column names of returned data.frame
+#
 #Revision 1.1  2004/02/26 22:07:13  sinnwell
 #Initial revision
 #
@@ -69,10 +72,9 @@ summaryGeno <- function(geno, miss.val=0)
     loc0[i] <- sum(!miss.one)
   }
 
-  tbl <- data.frame(loc0, loc1, loc2,
-                    num.enum.rows=count.geno)
+  tbl <- data.frame(missing0=loc0, missing1=loc1, missing2=loc2,
+                    N.enum.rows=count.geno)
 
-  names(tbl) <- c("loc miss-0", "loc miss-1", "loc miss-2", "num_enum_rows")
   return(tbl)
 }
 

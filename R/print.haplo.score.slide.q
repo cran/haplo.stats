@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2003/09/19 16:48:38 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.slide.q,v 1.2 2003/09/19 16:48:38 sinnwell Exp $
+#$Date: 2007/11/27 20:55:31 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.slide.q,v 1.3 2007/11/27 20:55:31 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.score.slide.q,v $
+#Revision 1.3  2007/11/27 20:55:31  sinnwell
+#re-build df data.frame with numeric as rounded by digits
+#
 #Revision 1.2  2003/09/19 16:48:38  sinnwell
 #fix digits syntax error
 #
@@ -10,7 +13,7 @@
 #Initial revision
 #
 # License: 
-# 
+#   
 # Copyright 2003 Mayo Foundation for Medical Education and Research. 
 # 
 # This program is free software; you can redistribute it and/or modify it under the terms of 
@@ -48,8 +51,13 @@ print.haplo.score.slide <- function(x, digits=max(options()$digits-2, 5), ...)
 # print method for haplo.score.slide object.  Only print the data frame portion
 # of the object.  It has the start and end locus,
 #  and the p-values of that call to haplo.score.
+
+  df <- data.frame(start.loc=x$df$start.loc,
+                   score.global.p=round(x$df$score.global.p, digits),
+                   global.p.sim=round(x$df$global.p.sim, digits),
+                   max.p.sim=round(x$df$max.p.sim, digits))
   
-  print(as.data.frame(x$df), digits=digits, ...)
+  print(df)
   invisible()
   
 }

@@ -1,3 +1,13 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:46:11 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/na.geno.keep.Rd,v 1.1 2008/01/09 19:46:11 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: na.geno.keep.Rd,v $
+% Revision 1.1  2008/01/09 19:46:11  sinnwell
+% Initial revision
+%
+
+
 \name{na.geno.keep}
 \alias{na.geno.keep}
 \title{

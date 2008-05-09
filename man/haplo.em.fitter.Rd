@@ -1,3 +1,16 @@
+% $Author: sinnwell $
+% $Date: 2008/01/08 22:28:36 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.fitter.Rd,v 1.1 2008/01/08 22:28:36 sinnwell Exp $
+% $Locker:  $ 
+% $Log: haplo.em.fitter.Rd,v $
+% Revision 1.1  2008/01/08 22:28:36  sinnwell
+% Initial revision
+%
+%Revision 1.2  2004/02/26 22:30:08  sinnwell
+%remove example
+%
+%Revision 1.1  2004
+
 \name{haplo.em.fitter}
 \alias{haplo.em.fitter}
 \title{

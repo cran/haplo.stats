@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2004/10/22 19:19:28 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.model.frame.q,v 1.8 2004/10/22 19:19:28 sinnwell Exp $
+#$Date: 2008/03/24 22:21:29 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.model.frame.q,v 1.10 2008/03/24 22:21:29 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.model.frame.q,v $
+#Revision 1.10  2008/03/24 22:21:29  sinnwell
+#rm allele.lev, miss.val parameters
+#
+#Revision 1.9  2007/10/22 20:52:40  sinnwell
+#fix to allow effect of only rare haplo.  Also some adjustments for this case in the dominant and recessive cases of the switch()
+#
 #Revision 1.8  2004/10/22 19:19:28  sinnwell
 #for recessive model, if sum(col[i]) is zero, subset accordingly
 #x.mat and haplo.common.  Guard against 1-col left keep as data.frame
@@ -28,11 +34,12 @@
 #Revision 1.1  2003/09/16 16:02:09  schaid
 #Initial revision
 #
-haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,NA), control=haplo.glm.control() ){
+haplo.model.frame <- function(m, locus.label=NA, control=haplo.glm.control() ){
 
   # Procedures to modify a glm model.frame by:
   #
-  # 1. enumerating haplotypes,  # 2. setup haplotype design matrix
+  # 1. enumerating haplotypes,
+  # 2. setup haplotype design matrix
   # 3. expand rows in the current model.frame (m), according to the
   #    number of pairs  of haplotypes consistent with a subject's marker data
   # 4. replace the model.matrix in  m (which corresponds to unphased
@@ -88,6 +95,12 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
 
   geno <- m[[gindx]]
 
+  if(is.null(attributes(geno)$unique.alleles))
+    stop("Genotype matrix does not contain unique.alleles attribute, use setupGeno")
+  
+  allele.lev <- attributes(geno)$unique.alleles
+
+  
   # Setup  weights for use in EM
   wt <- model.extract(m, weights)
   if(!length(wt)){
@@ -98,7 +111,8 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
 
   # EM algorithm for haplotype frequencies
 
-  hapEM <- haplo.em(geno, locus.label=locus.label, miss.val=miss.val, weight=wt, control=control$em)
+  hapEM <- haplo.em(geno, locus.label=locus.label, miss.val=NA,
+                    weight=wt, control=control$em)
 
 
   if(!hapEM$converge){
@@ -106,7 +120,7 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
   }
 
   # If any subects were removed by EM, need to remove them from model.frame
-  if(length(hapEM$rows.rem)>0){
+  if(length(hapEM$rows.rem)) {
     m <- m[-hapEM$rows.rem, , drop=FALSE]
   }
 
@@ -115,20 +129,16 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
   g.dat <- data.frame(hapEM$indx.subj, hapEM$hap1code, hapEM$hap2code)
   attr(g.dat,"names") <-  c("indx.subj","hap1","hap2")
 
-
   indx.subj <- g.dat$indx.subj
   hap1code  <- g.dat$hap1
   hap2code  <- g.dat$hap2
 
-
   # haplotype frequencies
   haplo.freq <- hapEM$hap.prob
-
  
-  # set up haplotype design matrix
+  ## Set up haplotype design matrix
  
-  # create a vector of unique haplotypes 
-
+  # create vector of unique haplotypes 
   uhap <- sort(unique(c(hapEM$hap1code, hapEM$hap2code)))
 
  # if no base haplotype defined, then use most frequent haplotype as base
@@ -140,10 +150,10 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
   }
 
   # check if any haplotypes remain after exclude base and rare haplotypes
-  
   haplo.common <- uhap[(haplo.freq >  haplo.freq.min) & uhap!=haplo.base]
-  if(length(haplo.common)==0)
-    stop("No haplotype freqs > haplo.freq.min")
+
+  if(!keep.rare.haplo && length(haplo.common)==0)
+    stop("No haplotypes effects to model")
 
   # now set up design matrix for add effects, with all haplotypes except base,
   # and later collapse over rare haplotypes
@@ -165,6 +175,7 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
 
   haplo.rare.term <- FALSE
 
+
   switch(haplo.effect,
          add = {
                  x.hap <- x.common
@@ -178,23 +189,23 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
                  }
                },
          dom = {
-                 x.hap <- 1*(x.common >=1)
+                 x.hap <- if(ncol(x.common)) 1*(x.common >= 1) else x.common
                  dimnames(x.hap) <- list(1:nrow(x.hap),haplo.common)
                  if(length(haplo.rare)>0 & sum(haplo.freq.rare) > sum.rare.min &
                     keep.rare.haplo == TRUE) 
                  {
-                    x.hap <- cbind(x.hap, 1*(apply(x.rare, 1, sum)>=1) )
+                    x.hap <- cbind(x.hap, 1*(apply(x.rare, 1, sum) >= 1) )
                     dimnames(x.hap) <- list(1:nrow(x.hap),c(haplo.common,"rare"))
                     haplo.rare.term <- TRUE
                  }
                },
          rec = {
-                  x.hap <- 1*(x.common ==2)
+                  x.hap <- if(ncol(x.common)) 1*(x.common == 2) else x.common
                   dimnames(x.hap) <- list(1:nrow(x.hap),haplo.common)
                   if(length(haplo.rare)>0 & sum(haplo.freq.rare) > sum.rare.min &
-                      keep.rare.haplo == TRUE) 
+                      keep.rare.haplo == TRUE)
                   {
-                    x.hap <- cbind(x.hap, 1*(apply(x.rare==2, 1, any) ))
+                    x.hap <- cbind(x.hap, 1*(apply(x.rare, 1, sum) == 2))
                     dimnames(x.hap) <- list(1:nrow(x.hap),c(haplo.common,"rare"))
                     haplo.rare.term <- TRUE
                   }
@@ -213,7 +224,7 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
                      # must also protect against 1 column left, don't drop to vector
                     x.hap <- x.hap[,ok, drop=FALSE]
                     dimnames(x.hap)[[2]] <- colname.ok
-                    haplo.common <- haplo.common[ok[1:length(haplo.common)]]
+                    if(length(haplo.common)) haplo.common <- haplo.common[ok[1:length(haplo.common)]]
                   }
                 },
           stop("Method for haplo.effect not supported")
@@ -248,7 +259,7 @@ haplo.model.frame <- function(m, locus.label=NA, allele.lev=NULL, miss.val=c(0,N
   # labels for a locus). For S, we can either do the same, or rely on S's model.frame
   # to have taken care of this for us, when model.frame was called within haplo.glm
 
-  if (exists("is.R") && is.function(is.R) && is.R()) {
+  if (is.R()) {
       if(is.null(allele.lev)){
         stop("Missing allele.lev = list of vectors for labels of alleles\nCheck par list for haplo.glm")
       }

@@ -1,3 +1,9 @@
+% $Author: sinnwell $
+% $Date: 2008/01/08 20:24:55 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.design.Rd,v 1.1 2008/01/08 20:24:55 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: 
+
 \name{haplo.design}
 \alias{haplo.design}
 \title{

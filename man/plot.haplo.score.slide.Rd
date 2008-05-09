@@ -1,3 +1,58 @@
+% $Author: sinnwell $ -->
+% $Date: 2008/01/08 20:28:31 $ -->
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.slide.Rd,v 1.2 2008/01/08 20:28:31 sinnwell Exp $ -->
+% $Locker:  $ -->
+% 
+% $Log: plot.haplo.score.slide.Rd,v $
+% Revision 1.2  2008/01/08 20:28:31  sinnwell
+% fix comment
+%
+% Revision 1.1  2008/01/08 17:12:10  sinnwell
+% Initial revision
+%
+% Revision 1.14  2007/05/29 15:53:50  sinnwell
+% leave cex.axis and las/srt to be given by user
+% 
+% Revision 1.13  2007/05/22 21:22:25  sinnwell
+% cex to cex.axis and srt to las
+% 
+% Revision 1.12  2007/04/12 21:08:05  sinnwell
+% add comments about near-zero p-values.
+% 
+% Revision 1.11  2005/03/31 19:23:24  sinnwell
+% *** empty log message ***
+% 
+% Revision 1.10  2004/03/16 22:26:38  sinnwell
+% comment example, point to haplo.score.slide
+% 
+% Revision 1.9  2004/03/03 17:33:43  sinnwell
+% T to TRUE
+% 
+% Revision 1.8  2004/03/03 15:47:05  sinnwell
+% examples update
+% 
+% Revision 1.7  2004/03/02 15:03:23  sinnwell
+% fix example
+% 
+% Revision 1.6  2004/02/06 19:30:30  sinnwell
+% *** empty log message ***
+% 
+% Revision 1.5  2004/02/06 17:44:37  sinnwell
+% add cex,srt,... documentation
+% 
+% Revision 1.4  2004/01/27 21:26:26  sinnwell
+% update for marker distance option
+% 
+% Revision 1.3  2003/09/16 21:09:33  sinnwell
+% edit pval explanations
+% 
+% Revision 1.2  2003/08/27 21:17:13  schaid
+% *** empty log message ***
+% 
+% Revision 1.1  2003/08/22 20:37:14  sinnwell
+% Initial revision
+
+
 \name{plot.haplo.score.slide}
 \alias{plot.haplo.score.slide}
 \title{
@@ -12,7 +67,7 @@ p-values as the sub-haplotype "slides" over a chromosome. Plot
 on the x-axis.
 }
 \usage{
-plot.haplo.score.slide(x, pval="global", dist.vec=1:x$n.loci, ...)
+\method{plot}{haplo.score.slide}(x, pval="global", dist.vec=1:x$n.loci, ...)
 }
 \arguments{
 \item{x}{

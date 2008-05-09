@@ -1,3 +1,13 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/08 21:56:53 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.slide.Rd,v 1.2 2008/01/08 21:56:53 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: print.haplo.score.slide.Rd,v $
+% Revision 1.2  2008/01/08 21:56:53  sinnwell
+% add RCS keywords
+%
+
+
 \name{print.haplo.score.slide}
 \alias{print.haplo.score.slide}
 \title{
@@ -7,7 +17,7 @@
 Print the data frame returned from haplo.score.slide
 }
 \usage{
-print.haplo.score.slide(x, digits=max(options()$digits - 2, 5), ...)
+\method{print}{haplo.score.slide}(x, digits=max(options()$digits - 2, 5), ...)
 }
 \arguments{
 

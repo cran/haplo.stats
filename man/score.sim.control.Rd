@@ -1,3 +1,27 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:47:30 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/score.sim.control.Rd,v 1.1 2008/01/09 19:47:30 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: score.sim.control.Rd,v $
+% Revision 1.1  2008/01/09 19:47:30  sinnwell
+% Initial revision
+%
+% Revision 1.5  2004/03/02 15:15:13  sinnwell
+% comment in example
+%
+% Revision 1.4  2004/02/16 17:41:03  sinnwell
+% change F to FALSE for verbose
+%
+% Revision 1.3  2003/09/12 20:23:12  sinnwell
+% remove pval.choice stuff
+%
+% Revision 1.2  2003/08/27 20:44:32  schaid
+% *** empty log message ***
+%
+% Revision 1.1  2003/08/22 20:29:23  sinnwell
+% Initial revision
+
+
 \name{score.sim.control}
 \alias{score.sim.control}
 \title{

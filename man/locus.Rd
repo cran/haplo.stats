@@ -1,3 +1,12 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 19:43:36 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/locus.Rd,v 1.1 2008/01/09 19:43:36 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: locus.Rd,v $
+% Revision 1.1  2008/01/09 19:43:36  sinnwell
+% Initial revision
+%
+
 \name{locus}
 \alias{locus}
 \title{

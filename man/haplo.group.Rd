@@ -1,3 +1,44 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 17:35:35 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.group.Rd,v 1.1 2008/01/09 17:35:35 sinnwell Exp $ 
+% $Locker:  $
+% $Log: haplo.group.Rd,v $
+% Revision 1.1  2008/01/09 17:35:35  sinnwell
+% Initial revision
+%
+%Revision 1.12  2004/03/22 19:52:53  sinnwell
+%speed up example, use keep
+%
+%Revision 1.11  2004/03/01 21:31:51  sinnwell
+%fix example
+%
+%Revision 1.10  2004/02/06 20:58:36  sinnwell
+%fix syntax for n.loci
+%
+%Revision 1.9  2003/10/27 19:24:51  sinnwell
+%fixed syntax error
+%
+%Revision 1.8  2003/10/15 16:16:12  schaid
+%*** empty log message ***
+%
+%Revision 1.7  2003/08/27 21:08:53  sinnwell
+%update for PIN, mostly for em.control parameter list
+%
+%Revision 1.6  2003/03/24 19:13:47  sinnwell
+%fix group.count description
+%
+%Revision 1.5  2003/03/24 16:38:38  sinnwell
+%add haplo.em to <s-see>
+%
+%Revision 1.4  2003/03/11 21:45:43  sinnwell
+%update for haplo.group returned as list
+%
+%Revision 1.3  2003/01/17 16:56:39  sinnwell
+%revision for haplo.score version 1.2
+%
+%Revision 1.2  2002/09/16 14:46:42  sinnwell
+%Fix RCS keywords
+
 \name{haplo.group}
 \alias{haplo.group}
 \title{

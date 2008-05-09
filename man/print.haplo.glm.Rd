@@ -1,3 +1,23 @@
+% $Author: sinnwell $ -->
+% $Date: 2008/04/04 16:12:33 $ -->
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.glm.Rd,v 1.4 2008/04/04 16:12:33 sinnwell Exp $ -->
+% $Locker:  $ -->
+% $Log: print.haplo.glm.Rd,v $
+% Revision 1.4  2008/04/04 16:12:33  sinnwell
+% add note about returned value by invisible()
+%
+% Revision 1.3  2008/03/24 21:14:44  sinnwell
+% add show.missing argument
+%
+% Revision 1.2  2008/01/09 21:32:16  sinnwell
+% change comments to %
+%
+% Revision 1.1  2007/11/07 21:46:59  sinnwell
+% Initial revision
+%
+% Revision 1.2  2004/03/16 17:02:24  sinnwell
+% add return char to usage
+
 \name{print.haplo.glm}
 \alias{print.haplo.glm}
 \title{
@@ -7,8 +27,7 @@
 Print model information and then haplotype information. 
 }
 \usage{
-print.haplo.glm(x, print.all.haplo=FALSE, digits = 
-                max(options()$digits - 4, 3), ...)
+\method{print}{haplo.glm}(x, print.all.haplo=FALSE, show.missing=FALSE, digits = max(options()$digits - 4, 3), ...)
 }
 \arguments{
 
@@ -18,6 +37,10 @@ A haplo.glm object
 \item{print.all.haplo }{
 Logical.  If TRUE, print all haplotypes considered in the model.
 }
+\item{show.missing }{
+Logical.  If TRUE, print number of rows removed because of missing
+values (NA) in y or x-covariates, or all alleles missing in geno
+}
 \item{digits}{
 Number of numeric digits to print.
 }
@@ -26,7 +49,8 @@ Optional arguments for print method
 }
 }
 \value{
-Nothing is returned
+If print is assigned, the object contains a list with the coefficient
+and haplotype data.frames which are printed by the method.
 }
 \section{Side Effects}{
 

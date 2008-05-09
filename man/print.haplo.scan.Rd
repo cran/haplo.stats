@@ -1,3 +1,15 @@
+% $Author: sinnwell $ -->
+% $Date: 2008/01/08 21:48:39 $ -->
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.scan.Rd,v 1.2 2008/01/08 21:48:39 sinnwell Exp $ -->
+% $Locker:  $ -->
+% 
+%$Log: print.haplo.scan.Rd,v $
+%Revision 1.2  2008/01/08 21:48:39  sinnwell
+%branch from sgml
+%
+%Revision 1.1  2005/03/23 18:07:44  sinnwell
+%Initial revision
+
 \name{print.haplo.scan}
 \alias{print.haplo.scan}
 \title{
@@ -7,7 +19,7 @@
 Print a haplo.scan object
 }
 \usage{
-print.haplo.scan(x, digits=max(options()$digits - 2, 5), ...)
+\method{print}{haplo.scan}(x, digits=max(options()$digits - 2, 5), ...)
 }
 \arguments{
 

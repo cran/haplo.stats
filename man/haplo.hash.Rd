@@ -1,3 +1,12 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/09 17:36:56 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.hash.Rd,v 1.1 2008/01/09 17:36:56 sinnwell Exp $ 
+% $Locker:  $ 
+% $Log: haplo.hash.Rd,v $
+% Revision 1.1  2008/01/09 17:36:56  sinnwell
+% Initial revision
+% 
+
 \name{haplo.hash}
 \alias{haplo.hash}
 \title{

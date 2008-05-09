@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2005/03/28 22:28:02 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.chistat.q,v 1.2 2005/03/28 22:28:02 sinnwell Exp $
+#$Date: 2008/04/01 20:55:08 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.chistat.q,v 1.3 2008/04/01 20:55:08 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.chistat.q,v $
+#Revision 1.3  2008/04/01 20:55:08  sinnwell
+#add eps to Ginv
+#
 #Revision 1.2  2005/03/28 22:28:02  sinnwell
 #changed from chistat
 #
@@ -26,7 +29,7 @@ haplo.chistat <- function(h1, h2, post, y, nrep) {
   x <- 1*outer(h1, uhap, "==") +  1*outer(h2, uhap, "==")
 
   varx <- var(x)
-  save.inv <- Ginv(varx)
+  save.inv <- Ginv(varx, eps=sqrt(.Machine$double.eps))
   vinv <- save.inv$Ginv
   df <- save.inv$rank
   

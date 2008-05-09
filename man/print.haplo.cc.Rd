@@ -1,3 +1,30 @@
+% $Author: sinnwell $ 
+% $Date: 2008/01/08 20:39:17 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.cc.Rd,v 1.3 2008/01/08 20:39:17 sinnwell Exp $ 
+% $Locker:  $ 
+% 
+%$Log: print.haplo.cc.Rd,v $
+%Revision 1.3  2008/01/08 20:39:17  sinnwell
+%fix comments
+%
+%Revision 1.2  2008/01/08 16:01:55  sinnwell
+%add comments from sgml file
+%
+%Revision 1.5  2005/05/09 21:10:46  sinnwell
+%entry for '...'
+%
+%Revision 1.4  2005/05/09 15:45:18  sinnwell
+%comma in \usage
+%
+%Revision 1.3  2005/05/09 15:25:48  sinnwell
+%remove ',' in <\see>
+%
+%Revision 1.2  2005/03/31 16:34:24  sinnwell
+%comment out example
+%
+%Revision 1.1  2004/04/23 21:25:46  sinnwell
+%Initial revision
+
 \name{print.haplo.cc}
 \alias{print.haplo.cc}
 \title{
@@ -7,7 +34,7 @@
 Display results for a haplotype analysis on a case-control study.  
 }
 \usage{
-print.haplo.cc(x, order.by="score", digits=max(options()$digits-2, 5),
+\method{print}{haplo.cc}(x, order.by="score", digits=max(options()$digits-2, 5),
     nlines=NULL, ...)
 }
 \arguments{
