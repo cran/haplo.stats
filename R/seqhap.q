@@ -1,6 +1,9 @@
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.q,v 1.5 2007/05/25 15:38:53 sinnwell Exp $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.q,v 1.6 2008/09/26 21:40:50 sinnwell Exp $
 #$Locker:  $
 #$Log: seqhap.q,v $
+#Revision 1.6  2008/09/26 21:40:50  sinnwell
+#add sim.control parameters
+#
 #Revision 1.5  2007/05/25 15:38:53  sinnwell
 #change inlist to scanned.loci
 #
@@ -17,7 +20,7 @@
 #Initial revision
 #
 #$Author: sinnwell $
-#$Date: 2007/05/25 15:38:53 $
+#$Date: 2008/09/26 21:40:50 $
 
 # License: 
 # 
@@ -65,9 +68,10 @@
 ######################################
 
 
-seqhap <- function(y, geno, pos, locus.label=NA, n.sim=1000, weight=NULL,
+seqhap <- function(y, geno, pos, locus.label=NA, weight=NULL,
                    mh.threshold=3.84, r2.threshold=.95,
                    haplo.freq.min=0.005, miss.val=c(0,NA),
+                   sim.control=score.sim.control(),
                    control=haplo.em.control()) {
 
 
@@ -117,7 +121,10 @@ seqhap <- function(y, geno, pos, locus.label=NA, n.sim=1000, weight=NULL,
             post=as.double(post),
             pos=as.double(pos),
             seed=as.integer(seed),
-            n.sim=as.integer(n.sim),
+            n.sim=as.integer(sim.control$min.sim),
+            min.sim=as.integer(sim.control$min.sim),
+            max.sim=as.integer(sim.control$max.sim),
+            p.threshold=as.double(sim.control$p.threshold),
             mh.threshold=as.double(mh.threshold),
             r2.threshold=as.double(r2.threshold),
             haplo.freq.min=as.double(haplo.freq.min),
@@ -145,7 +152,7 @@ seqhap <- function(y, geno, pos, locus.label=NA, n.sim=1000, weight=NULL,
   results=list(
     converge=obj$converge,
     pos=pos,
-    n.sim=n.sim,
+    n.sim=tmp$n.sim,
     locus.label=obj$locus.label,
     scanned.loci=inlist,
     chi.stat=tmp$chi.chi,

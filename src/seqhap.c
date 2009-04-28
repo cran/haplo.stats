@@ -1,5 +1,10 @@
-/*Author: Yu*/
+/*Author: Yu, Zhaoxia*/
 /*Date: 2007/04/02*/
+
+/* Modified: Jason Sinnwell to do permutations until p.threshold met, 
+   as implemented in haplo.score permutations */
+/* Date: 2008/9/22 */
+
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -34,7 +39,7 @@ static int **haplist;
 static double *post, *pos; /*posterior probabilities and SNPs' physical positions*/
 static int *newhap1codesingle, *newhap2codesingle;
 
-static double r2_threshold, mh_threshold, haplo_freq_min; /*parameters*/
+static double r2_threshold, mh_threshold, haplo_freq_min, p_threshold; /*parameters*/
 static int nsnp, nhap, nsub, npost, newnhap, flag, hap_df;
 
 
@@ -54,6 +59,10 @@ void seqhap(
 
 	    int *seed_c, /*random seeds*/
 	    int *nperm_c, /*number of permutations to calculate P-values*/
+	    int *min_perm_c, /* min number permutations in Besag/Clifford approach */
+	    int *max_perm_c, /* max number permutations in Besag/Clifford approach */
+	    double *p_threshold_c, /* perm p-value threshold */
+
 	    double *lamda_c, /*threshold for the MH test*/
 	    double *r2_threshold_c, /*threshold to ignore one marker when two are in high r^2*/
 	    double *haplo_freq_min_c, /*the minimum haplotype frequency that should used*/
@@ -79,7 +88,10 @@ void seqhap(
   nsnp = *nsnp_c;
   r2_threshold = *r2_threshold_c;
   mh_threshold = *lamda_c;
+  p_threshold = *p_threshold_c;
   int N_PERM = *nperm_c;
+  int MIN_PERM = *min_perm_c;  
+  int MAX_PERM = *max_perm_c; 
   nsub = *nsub_c;
   npost = *npost_c;
   nhap = *nhap_c;
@@ -197,14 +209,20 @@ void seqhap(
 	nondup_disease[j] = disease[i];
 	j ++;}
 
-  double chi_tmp, hap_tmp, sum_tmp;
-  for(nperm=0; nperm<N_PERM; nperm++)
-    {
+  double chi_tmp, hap_tmp, sum_tmp, h_region;
+  int doneperm=0;            /* jps */
+  N_PERM = 0;
+  while(!doneperm) {  /* while() used to keep permuting until p-threshold met -JPS*/
+
+  /*  for(nperm=0; nperm<N_PERM; nperm++)  { */  
+
       /*permute disease status*/
       for(i=0; i<nsub; i++)
 	perm_rand[i]=ranAS183();
       permute(nondup_disease, perm_rand, perm_disease);
       chi_max=0; hap_min=1; sum_min=1;
+
+      N_PERM++; /*jps*/
 
       /*calculate the three statistics for a permutated data set*/
       for(si=0; si<nsnp; si++)
@@ -227,25 +245,39 @@ void seqhap(
 	  hap_tmp = pchisq(doublek/2, hap_tmp/2);
 
 	  /*global*/
-	  if(chi_tmp>chi_max) chi_max=chi_tmp;
-	  if(hap_tmp<hap_min) hap_min=hap_tmp;
-	  if(sum_tmp<sum_min) sum_min=sum_tmp;	  
-
+	  if(chi_tmp > chi_max) chi_max=chi_tmp;
+	  if(hap_tmp < hap_min) hap_min=hap_tmp;
+	  if(sum_tmp < sum_min) sum_min=sum_tmp;	  
+ 
 	  /*pointwise*/
-	  if(chi_tmp>chi_stat0i[si]) chi_pi[si]++;
-	  if(hap_tmp<hap_stat0i[si]) hap_pi[si]++;
-	  if(sum_tmp<sum_stat0i[si]) sum_pi[si]++;
+	  if(chi_tmp > chi_stat0i[si]) chi_pi[si]++;
+	  if(hap_tmp < hap_stat0i[si]) hap_pi[si]++;
+	  if(sum_tmp < sum_stat0i[si]) sum_pi[si]++;
 	}
-      /*global*/
-      if(chi_max>chi_max0) chi_p++;
-      if(hap_min<hap_min0) hap_p++;
-      if(sum_min<sum_min0) sum_p++;
-    }
 
-  /*global P-vlaues based on permutation*/
-  *chi_p_region_c=chi_p/N_PERM;
-  *hap_p_region_c=hap_p/N_PERM;
-  *sum_p_region_c=sum_p/N_PERM;
+      /*global*/
+      if(chi_max > chi_max0) chi_p++;
+      if(hap_min < hap_min0) hap_p++;
+      if(sum_min < sum_min0) sum_p++;
+
+      /* }  old for() stop  */
+   
+      if( N_PERM >= MIN_PERM ) {  
+      /* added by JPS:  apply Besag and Clifford permutation 
+         p-values rules to region p-values */
+	h_region = 1/((p_threshold * p_threshold) + 1/N_PERM);
+	if( (h_region <= hap_p & h_region <= chi_p & h_region <= sum_p) | N_PERM == MAX_PERM) {
+ 	  doneperm = 1;
+	}
+      }
+  }
+
+  /*global P-values based on permutation*/
+  *chi_p_region_c = chi_p/N_PERM;
+  *hap_p_region_c = hap_p/N_PERM;
+  *sum_p_region_c = sum_p/N_PERM;
+
+  *nperm_c = N_PERM;
 
   /*pointwisw P-vlaues based on permutation*/
   for(si=0; si<nsnp; si++)

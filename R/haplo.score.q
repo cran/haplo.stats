@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2008/04/08 20:26:22 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.q,v 1.26 2008/04/08 20:26:22 sinnwell Exp $
+#$Date: 2009/04/09 14:31:37 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.q,v 1.28 2009/04/09 14:31:37 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.q,v $
+#Revision 1.28  2009/04/09 14:31:37  sinnwell
+#*** empty log message ***
+#
+#Revision 1.27  2009/04/08 17:52:40  sinnwell
+# use R's pchisq with lower.tail=FALSE for more signif digits
+#
 #Revision 1.26  2008/04/08 20:26:22  sinnwell
 #add eps.svd, undo last changes with haplo.effect and control
 #
@@ -469,9 +475,8 @@ haplo.score <- function(y, geno, trait.type="gaussian",
       
     }
 
-
-   score.global.p <- 1 - pchisq(score.global,df)
-   score.haplo.p <- 1-pchisq(score.haplo^2,1)
+   score.global.p <- if(is.R()) pchisq(score.global, df, lower.tail=FALSE) else 1 - pchisq(score.global,df)
+   score.haplo.p <- if(is.R()) pchisq(score.haplo^2, 1, lower.tail=FALSE) else 1 - pchisq(score.haplo^2,1)
 
 # Create locus label if missing:
    if(all(is.na(locus.label))) {

@@ -1,53 +1,67 @@
 %  $Author: sinnwell $ 
-%  $Date: 2004/03/12 21:51:18 $ 
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/hla.demo.Rd,v 1.3 2004/03/12 21:51:18 sinnwell Exp $
+%  $Date: 2009/04/08 19:11:56 $ 
+%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/hla.demo.Rd,v 1.5 2009/04/08 19:11:56 sinnwell Exp $
 %  $Locker:  $ 
-
+%  $Log: hla.demo.Rd,v $
+%  Revision 1.5  2009/04/08 19:11:56  sinnwell
+%  changed for version 2.9.1
+%
 
 \name{hla.demo}
 \alias{hla.demo}
-\title{
-  HLA Loci and Serologic Response to Measles Vaccination.
-}
+\docType{data}
+\title{ HLA Loci and Serologic Response to Measles Vaccination  }
 \description{
-  Eleven HLA-region loci genotyped for 220 subjects, phase not
-  known. Contains measles vaccination response with covariate data.
+ A data frame with genotypes at eleven HLA-region loci genotyped for
+  220 subjects, phase not known. Contains measles vaccination response
+  with covariate data.
 }
-\usage{
-data(hla.demo)
-}
+\usage{data(hla.demo)}
 \format{
-\item{ }{
-Data Frame with the following columns:
+ A data frame with 220 observations on the following 26 variables.
+  \describe{
+    \item{\code{resp}}{numeric, Quantitative response to Measles Vaccination}
+    \item{\code{resp.cat}}{Category of vaccination response, a factor with levels \code{high} \code{low} \code{normal}}
+    \item{\code{male}}{numeric, indicator of gener, 1=male, 0=female}
+    \item{\code{age}}{numeric, subject's age}
+    \item{\code{DPB.a1}}{first allele of genotype }
+    \item{\code{DPB.a2}}{second allele of genotype }
+    \item{\code{DPA.a1}}{first allele of genotype }
+    \item{\code{DPA.a2}}{second allele of genotype}
+    \item{\code{DMA.a1}}{first allele of genotype}
+    \item{\code{DMA.a2}}{second allele of genotype}
+    \item{\code{DMB.a1}}{first allele of genotype}
+    \item{\code{DMB.a2}}{second allele of genotype}
+    \item{\code{TAP1.a1}}{first allele of genotype }
+    \item{\code{TAP1.a2}}{ second allele of genotype}
+    \item{\code{TAP2.a1}}{first allele of genotype }
+    \item{\code{TAP2.a2}}{second allele of genotype }
+    \item{\code{DQB.a1}}{first allele of genotype}
+    \item{\code{DQB.a2}}{second allele of genotype}
+    \item{\code{DQA.a1}}{first allele of genotype}
+    \item{\code{DQA.a2}}{second allele of genotype}
+    \item{\code{DRB.a1}}{first allele of genotype}
+    \item{\code{DRB.a2}}{second allele of genotype}
+    \item{\code{B.a1}}{first allele of genotype}
+    \item{\code{B.a2}}{second allele of genotype}
+    \item{\code{A.a1}}{first allele of genotype}
+    \item{\code{A.a2}}{second allele of genotype}
+  }
 }
-\item{ resp }{
-Quantitative response to Measles Vaccination 
-}
-\item{ resp.cat }{
-Category of response as low, normal, or high; based on 'resp'
-}
-\item{ male }{
-Binary indicator of gender, 1=male, 0=female
-}
-\item{ age }{
-Age of the subject
-}
-\item{ allele columns 5 - 26 }{
-  Pairs of columns represent the allele pairs for each subject at the
-  locus.
-}
-}
+\details{
 
+}
 \source{
   Data set kindly provided by Gregory A. Poland, M.D. and the Mayo
   Clinic Vaccine Research Group for illustration only, and my not be
   used for publication.
 }
-\section{References}{
+\references{
   Schaid DJ, Rowland CM, Tines DE, Jacobson RM,  Poland  GA.
   "Score tests for association of traits with haplotypes when
   linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 }
-
+\examples{
+data(hla.demo)
+}
 \keyword{datasets}
-% docclass is function

@@ -1,8 +1,17 @@
 #$Author: sinnwell $
-#$Date: 2008/05/08 17:38:26 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.q,v 1.3 2008/05/08 17:38:26 sinnwell Exp $
+#$Date: 2009/03/09 16:10:19 $
+#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.q,v 1.6 2009/03/09 16:10:19 sinnwell Exp $
 #$Locker:  $
 #$Log: plot.seqhap.q,v $
+#Revision 1.6  2009/03/09 16:10:19  sinnwell
+#for R use pchisq(, , lower=FALSE) to get precision on small p-vals
+#
+#Revision 1.5  2008/05/16 18:34:44  sinnwell
+#warnings for when perm pvals 0, set to 1/(n.sim+1)
+#
+#Revision 1.4  2008/05/09 20:59:58  sinnwell
+#add minp parameter
+#
 #Revision 1.3  2008/05/08 17:38:26  sinnwell
 #allow ylim, set minimum p as 1e-10, issue warning if pval not valid
 #
@@ -43,18 +52,16 @@
 # email: schaid@mayo.edu
 #
 
-plot.seqhap <- function(x, pval="hap", single=TRUE, ...) {
-  # plot method of seqhap object
-  #  1. x-axis: give locus labels in order, in "pos" chrom positions
-  #  2. y-axis: plot the -log10 of the p-val chosen
-  #  3. the pval parameter selects which ("hap","hap.sim","sum","sum.sim") to plot
-
+plot.seqhap <- function(x, pval="hap", single=TRUE, minp=.Machine$double.eps, ...) {
+  ## plot method of seqhap object
+  ##  1. x-axis: give locus labels in order, in "pos" chrom positions
+  ##  2. y-axis: plot the -log10 of the p-val chosen
+  ##  3. the pval parameter selects which ("hap","hap.sim","sum","sum.sim") to plot
+  ##  4. Use minp as the smallest "allowable" p-value.
+  ##     Any p-value smaller will be set to log10(minp)
+  
   if(!inherits(x, "seqhap"))
 	    stop("Not a seqhap object")
-
-  ## Set p.small as the smallest "allowable" p-value.
-  ## Any p-value smaller will be set to log10(p.small)
-  small.p <- 1e-10
   
   ## if ylim is given in ..., pull it off and use it
   dots <- as.list(substitute(list(...)))[-1]
@@ -69,26 +76,28 @@ plot.seqhap <- function(x, pval="hap", single=TRUE, ...) {
   }
   
   switch(pval,
-         "hap"={seqp <- 1-pchisq(x$hap.stat,x$hap.df)
+         "hap"={ if(is.R()) seqp <- pchisq(x$hap.stat, x$hap.df, lower.tail=FALSE) else seqp <- 1-pchisq(x$hap.stat,x$hap.df)
                 ylabel <- '-log10(hap.pval)' 
-                 },
-         "sum"={seqp <- 1-pchisq(x$sum.stat,x$sum.df)
-                ylabel <- '-log10(sum.pval)'
-                 },
-         "hap.sim"={seqp <- x$hap.p.point
+                },
+         "sum"={ if(is.R()) seqp <- pchisq(x$sum.stat,x$sum.df, lower.tail=FALSE) else 1-pchisq(x$sum.stat,x$sum.df)
+                 ylabel <- '-log10(sum.pval)'
+               },
+         "hap.sim"={seqp <-  ifelse(x$hap.p.point==0, 1/(x$n.sim+1), x$hap.p.point)
+                    if(any(seqp < 1/x$n.sim)) warning("One or more permutation p-value(s) set from 0 to 1/(n.sim+1)")
                     ylabel <- '-log10(hap.sim.pval)'
                  },
-         "sum.sim"={seqp <- x$sum.p.point
+         "sum.sim"={seqp <- ifelse(x$sum.p.point==0, 1/(x$n.sim+1), x$sum.p.point)
+                    if(any(seqp < 1/x$n.sim)) warning("One or more permutation p-value(s) set from 0 to 1/(n.sim+1)")
                     ylabel <- '-log10(sum.sim.pval)'
                  })
 
-  if(any(single.p < small.p)) {
-    cat("One or more single-marker p-values too small to plot, set to ", small.p, "\n")
-    single.p <- ifelse(single.p < small.p, small.p, single.p)
+  if(any(single.p < minp)) {
+    warning(paste("One or more single-marker p-values too small to plot, set to ", minp, "\n"))
+    single.p <- ifelse(single.p < minp, minp, single.p)
   }
-  if(any(seqp < small.p)) {
-    cat("One or more multi-marker p-values too small to plot, set to ", small.p, "\n")
-    seqp <- ifelse(seqp < small.p, small.p, seqp)
+  if(any(seqp < minp)) {
+    warning(paste("One or more multi-marker p-values too small to plot, set to ", minp, "\n"))
+    seqp <- ifelse(seqp < minp, minp, seqp)
   }
 
   log.single.p <- if(single) -log10(single.p) else NULL
