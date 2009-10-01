@@ -1,8 +1,14 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 21:18:10 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.scan.Rd,v 1.2 2008/01/09 21:18:10 sinnwell Exp $ 
+% $Date: 2009/09/30 19:58:16 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.scan.Rd,v 1.4 2009/09/30 19:58:16 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: haplo.scan.Rd,v $
+% Revision 1.4  2009/09/30 19:58:16  sinnwell
+% remove keywords section
+%
+% Revision 1.3  2009/09/30 19:01:46  sinnwell
+% remove section{} and put in note{}
+%
 % Revision 1.2  2008/01/09 21:18:10  sinnwell
 % fixed alias for haplo.scan.obs
 %
@@ -123,9 +129,6 @@ A p-value for the significance of the global maximum statistic.
 Number of simulations performed
 }
 }
-\section{Side Effects}{
-For datasets with many estimated haplotypes, the run-time can be very long.
-}
 \details{
 Search for a region for which the haplotypes have the strongest
 association with a binary trait by sliding a window of fixed width
@@ -144,18 +147,25 @@ the locus-specific test statistic. The global test statistic is the
 maximum over all computed score statistics. To compute p-values, 
 the case/control status is randomly permuted.  Simulations are
 performed until precision criteria are met for all p-values; the
-criteria are controlled by score.sim.control.
+criteria are controlled by score.sim.control. See the note for long run
+times.
 }
-\section{References}{
-Cheng R, Ma JZ, Wright FA, Lin S, Gau X, Wang D, Elston RC, Li
-MD. "Nonparametric disequilibrium mapping of functional sites using
-haplotypes of multiple tightly linked single-nucleotide polymorphism markers".
-Genetics 164 (2003):1175-1187.
+\references{
+  \itemize{
+    \item{Cheng et al-1}{Cheng R, Ma JZ, Wright FA, Lin S, Gau X, Wang
+      D, Elston RC, Li MD. "Nonparametric disequilibrium mapping of
+      functional sites using haplotypes of multiple tightly linked
+      single-nucleotide polymorphism markers". Genetics 164
+      (2003):1175-1187.} 
+
+    \item{Cheng et al-2}{Cheng R, Ma JZ, Elston RC, Li MD.  "Fine Mapping Functional Sites or
+          Regions from Case-Control Data Using Haplotypes of Multiple
+	  Linked SNPs."  Annals of Human Genetics 69 (2005): 102-112. 
+	  }
+  }
 }
-\section{}{
-Cheng R, Ma JZ, Elston RC, Li MD.  "Fine Mapping Functional Sites or
-Regions from Case-Control Data Using Haplotypes of Multiple Linked
-SNPs."  Annals of Human Genetics 69 (2005): 102-112.
+\note{
+For datasets with many estimated haplotypes, the run-time can be very long.
 }
 \seealso{
 \code{\link{haplo.em}},
@@ -177,6 +187,5 @@ SNPs."  Annals of Human Genetics 69 (2005): 102-112.
 
   print(scan.obj)
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

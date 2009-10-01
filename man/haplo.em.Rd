@@ -1,9 +1,15 @@
 % $Author: sinnwell $
-% $Date: 2008/01/08 20:21:53 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.Rd,v 1.1 2008/01/08 20:21:53 sinnwell Exp $ 
+% $Date: 2009/09/30 19:58:16 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.Rd,v 1.3 2009/09/30 19:58:16 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: haplo.em.Rd,v $
+%Revision 1.3  2009/09/30 19:58:16  sinnwell
+%remove keywords section
+%
+%Revision 1.2  2009/09/30 19:17:51  sinnwell
+%remove empty sections
+%
 %Revision 1.1  2008/01/08 20:21:53  sinnwell
 %Initial revision
 %
@@ -171,13 +177,7 @@ matrix of unique haplotypes. Each row represents a unique
 list of control parameters for algorithm. See haplo.em.control
 }
 }
-\section{Side Effects}{
-
-}
 \details{
-
-}
-\section{References}{
   The basis of this progressive insertion algorithm is from the sofware
   snphap by David Clayton. Although some of the features and control
   parameters of this S-PLUS version are modeled after snphap, there are
@@ -200,6 +200,5 @@ save.em.keep <- haplo.em(geno=geno[keep,], locus.label=label)
 
 print.haplo.em(save.em.keep)
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

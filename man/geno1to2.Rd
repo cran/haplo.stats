@@ -1,9 +1,15 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/08 20:25:48 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno1to2.Rd,v 1.2 2008/01/08 20:25:48 sinnwell Exp $ 
+% $Date: 2009/09/30 20:05:38 $ 
+% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno1to2.Rd,v 1.4 2009/09/30 20:05:38 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: geno1to2.Rd,v $
+%Revision 1.4  2009/09/30 20:05:38  sinnwell
+%rm keywords, or leave one with one from /doc/KEYWORDS
+%
+%Revision 1.3  2009/09/30 19:19:23  sinnwell
+%remove empty sections
+%
 %Revision 1.2  2008/01/08 20:25:48  sinnwell
 %change comments
 %
@@ -51,18 +57,6 @@ will be "A.1" and "A.2"
 \value{
 a 2-column genotype matrix
 }
-\section{Side Effects}{
-
-}
-\details{
-
-}
-\section{References}{
-
-}
-\seealso{
-
-}
 \examples{
 geno1 <- matrix(c(0,0,1,
                   1,0,2,
@@ -74,6 +68,6 @@ geno1[1,3] <- NA
 geno1[1,1] <- 3
 geno1to2(geno1)
 }
-\keyword{}
+\keyword{utilities}
 % docclass is function
 % Converted by Sd2Rd version 37351.

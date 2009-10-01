@@ -9,22 +9,6 @@
 #        [change/add]: function.name  title for issue
 #        explanation of issue, status, and recommendations 
 
-
-===================================================
-### changes made between releases 1.4.1 and 1.4.2
-===================================================
-update: more pchisq() precision
-use pchisq(, , lower.tail=FALSE) for R instead of 1-pchisq( ), as it
-gives more precision than the 1e-16 for small p-values.  It is used in
-print.haplo.em, seqhap, print.seqhap, plot.seqhap, and haplo.score.
-
-update: Rd files for seqhap.dat, hla.demo, hapPower.demo
-The Rd files were failing R CMD check for R 2.9.0 on CRAN, mostly
-because of how I used \item to document columns of data.frames.  I
-found out using prompt(hla.demo) for how R281 suggests to document
-data.frames, and mimmick that format.
-
-
 ===================================================
 ### changes made between releases 1.3.8 and 1.4.1
 ===================================================

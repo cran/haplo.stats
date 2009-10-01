@@ -1,8 +1,14 @@
 %$Author: sinnwell $ 
-%$Date: 2008/03/10 18:59:33 $ 
-%$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/get.hapPair.Rd,v 1.1 2008/03/10 18:59:33 sinnwell Exp $ 
+%$Date: 2009/09/30 20:05:38 $ 
+%$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/get.hapPair.Rd,v 1.3 2009/09/30 20:05:38 sinnwell Exp $ 
 %$Locker:  $ 
 %$Log: get.hapPair.Rd,v $
+%Revision 1.3  2009/09/30 20:05:38  sinnwell
+%rm keywords, or leave one with one from /doc/KEYWORDS
+%
+%Revision 1.2  2009/09/30 19:21:50  sinnwell
+%remove empty sections
+%
 %Revision 1.1  2008/03/10 18:59:33  sinnwell
 %Initial revision
 %
@@ -38,7 +44,6 @@ get.hapPair(haplo, haplo.freq, base.index)
 }
 \value{
   list with components:
-
 \item{p.g}{
 Genotype probability under Hardy-Weinberg Equilibrium, where the
 genotype is the haplotype pair
@@ -51,15 +56,6 @@ haplotype.  Effects are coded to an additive effect for the haplotypes.
 two-column matrix containing the indices for the haplotypes in x.haplo.
 The indices are the row of the haplotype in haplo.
 }
-}
-\section{Side Effects}{
-
-}
-\details{
-}
-\section{References}{
-}
-\seealso{
 }
 \examples{
 haplo <- rbind(
@@ -96,5 +92,4 @@ hPair <- get.hapPair(haplo, haplo.freq, base.index=1)
 names(hPair)
 dim(hPair$x.haplo)
 }
-\keyword{}
 % docclass is function

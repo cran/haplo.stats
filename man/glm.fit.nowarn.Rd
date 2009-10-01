@@ -1,6 +1,6 @@
 %  $Author: sinnwell $ 
-%  $Date: 2004/03/12 17:56:54 $
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/glm.fit.nowarn.Rd,v 1.3 2004/03/12 17:56:54 sinnwell Exp $
+%  $Date: 2009/09/30 20:05:38 $
+%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/glm.fit.nowarn.Rd,v 1.5 2009/09/30 20:05:38 sinnwell Exp $
 %  $Locker:  $ 
 
 \name{glm.fit.nowarn}
@@ -29,16 +29,8 @@ glm.fit.nowarn(x, y, weights = rep(1, nobs), start = NULL,
   \item{control}{ \code{control} }
   \item{intercept}{ \code{intercept} }
 }
-\details{
- 
-}
-\value{ }
-\references{  }
 \author{ Sinnwell JP }
-\note{ }
 
 % ~Make other sections like Warning with \section{Warning }{....} ~ 
 \seealso{ \code{\link{haplo.glm}} }
-\examples{ }
-\keyword{ }% at least one, from doc/KEYWORDS
 
