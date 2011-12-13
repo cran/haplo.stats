@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2008/04/29 14:34:32 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/find.haplo.beta.qt.q,v 1.5 2008/04/29 14:34:32 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/find.haplo.beta.qt.q,v 1.5 2008/04/29 14:34:32 sinnwell Exp $
 #$Locker:  $
 #$Log: find.haplo.beta.qt.q,v $
 #Revision 1.5  2008/04/29 14:34:32  sinnwell

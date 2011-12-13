@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2008/12/02 20:23:57 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.scan.q,v 1.6 2008/12/02 20:23:57 sinnwell Exp $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.scan.q,v 1.7 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.scan.q,v $
+#Revision 1.7  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.6  2008/12/02 20:23:57  sinnwell
 #add code to remove subjects with NA in y.
 #
@@ -103,7 +106,7 @@ haplo.scan <- function(y, geno, width=4, miss.val=c(0,NA),
 
     # done if reach max.sim or enough rej values.  If max is reached,
     # keep results and calculate p-vals at that point.
-    cat("nsim:", nsim, " h.count:", h.count, " h.met:", h.met, "\n")
+    ## cat("nsim:", nsim, " h.count:", h.count, " h.met:", h.met, "\n")
     if((nsim >= sim.control$min.sim) & ( (nsim == sim.control$max.sim) | all(h.met) ) )
       done <- TRUE
   }

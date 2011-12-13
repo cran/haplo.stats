@@ -1,9 +1,12 @@
 % $Author: sinnwell $ 
-% $Date: 2009/09/30 20:05:38 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno1to2.Rd,v 1.4 2009/09/30 20:05:38 sinnwell Exp $ 
+% $Date: 2011/02/21 19:08:18 $ 
+% $Header: /projects/genetics/cvs/cvsroot/mgenet/man/geno1to2.Rd,v 1.1.1.1 2011/02/21 19:08:18 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: geno1to2.Rd,v $
+%Revision 1.1.1.1  2011/02/21 19:08:18  sinnwell
+%"initial, general functions for R genetics at Mayo BSI
+%
 %Revision 1.4  2009/09/30 20:05:38  sinnwell
 %rm keywords, or leave one with one from /doc/KEYWORDS
 %

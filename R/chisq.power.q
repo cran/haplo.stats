@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2008/02/28 21:38:19 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/chisq.power.q,v 1.2 2008/02/28 21:38:19 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/chisq.power.q,v 1.2 2008/02/28 21:38:19 sinnwell Exp $
 #$Locker:  $
 #$Log: chisq.power.q,v $
 #Revision 1.2  2008/02/28 21:38:19  sinnwell

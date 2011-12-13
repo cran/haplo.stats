@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 19:36:04 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.merge.Rd,v 1.1 2008/01/09 19:36:04 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.score.merge.Rd,v 1.2 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $
 % $Log: haplo.score.merge.Rd,v $
+% Revision 1.2  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.1  2008/01/09 19:36:04  sinnwell
 % Initial revision
 %
@@ -69,7 +72,7 @@ are estimated by haplo.group.
 \code{\link{haplo.group}}
 }
 \examples{
-  setupData(hla.demo)
+  data(hla.demo)
   geno <- as.matrix(hla.demo[,c(17,18,21:24)])
   keep <- !apply(is.na(geno) | geno==0, 1, any)
   hla.demo <- hla.demo[keep,]
@@ -84,6 +87,6 @@ are estimated by haplo.group.
 
   print(score.merged)
 }
-\keyword{}
+\keyword{scores}
 % docclass is function
 % Converted by Sd2Rd version 37351.

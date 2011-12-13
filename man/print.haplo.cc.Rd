@@ -1,9 +1,12 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/08 20:39:17 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.cc.Rd,v 1.3 2008/01/08 20:39:17 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/print.haplo.cc.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: print.haplo.cc.Rd,v $
+%Revision 1.4  2011/11/10 15:29:41  sinnwell
+%major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 %Revision 1.3  2008/01/08 20:39:17  sinnwell
 %fix comments
 %
@@ -60,12 +63,6 @@ the print method.
 \value{
 Nothing is returned.
 }
-\section{Side Effects}{
-
-}
-\details{
-
-}
 \seealso{
 \code{\link{haplo.cc}}
 }
@@ -74,6 +71,5 @@ Nothing is returned.
 ##    order results by haplotype 
 # print.haplo.cc(cc.test, order.by="haplotype")
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

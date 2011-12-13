@@ -1,8 +1,11 @@
 %  $Author: sinnwell $ 
-%  $Date: 2009/04/08 19:11:56 $ 
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/hla.demo.Rd,v 1.5 2009/04/08 19:11:56 sinnwell Exp $
+%  $Date: 2011/11/10 15:29:41 $ 
+%  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/hla.demo.Rd,v 1.6 2011/11/10 15:29:41 sinnwell Exp $
 %  $Locker:  $ 
 %  $Log: hla.demo.Rd,v $
+%  Revision 1.6  2011/11/10 15:29:41  sinnwell
+%  major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 %  Revision 1.5  2009/04/08 19:11:56  sinnwell
 %  changed for version 2.9.1
 %
@@ -47,9 +50,6 @@
     \item{\code{A.a1}}{first allele of genotype}
     \item{\code{A.a2}}{second allele of genotype}
   }
-}
-\details{
-
 }
 \source{
   Data set kindly provided by Gregory A. Poland, M.D. and the Mayo

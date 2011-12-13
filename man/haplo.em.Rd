@@ -1,9 +1,12 @@
 % $Author: sinnwell $
-% $Date: 2009/09/30 19:58:16 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.Rd,v 1.3 2009/09/30 19:58:16 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.em.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % 
 %$Log: haplo.em.Rd,v $
+%Revision 1.4  2011/11/10 15:29:41  sinnwell
+%major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 %Revision 1.3  2009/09/30 19:58:16  sinnwell
 %remove keywords section
 %
@@ -105,7 +108,10 @@ indicator of convergence of the EM algorithm
   (1 = converge, 0 = failed).
 }
 \item{lnlike}{
-value of lnlike at last EM iteration (maximum lnlike if converged).
+  value of lnlike at last EM iteration (maximum lnlike if converged).
+}
+\item{lnlike.noLD}{
+  value of lnlike under the null of linkage equilibrium at all loci.  
 }
 \item{lr}{
 likelihood ratio statistic to test the final lnlike against the
@@ -184,11 +190,18 @@ list of control parameters for algorithm. See haplo.em.control
   substantial differences, such as extension to allow for more than two
   alleles per locus, and some other nuances on how the alogrithm is implemented.
 }
+\note{
+  Sorted order of haplotypes with character alleles is system-dependent,
+  and can be controlled via the LC_COLLATE locale environment
+  variable. Different locale settings can cause results to be
+  non-reproducible even when controlling the random seed. 
+}
 \seealso{
-  haplo.em.control
+  \code{\link{setupGeno}},
+  \code{\link{haplo.em.control}}
 }
 \examples{
-setupData(hla.demo)
+data(hla.demo)
 attach(hla.demo)
 geno <- hla.demo[,c(17,18,21:24)]
 label <-c("DQB","DRB","B")

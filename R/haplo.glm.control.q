@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2008/04/04 15:56:23 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.glm.control.q,v 1.7 2008/04/04 15:56:23 sinnwell Exp $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.glm.control.q,v 1.8 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.control.q,v $
+#Revision 1.8  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.7  2008/04/04 15:56:23  sinnwell
 #fix typo of haplo.min.count
 #
@@ -31,6 +34,7 @@ haplo.glm.control <- function(haplo.effect="add",
                               sum.rare.min=0.001,
                               haplo.min.info=0.001,
                               keep.rare.haplo=TRUE,
+                              eps.svd=sqrt(.Machine$double.eps),
                               glm.c=glm.control(maxit=500),
                               em.c=haplo.em.control()){
 
@@ -78,7 +82,12 @@ haplo.glm.control <- function(haplo.effect="add",
     keep.rare.haplo=TRUE
   }
 
-
+  if(eps.svd < .Machine$double.eps || eps.svd > 0.1) {
+    warning(paste("The value of eps.svd is out of range, the default of ",
+                  sqrt(.Machine$double.eps), " is being used.", sep=''))
+    eps.svd <- sqrt(.Machine$double.eps)
+  }
+  
   return(list(haplo.effect=haplo.effect,
               haplo.base = haplo.base,
               haplo.min.count=haplo.min.count,
@@ -87,6 +96,7 @@ haplo.glm.control <- function(haplo.effect="add",
               haplo.min.info=haplo.min.info,
               keep.rare.haplo=keep.rare.haplo,
               epsilon=glm.c$epsilon,
+              eps.svd=eps.svd,
               maxit=glm.c$maxit,
               trace=glm.c$trace,
               em.control=em.c))

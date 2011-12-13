@@ -1,6 +1,6 @@
 #  $Author: sinnwell $
 #  $Date: 2007/03/22 15:41:32 $ -->
-#  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.group.q,v 1.12 2007/03/22 15:41:32 sinnwell Exp $ -->
+#  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.group.q,v 1.12 2007/03/22 15:41:32 sinnwell Exp $ -->
 #  $Locker:  $  
 #   $Log: haplo.group.q,v $
 #   Revision 1.12  2007/03/22 15:41:32  sinnwell

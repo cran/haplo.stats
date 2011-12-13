@@ -1,6 +1,6 @@
 %  $Author: sinnwell $ 
 %  $Date: 2009/04/27 21:22:07 $ 
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.dat.Rd,v 1.8 2009/04/27 21:22:07 sinnwell Exp $
+%  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/seqhap.dat.Rd,v 1.8 2009/04/27 21:22:07 sinnwell Exp $
 %  $Locker:  $ 
 %  $Log: seqhap.dat.Rd,v $
 %  Revision 1.8  2009/04/27 21:22:07  sinnwell

@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/07/02 14:18:11 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/zzz.haplo.stats.R,v 1.1 2004/07/02 14:18:11 sinnwell Exp $
+#$Date: 2011/12/05 20:56:10 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/zzz.haplo.stats.R,v 1.2 2011/12/05 20:56:10 sinnwell Exp $
 #$Locker:  $
 #$Log: zzz.haplo.stats.R,v $
+#Revision 1.2  2011/12/05 20:56:10  sinnwell
+#final manual changes, updated test suite
+#
 #Revision 1.1  2004/07/02 14:18:11  sinnwell
 #Initial revision
 #
@@ -21,37 +24,25 @@
 #Revision 1.1  2003/03/06 23:25:55  sinnwell
 #Initial revision
 #
-# License: 
-# 
-# Copyright 2003 Mayo Foundation for Medical Education and Research. 
-# 
-# This program is free software; you can redistribute it and/or modify it under the terms of 
-# the GNU General Public License as published by the Free Software Foundation; either 
-# version 2 of the License, or (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful, but WITHOUT ANY 
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
-# more details.
-# 
-# You should have received a copy of the GNU General Public License along with this 
-# program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
-# Boston, MA 02111-1307 USA
-# 
-# For other licensing arrangements, please contact Daniel J. Schaid.
-# 
-# Daniel J. Schaid, Ph.D.
-# Division of Biostatistics
-# Harwick Building – Room 775
-# Mayo Clinic
-# 200 First St., SW
-# Rochester, MN 55905
-# 
-# phone: 507-284-0639
-# fax:      507-284-9542
-# email: schaid@mayo.edu
-# 
-# 
-.First.lib <- function(lib, pkg) {
+
+.onLoad <- function(lib, pkg) {
    library.dynam("haplo.stats", pkg, lib)
+}
+
+.onAttach <- function(lib, pkg) {
+   library.dynam("haplo.stats", pkg, lib)
+}
+
+##.First.lib <- function(lib, pkg) {
+##
+##library.dynam("haplo.stats", pkg, lib)
+##}
+
+
+.Last.lib <- function(libpath) {
+  library.dynam.unload("haplo.stats", libpath)
+}
+
+.onUnload <- function(libpath) {
+  library.dynam.unload("haplo.stats", libpath)
 }

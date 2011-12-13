@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2008/02/11 22:54:22 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.q,v 1.17 2008/02/11 22:54:22 sinnwell Exp $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.em.q,v 1.18 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.em.q,v $
+#Revision 1.18  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.17  2008/02/11 22:54:22  sinnwell
 #include subjects removed by PIN steps (low-LD, rare haps) in rows.rem and issue a warning to reduce min.posterior
 #
@@ -98,8 +101,9 @@ if(length(locus.label)!=n.loci){
 }
 
 
-# recode geno to integer values, accounting for missing values
-temp.geno <- loci(geno,locus.names=locus.label,miss.val=miss.val)
+## recode geno to integer values, accounting for missing values
+## replaced loci with setupGeno (JPS: 10/20/2011)
+temp.geno <- setupGeno(geno, miss.val=miss.val, locus.label=locus.label)
 
 
 # Compute the max number of pairs of haplotypes over all subjects
@@ -308,13 +312,14 @@ prior.noLD <- ifelse(hap1code!=hap2code, 2*prior.noLD, prior.noLD)
 ppheno.noLD <- tapply(prior.noLD, indx.subj, sum)
 lnlike.noLD <- sum(log(ppheno.noLD))
 
-lr = 2*(tmp1$lnlike - lnlike.noLD)
+lr <- 2*(tmp1$lnlike - lnlike.noLD)
 df.LD <- sum(tmp2$hap.prob > 0.0000001) - 1
 df.lr <-  df.LD - df.noLD
 
 
 obj <- list(
   lnlike=tmp1$lnlike,
+  lnlike.noLD=lnlike.noLD,
   lr = lr,
   df.lr = df.lr,
   hap.prob = tmp2$hap.prob,
@@ -333,13 +338,8 @@ obj <- list(
   control=control)
 
 
-   if(exists("is.R") && is.function(is.R) && is.R()) {
-     class(obj) <- "haplo.em"
-   } else {
-     oldClass(obj) <- "haplo.em"
-   }
+  class(obj) <- "haplo.em"
 
-return(obj)
-
+  return(obj)
 
 }

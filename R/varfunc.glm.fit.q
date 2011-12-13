@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2003/12/24 17:35:55 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/varfunc.glm.fit.q,v 1.3 2003/12/24 17:35:55 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/varfunc.glm.fit.q,v 1.3 2003/12/24 17:35:55 sinnwell Exp $
 #$Locker:  $
 #$Log: varfunc.glm.fit.q,v $
 #Revision 1.3  2003/12/24 17:35:55  sinnwell

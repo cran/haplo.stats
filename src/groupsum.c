@@ -1,6 +1,6 @@
 /* $Author: sinnwell $ */
 /* $Date: 2003/10/07 21:21:27 $ */
-/* $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/groupsum.c,v 1.2 2003/10/07 21:21:27 sinnwell Exp $ */
+/* $Header: /projects/genetics/cvs/cvsroot/haplo.stats/src/groupsum.c,v 1.2 2003/10/07 21:21:27 sinnwell Exp $ */
 /* $Locker:  $ */
 /* 
  * $Log: groupsum.c,v $

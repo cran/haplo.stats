@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 19:57:03 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/x.sexcheck.Rd,v 1.1 2008/01/09 19:57:03 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/x.sexcheck.Rd,v 1.2 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: x.sexcheck.Rd,v $
+% Revision 1.2  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.1  2008/01/09 19:57:03  sinnwell
 % Initial revision
 %
@@ -38,15 +41,6 @@ halted immediately
 T if one or more errors were found
 F if no errors were found
 }
-\section{Side Effects}{
-
-}
-\details{
-
-}
-\section{References}{
-
-}
 \seealso{
 \code{\link{locus}}
 }
@@ -59,6 +53,5 @@ loc2 <- locus(c1,c2,chrom="X",locus.alias="DXS1234", x.linked=TRUE, sex=gender)
 
 loc2
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2008/02/28 15:59:27 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.power.qt.q,v 1.1 2008/02/28 15:59:27 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.power.qt.q,v 1.1 2008/02/28 15:59:27 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.power.qt.q,v $
 #Revision 1.1  2008/02/28 15:59:27  sinnwell

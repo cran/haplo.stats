@@ -1,8 +1,14 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 19:43:36 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/locus.Rd,v 1.1 2008/01/09 19:43:36 sinnwell Exp $ 
+% $Date: 2011/10/26 15:03:59 $ 
+% $Header: /projects/genetics/cvs/cvsroot/mgenet/man/locus.Rd,v 1.2 2011/10/26 15:03:59 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: locus.Rd,v $
+% Revision 1.2  2011/10/26 15:03:59  sinnwell
+% take out unused sections in Rd
+%
+% Revision 1.1.1.1  2011/02/21 20:09:27  sinnwell
+% initial, genetics functions for Mayo BSI
+%
 % Revision 1.1  2008/01/09 19:43:36  sinnwell
 % Initial revision
 %
@@ -79,18 +85,6 @@ a code to be used to identify males for an x.linked locus.
 \item{female.code}{
 a code to be used to identify females for an x.linked locus.
 }
-}
-\section{Side Effects}{
-
-}
-\details{
-
-}
-\section{References}{
-
-}
-\seealso{
-
 }
 \examples{
 b1 <- c("A","A","B","C","E","D")

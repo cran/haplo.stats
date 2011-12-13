@@ -1,8 +1,14 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/09 20:56:47 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/geno.count.pairs.Rd,v 1.1 2008/01/09 20:56:47 sinnwell Exp $ 
+% $Date: 2011/11/23 21:00:26 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/geno.count.pairs.Rd,v 1.3 2011/11/23 21:00:26 sinnwell Exp $ 
 % $Locker:  $
 % $Log: geno.count.pairs.Rd,v $
+% Revision 1.3  2011/11/23 21:00:26  sinnwell
+% rm geno.recode from example
+%
+% Revision 1.2  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.1  2008/01/09 20:56:47  sinnwell
 % Initial revision
 %
@@ -60,9 +66,6 @@ Vector where each element gives a count of the number haplotype pairs
 that are consistent with a  subject's phenotype, where a phenotype may
 include 0, 1, or 2 missing alleles at any locus.
 }
-\section{Side Effects}{
-
-}
 \details{
 When a subject has no missing alleles, and has h heterozygous sites, 
 there are 2**(h-1) haplotype pairs that are possible ('**'=power).
@@ -88,12 +91,12 @@ where the sum is over all possible values for the vector V.
 \code{\link{summaryGeno}}
 }
 \examples{
-setupData(hla.demo)
-geno <- hla.demo[,c(17,18,21:24)]
-geno <- geno.recode(geno)$grec
+data(hla.demo)
+genohla <- hla.demo[,c(17,18,21:24)]
+geno <- setupGeno(genohla)
 count.geno <- geno.count.pairs(geno)
 print(count.geno)
 }
-\keyword{}
+
 % docclass is function
 % Converted by Sd2Rd version 37351.

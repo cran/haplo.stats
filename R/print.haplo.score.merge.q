@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2005/03/30 16:40:22 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.score.merge.q,v 1.10 2005/03/30 16:40:22 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/print.haplo.score.merge.q,v 1.10 2005/03/30 16:40:22 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.score.merge.q,v $
 #Revision 1.10  2005/03/30 16:40:22  sinnwell

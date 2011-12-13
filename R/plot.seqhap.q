@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2009/03/09 16:10:19 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.seqhap.q,v 1.6 2009/03/09 16:10:19 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/plot.seqhap.q,v 1.6 2009/03/09 16:10:19 sinnwell Exp $
 #$Locker:  $
 #$Log: plot.seqhap.q,v $
 #Revision 1.6  2009/03/09 16:10:19  sinnwell

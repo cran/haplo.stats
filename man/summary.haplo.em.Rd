@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/01/08 22:23:35 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/summary.haplo.em.Rd,v 1.2 2008/01/08 22:23:35 sinnwell Exp $ -->
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/summary.haplo.em.Rd,v 1.3 2011/11/10 15:29:41 sinnwell Exp $ -->
 % $Locker:  $ 
 % $Log: summary.haplo.em.Rd,v $
+% Revision 1.3  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.2  2008/01/08 22:23:35  sinnwell
 % change comments
 %
@@ -47,22 +50,21 @@ Optional arguments for the summary method
 }
 }
 \value{
-}
-\section{Side Effects}{
-
-}
-\details{
-
-}
-\section{References}{
-
+  A data.frame with a row for every subject's possible haplotype pairs
+  and the posterior probabilities of that pair given their genotypes.
 }
 \seealso{
 \code{\link{haplo.em}}
 }
 \examples{
+data(hla.demo)
+geno <- hla.demo[,c(17,18,21:24)]
+label <-c("DQB","DRB","B")
+keep <- !apply(is.na(geno) | geno==0, 1, any)
 
+save.em.keep <- haplo.em(geno=geno[keep,], locus.label=label)
+save.df <- summary(save.em.keep)
+save.df[1:10,]
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

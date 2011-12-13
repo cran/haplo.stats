@@ -90,7 +90,9 @@ Schaid, DJ. Power and sample size for testing associations of
 haplotypes with complex traits. Ann Hum Genet (2005) 70:116-130.
 }
 \seealso{
-find.haplo.beta.qt (to determine beta's from model R-square), haplo.em,  haplo.power.cc (for case-control power)
+  \code{\link{find.haplo.beta.qt}},
+  \code{\link{haplo.em}},
+  \code{\link{haplo.power.cc}}
 }
 \examples{
 haplo <- rbind(

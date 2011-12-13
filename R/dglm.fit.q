@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2003/12/24 17:36:50 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/dglm.fit.q,v 1.3 2003/12/24 17:36:50 sinnwell Exp $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/dglm.fit.q,v 1.4 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: dglm.fit.q,v $
+#Revision 1.4  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.3  2003/12/24 17:36:50  sinnwell
 # fix the check for "logit" and "log" links to work in S and R
 #
@@ -12,7 +15,7 @@
 #Revision 1.1  2003/09/16 16:00:28  schaid
 #Initial revision
 #
-dglm.fit <- function(fit){
+dglm.fit <- function(fit, mse=NULL){
 
 # Given a glm model fit, compute the probability density P(y|Xb).
 # Note that mse has denom N if no prior.weights, or 
@@ -32,12 +35,15 @@ switch(as.character(fit$family[1]),
          "Gaussian"=, "gaussian" =
             { y <- fit$y
               mu <- fit$fitted.values
-              if(is.null(fit$prior.weights)){
-                mse <- sum((y-mu)^2)/length(fit$y)
+              if(is.null(mse)) {
+                if(is.null(fit$prior.weights)){
+                  mse <- sum((y-mu)^2)/length(fit$y)
+                }
+                if(!is.null(fit$prior.weights)){
+                  mse <- sum(fit$prior.weights*(y-mu)^2)/sum(fit$prior.weights)
+                }
               }
-              if(!is.null(fit$prior.weights)){
-                mse <- sum(fit$prior.weights*(y-mu)^2)/sum(fit$prior.weights)
-              }
+##              cat("mse=", mse, "\n")
               dnorm(y, mean=mu, sd=sqrt(mse) )
             },
          "Poisson"=, "poisson" =

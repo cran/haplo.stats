@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/10/06 15:26:39 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/seqhap.Rd,v 1.4 2008/10/06 15:26:39 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/seqhap.Rd,v 1.5 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: seqhap.Rd,v $
+% Revision 1.5  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.4  2008/10/06 15:26:39  sinnwell
 % *** empty log message ***
 %
@@ -41,6 +44,7 @@
 
 \name{seqhap}
 \alias{seqhap}
+\alias{print.seqhap}
 \title{
   Sequential Haplotype Scan Association Analysis for Case-Control Data
 }
@@ -61,6 +65,7 @@ seqhap(y, geno, pos, locus.label=NA, weight=NULL,
        mh.threshold=3.84, r2.threshold=0.95, haplo.freq.min=0.005, 
        miss.val=c(0, NA), sim.control=score.sim.control(),
        control=haplo.em.control())
+\method{print}{seqhap}(x, digits=max(options()$digits-2, 5), ...)
 }
 \arguments{
 \item{y}{
@@ -118,7 +123,16 @@ seqhap. See score.sim.control for details.
 \item{control}{
 A list of parameters that control the EM algorithm for estimating 
 haplotype frequencies when phase is unknown.  The list is created by 
-the function haplo.em.control - see this function for more details. 
+the function haplo.em.control - see this function for more details.
+}
+\item{x}{
+a seqhap object to print
+}
+\item{digits}{
+Number of significant digits to print for numeric values
+}
+\item{\dots }{
+Additional parameters for the print method
 }
 }
 \value{
@@ -176,11 +190,8 @@ permuted pointwise p-values of sequential summary analysis.
 permuted regional p-value of sequential summary analysis.
 }
 }
-\section{Side Effects}{
-
-}
 \details{
-
+No further details
 }
 \section{References}{
 Yu Z, Schaid DJ. (2007) Sequential haplotype scan methods for
@@ -194,16 +205,15 @@ association analysis. Genet Epidemiol, in print.
 }
 \examples{
 # load example data with response and genotypes. 
-setupData(seqhap.dat)
+data(seqhap.dat)
 mydata.y <- seqhap.dat[,1]
 mydata.x <- seqhap.dat[,-1]
 # load positions
-setupData(seqhap.pos)
+data(seqhap.pos)
 pos=seqhap.pos$pos
 # run seqhap with default settings
 myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=pos)
 print.seqhap(myobj)
 }
-\keyword{}
 % docclass is function
 % Converted by Sd2Rd version 37351.

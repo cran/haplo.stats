@@ -1,42 +1,10 @@
-% $Author: sinnwell $
-% $Date: 2008/05/09 15:03:01 $
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/printBanner.Rd,v 1.3 2008/05/09 15:03:01 sinnwell Exp $
-% $Id: printBanner.Rd,v 1.3 2008/05/09 15:03:01 sinnwell Exp $
-% $Locker:  $
-% $Log: printBanner.Rd,v $
-% Revision 1.3  2008/05/09 15:03:01  sinnwell
-% add to description
-%
-% Revision 1.2  2008/01/08 20:29:41  sinnwell
-% fix comments
-%
-% Revision 1.1  2008/01/08 18:26:06  sinnwell
-% Initial revision
-%
-%Revision 1.4  2007/12/21 17:21:07  sinnwell
-%add description
-%
-%Revision 1.3  2005/02/04 20:57:46  sinnwell
-%banner.width and char.perline comply to options()$width
-%
-%Revision 1.2  2004/06/29 19:54:56  sinnwell
-%now works in both R and Splus
-%
-%Revision 1.1  2004/02/26 21:35:08  sinnwell
-%Initial revision
-%
-%Revision 1.2  2003/01/20 23:21:06  sinnwell
-%fixed RCS keywords
-
 \name{printBanner}
 \alias{printBanner}
 \title{
   Print a nice banner
 }
 \description{
-Print a nice banner with a border above and below the text.  It centers
-the text, and adjusts to the width system option by breaking into
-multiple lines when needed.
+ Print a centered banner that carries to multiple lines
 }
 \usage{
 printBanner(str, banner.width=options()$width, char.perline=.75*banner.width, border="=")
@@ -57,15 +25,10 @@ type of character for the border
 }
 }
 \value{
-}
-\section{Side Effects}{
-
+  nothing is returned
 }
 \details{
 This function prints a nice banner in both R and S-PLUS
-}
-\section{References}{
-
 }
 \seealso{
 options
@@ -78,6 +41,5 @@ printBanner("This is a pretty banner", banner.width=40, char.perline=30)
 #         This is a pretty banner
 # ========================================
 }
-\keyword{}
 % docclass is function
-% Converted by Sd2Rd version 37351.
+% Converted by Sd2Rd version 43267.

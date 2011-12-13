@@ -1,6 +1,9 @@
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.seqhap.q,v 1.5 2009/03/04 14:57:30 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/print.seqhap.q,v 1.6 2011/11/22 20:29:22 sinnwell Exp $
 #$Locker:  $
 #$Log: print.seqhap.q,v $
+#Revision 1.6  2011/11/22 20:29:22  sinnwell
+#take out S exception
+#
 #Revision 1.5  2009/03/04 14:57:30  sinnwell
 #for R use pchisq( x, p, lower=FALSE) instead of 1-pchisq
 #
@@ -17,7 +20,7 @@
 #Initial revision
 #
 #$Author: sinnwell $
-#$Date: 2009/03/04 14:57:30 $
+#$Date: 2011/11/22 20:29:22 $
 
 # License: 
 # 
@@ -52,7 +55,6 @@
 
 print.seqhap <- function(x, digits=max(options()$digits-2, 5), ...)
 
-
 {
   
   if(x$converge==0)
@@ -64,8 +66,8 @@ print.seqhap <- function(x, digits=max(options()$digits-2, 5), ...)
           signif(x$chi.p.region, digits),"\n")
       chi.test <- data.frame(chi.stat=round(x$chi.stat,digits), 
                      perm.point.p=x$chi.p.point, 
-                     if(is.R()) { asym.point.p= round(pchisq(x$chi.stat,1, lower.tail=FALSE),digits)
-                                } else { asym.point.p=round(1-pchisq(x$chis.stat,1), digits)})
+                     asym.point.p= round(pchisq(x$chi.stat,1,
+                       lower.tail=FALSE),digits))
       row.names(chi.test) <- c(x$locus.label)
       print(chi.test)
       cat("\n\n")
@@ -75,30 +77,32 @@ print.seqhap <- function(x, digits=max(options()$digits-2, 5), ...)
       scanned.loci <- x$scanned.loci
       for(i in 1:dim(scanned.loci)[1]){
         cat('seq-')
-        cat(x$locus.label[i], scanned.loci[i,scanned.loci[i,]!=0],sep=" ","\n")}
+        cat(x$locus.label[i], scanned.loci[i,scanned.loci[i,]!=0],
+            sep=" ","\n")
+      }
       cat("\n\n")
 
       printBanner("Sequential Haplotype Test")
       cat("Regional permuted P-value based on sequential haplotype test is ", 
           signif(x$hap.p.region, digits),"\n")
       hap.test <- data.frame(hap.stat=round(x$hap.stat,digits),
-                        df=x$hap.df,
-                        perm.point.p=x$hap.p.point,
-                        if(is.R()) {asym.point.p= round(pchisq(x$hap.stat,x$hap.df, lower.tail=FALSE),digits)
-                                  } else { asym.point.p= round(1-pchisq(x$hap.stat,x$hap.df),digits)})
+                    df=x$hap.df,
+                    perm.point.p=x$hap.p.point,
+                    asym.point.p= round(pchisq(x$hap.stat,x$hap.df,
+                      lower.tail=FALSE),digits))
       row.names(hap.test) <- paste(rep('seq-',length(x$locus.label)),
                                    x$locus.label,sep='')
       print(hap.test)
       cat("\n\n")
       
-      printBanner("Sequential Summary Test")
-      cat("Regional permuted P-value based on sequential summary test is ", 
+      printBanner("Sequential Sum Test")
+      cat("Regional permuted P-value based on sequential sum test is ", 
             signif(x$sum.p.region, digits),"\n")
       sum.test <- data.frame(sum.stat=round(x$sum.stat,digits),
-                      df=x$sum.df,
-                      perm.point.p=x$sum.p.point,
-                      if(is.R()) {asym.point.p = round(pchisq(x$sum.stat,x$sum.df, lower.tail=FALSE),digits)
-                                } else {asym.point.p= round(1-pchisq(x$sum.stat,x$sum.df),digits)})
+                    df=x$sum.df,
+                    perm.point.p=x$sum.p.point,
+                    asym.point.p = round(pchisq(x$sum.stat,x$sum.df,
+                      lower.tail=FALSE),digits))
       row.names(sum.test) <- paste(rep('seq-',length(x$locus.label)),
                                    x$locus.label,sep='')
       print(sum.test)

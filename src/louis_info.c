@@ -1,6 +1,6 @@
 /* $Author: schaid $ */
 /* $Date: 2007/02/27 20:18:43 $ */
-/* $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/louis_info.c,v 1.8 2007/02/27 20:18:43 schaid Exp $ */
+/* $Header: /projects/genetics/cvs/cvsroot/haplo.stats/src/louis_info.c,v 1.8 2007/02/27 20:18:43 schaid Exp $ */
 /* $Locker:  $ */
 /* 
  * $Log: louis_info.c,v $

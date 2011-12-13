@@ -1,6 +1,6 @@
 %  $Author: sinnwell $
 %  $Date: 2009/04/27 21:21:57 $
-%  $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/hapPower.demo.Rd,v 1.5 2009/04/27 21:21:57 sinnwell Exp $
+%  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/hapPower.demo.Rd,v 1.5 2009/04/27 21:21:57 sinnwell Exp $
 %  $Locker:  $
 
 \name{hapPower.demo}

@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2003/12/08 20:05:21 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/mf.gindx.q,v 1.2 2003/12/08 20:05:21 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/mf.gindx.q,v 1.2 2003/12/08 20:05:21 sinnwell Exp $
 #$Locker:  $
 #$Log: mf.gindx.q,v $
 #Revision 1.2  2003/12/08 20:05:21  sinnwell

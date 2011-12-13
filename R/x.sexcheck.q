@@ -2,7 +2,7 @@
 #
 #$Date: 2006/10/25 19:31:34 $
 #
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/x.sexcheck.q,v 1.6 2006/10/25 19:31:34 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/x.sexcheck.q,v 1.6 2006/10/25 19:31:34 sinnwell Exp $
 #
 #$Locker:  $
 #

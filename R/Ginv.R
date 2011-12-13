@@ -1,14 +1,17 @@
 #$Author: sinnwell $
 #
-#$Date: 2006/10/25 14:39:02 $
+#$Date: 2011/02/21 20:09:27 $
 #
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/Ginv.R,v 1.1 2006/10/25 14:39:02 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/mgenet/R/Ginv.R,v 1.1.1.1 2011/02/21 20:09:27 sinnwell Exp $
 #
-#$Id: Ginv.R,v 1.1 2006/10/25 14:39:02 sinnwell Exp $
+#$Id: Ginv.R,v 1.1.1.1 2011/02/21 20:09:27 sinnwell Exp $
 #
 #$Locker:  $
 #
 #$Log: Ginv.R,v $
+#Revision 1.1.1.1  2011/02/21 20:09:27  sinnwell
+#initial, genetics functions for Mayo BSI
+#
 #Revision 1.1  2006/10/25 14:39:02  sinnwell
 #Initial revision
 #

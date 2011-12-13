@@ -2,7 +2,7 @@
 #
 #$Date: 2003/08/26 16:39:04 $
 #
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.q,v 1.3 2003/08/26 16:39:04 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/plot.haplo.score.q,v 1.3 2003/08/26 16:39:04 sinnwell Exp $
 #
 #$Id: plot.haplo.score.q,v 1.3 2003/08/26 16:39:04 sinnwell Exp $
 #

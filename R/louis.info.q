@@ -1,8 +1,11 @@
-#$Author: schaid $
-#$Date: 2007/02/21 21:19:40 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/louis.info.q,v 1.8 2007/02/21 21:19:40 schaid Exp $
+#$Author: sinnwell $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/louis.info.q,v 1.9 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: louis.info.q,v $
+#Revision 1.9  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.8  2007/02/21 21:19:40  schaid
 #fixed call of Ginv by passing a smaller value of eps (see Machine tol for eps) .
 #
@@ -27,7 +30,7 @@
 #Revision 1.1  2003/09/16 16:02:21  schaid
 #Initial revision
 #
-louis.info <- function(fit){
+louis.info <- function(fit, epsilon=1e-8){
 
  # Compute Louis' Information Matrix for glm regression coefficients (which
  # include effects for haplotypes and non-genetic covariates) and
@@ -85,11 +88,12 @@ louis.info <- function(fit){
   vfunc <- varfunc.glm.fit(fit) /a.phi
   vfunc <- vfunc[keep]
  
-  # From the glm fit, prior.weights are what go into glm, and weights are what 
-  # come out after IRWLS, but we want the last updated
-  # weights that depend on the last updated post
-
-  wt <- fit$weights.expanded * fit$haplo.post.info$post
+  ## From the glm fit, prior.weights are what go into glm, expanded to the size
+  ## of the haplo.mf model matrix;  weights are what 
+  ## come out after IRWLS (scaled and multiplied by post).
+  ## We want the expanded prior weights times the last updated posterior
+  
+  wt <- fit$prior.weights * fit$haplo.post.info$post
 
   wt <- wt[keep]
 
@@ -141,14 +145,15 @@ louis.info <- function(fit){
  info <- rbind( cbind(info11,   info12),
                cbind(t(info12), info22) )
 
- v <-  Ginv(info, eps=sqrt(.Machine$double.eps))
+# v <-  Ginv(info, eps=sqrt(.Machine$double.eps))
+ v <- Ginv(info, epsilon)
  var.mat <-v$Ginv
  rank   <- v$rank
 
  if(length(hap.elim)==0) hap.elim <- NA
 
- return(list(info=info, var.mat=var.mat, rank = rank, haplo.base = hap.base +1, haplo.elim=hap.elim))
-
+ return(list(info=info, var.mat=var.mat, rank = rank,
+             haplo.base = hap.base +1, haplo.elim=hap.elim))
 
 }
 

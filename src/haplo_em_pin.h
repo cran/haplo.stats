@@ -1,6 +1,6 @@
 /* $Author: schaid $ */
 /* $Date: 2007/02/27 20:18:01 $ */
-/* $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo_em_pin.h,v 1.7 2007/02/27 20:18:01 schaid Exp $ */
+/* $Header: /projects/genetics/cvs/cvsroot/haplo.stats/src/haplo_em_pin.h,v 1.7 2007/02/27 20:18:01 schaid Exp $ */
 /* $Locker:  $ */
 
 /*

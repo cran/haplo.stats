@@ -1,6 +1,6 @@
 #$Author: schaid $
 #$Date: 2007/02/27 20:15:24 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.em.fitter.q,v 1.5 2007/02/27 20:15:24 schaid Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.em.fitter.q,v 1.5 2007/02/27 20:15:24 schaid Exp $
 #$Locker:  $
 #$Log: haplo.em.fitter.q,v $
 #Revision 1.5  2007/02/27 20:15:24  schaid

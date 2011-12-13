@@ -1,6 +1,6 @@
 #$Author: sinnwell $
 #$Date: 2009/04/08 18:40:58 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/print.haplo.em.q,v 1.9 2009/04/08 18:40:58 sinnwell Exp $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/print.haplo.em.q,v 1.9 2009/04/08 18:40:58 sinnwell Exp $
 #$Locker:  $
 #$Log: print.haplo.em.q,v $
 #Revision 1.9  2009/04/08 18:40:58  sinnwell

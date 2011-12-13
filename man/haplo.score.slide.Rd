@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2008/04/14 19:54:34 $ 
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/haplo.score.slide.Rd,v 1.3 2008/04/14 19:54:34 sinnwell Exp $ 
+% $Date: 2011/11/10 15:29:41 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.score.slide.Rd,v 1.4 2011/11/10 15:29:41 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: haplo.score.slide.Rd,v $
+% Revision 1.4  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
 % Revision 1.3  2008/04/14 19:54:34  sinnwell
 % change eps.svd note
 %
@@ -178,9 +181,6 @@ Vector containing the number of valid simulations used in the
 global score statistic p-value simulation.  
 }
 }
-\section{Side Effects}{
-
-}
 \details{
 Haplo.score.slide is useful for a series of loci where little is
 known of the association between a trait and haplotypes.  Using a
@@ -202,7 +202,7 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 \code{\link{score.sim.control}}
 }
 \examples{
-  setupData(hla.demo)
+  data(hla.demo)
 
 # Continuous trait slide by 2 loci on all 11 loci, uncomment to run it.
 # Takes > 20 minutes to run
@@ -233,6 +233,6 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 #  plot(slide.ord.sim, pval="global.sim")
 #  plot(slide.ord.sim, pval="max.sim")
 }
-\keyword{}
+\keyword{scores}
 % docclass is function
 % Converted by Sd2Rd version 37351.

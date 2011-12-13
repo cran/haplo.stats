@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2004/02/26 22:35:38 $
-#$Header: /people/biostat3/sinnwell/Haplo/Make/RCS/residScaledGlmFit.q,v 1.1 2004/02/26 22:35:38 sinnwell Exp $
+#$Date: 2011/11/10 15:29:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/residScaledGlmFit.q,v 1.2 2011/11/10 15:29:40 sinnwell Exp $
 #$Locker:  $
 #$Log: residScaledGlmFit.q,v $
+#Revision 1.2  2011/11/10 15:29:40  sinnwell
+#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+#
 #Revision 1.1  2004/02/26 22:35:38  sinnwell
 #Initial revision
 #
@@ -26,7 +29,8 @@ residScaledGlmFit <- function(fit){
  
   resid <- NULL
   a.phi <- 1
-  wt <- fit$weights.expanded * fit$haplo.post.info$post
+  ## JPS 9/26/11 -- replace weights.expanded by prior.weights
+  wt <- fit$prior.weights * fit$haplo.post.info$post
 
   switch(as.character(fit$family[1]),
         "Binomial"= , "binomial" =

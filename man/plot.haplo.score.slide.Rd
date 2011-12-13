@@ -1,9 +1,15 @@
 % $Author: sinnwell $ -->
-% $Date: 2008/01/08 20:28:31 $ -->
-% $Header: /people/biostat3/sinnwell/Haplo/Make/RCS/plot.haplo.score.slide.Rd,v 1.2 2008/01/08 20:28:31 sinnwell Exp $ -->
+% $Date: 2011/11/10 15:29:41 $ -->
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/plot.haplo.score.slide.Rd,v 1.2 2011/11/10 15:29:41 sinnwell Exp $ -->
 % $Locker:  $ -->
 % 
 % $Log: plot.haplo.score.slide.Rd,v $
+% Revision 1.2  2011/11/10 15:29:41  sinnwell
+% major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
+%
+% Revision 1.1.1.1  2011/04/13 15:48:54  sinnwell
+% bring in haplo.stats, uses functions from rlocal and mgenet
+%
 % Revision 1.2  2008/01/08 20:28:31  sinnwell
 % fix comment
 %
@@ -93,9 +99,6 @@ are cex.axis, las, and srt.
 \value{
 Nothing is returned.
 }
-\section{Side Effects}{
-
-}
 \details{
 The x-axis has tick marks for all loci.  The y-axis is the -log10() of
 the selected p-value.  For each haplo.score result, plot a horizontal
@@ -120,7 +123,7 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 \examples{
 # This example has a long run-time, therefore it is commented
 
-#   setupData(hla.demo)
+#   data(hla.demo)
 #   attach(hla.demo)
 #   geno.11 <- hla.demo[,-c(1:4)]
 #   label.11 <- c("DPB","DPA","DMA","DMB","TAP1","TAP2","DQB","DQA","DRB","B","A")
@@ -136,6 +139,6 @@ linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):  425-434.
 #   plot(slide.ord.sim, pval="global.sim", las=2, cex.axis=.8)
 #   plot(slide.ord.sim, pval="max.sim", srt=90, cex.axis=.8)
 }
-\keyword{}
+\keyword{scores}
 % docclass is function
 % Converted by Sd2Rd version 37351.
