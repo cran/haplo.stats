@@ -43,7 +43,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] haplo.stats_1.5.2
+[1] haplo.stats_1.5.5
 > 
 > 
 > if(verbose) cat("setting up data...\n")

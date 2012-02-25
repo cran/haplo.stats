@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2011/11/23 20:34:02 $
-#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.glm.q,v 1.19 2011/11/23 20:34:02 sinnwell Exp $
+#$Date: 2012/02/22 14:59:44 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.glm.q,v 1.21 2012/02/22 14:59:44 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.q,v $
+#Revision 1.21  2012/02/22 14:59:44  sinnwell
+#make assigning of names to var.mat allow for when haplo.elim=NA
+#
+#Revision 1.20  2012/02/03 21:36:59  sinnwell
+#fix small bug in haplo.glm in names for var.mat
+#
 #Revision 1.19  2011/11/23 20:34:02  sinnwell
 #release 1.4.81, updates with test scripts
 #
@@ -451,7 +457,7 @@ haplo.glm  <- function(formula = formula(data),
   }
   
   if(length(haplo.rare)) {
-    nrare <- length(haplo.rare) - length(fit$haplo.elim)
+    nrare <- length(haplo.rare) - sum(!is.na(fit$haplo.elim))
     coeffnames <- c(coeffnames, rep("hap.rare", nrare))
   }
 
@@ -461,7 +467,8 @@ haplo.glm  <- function(formula = formula(data),
 
   if(model)
     fit$model <- haplo.mf$m.frame
-    ## fit$model <- m  ## JPS changed to line above 9/16/11
+    ## fit$model <- m  ## JPS changed to line above--9/16/11
+  
   
   if(!y)
     fit$y <- NULL
