@@ -25,6 +25,7 @@
 
 \usepackage{Sweave}
 \usepackage{fullpage}
+\usepackage{hyperref}
 
 %\textwidth 6.5in
 %\oddsidemargin 0in

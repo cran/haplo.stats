@@ -23,6 +23,7 @@
 \alias{haplo.score.glm}
 \alias{haplo.score.podds}
 \alias{mf.gindx}
+\alias{haplo.binomial}
 \alias{residScaledGlmFit}
 \alias{sr.class}
 \alias{sr.class<-}
