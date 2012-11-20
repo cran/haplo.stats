@@ -61,7 +61,7 @@ coefficients used to update the posterior probabilities.
 }
 \usage{
 haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
-           weights, na.action="na.geno.keep", start=eta, 
+           weights, na.action="na.geno.keep", start=NULL, 
            locus.label=NA, control=haplo.glm.control(), 
            method="glm.fit", model=TRUE, x=FALSE, y=TRUE, 
            contrasts=NULL, ...)
@@ -113,7 +113,7 @@ haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
 }
 \item{start}{
   a vector of initial values on the scale of the linear
-  predictor.
+  predictor. 
 }
 \item{locus.label }{
   vector of labels for loci.
