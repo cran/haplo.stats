@@ -16,7 +16,7 @@
 
 verbose=TRUE
 Sys.setlocale("LC_ALL", "C")
-sessionInfo()
+Sys.getlocale('LC_COLLATE')
 
 require(haplo.stats)
 

@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.6.0}{
+  \itemize{
+    \item Removed .First.lib and .Last.lib b/c handled via namespace
+    \item Updated test scripts to set LC_COLLATE and check values after set
+  }
+}
+
 \section{Changes in version 1.5.6}{
   \itemize{
     \item Removed glm.fit.nowarn because glm.fit changed from R 2.15.0

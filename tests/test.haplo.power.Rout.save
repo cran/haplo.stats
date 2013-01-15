@@ -35,20 +35,8 @@ Type 'q()' to quit R.
 > verbose=TRUE
 > Sys.setlocale("LC_ALL", "C")
 [1] "LC_CTYPE=C;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C"
-> sessionInfo()
-R version 2.15.0 (2012-03-30)
-Platform: x86_64-unknown-linux-gnu (64-bit)
-
-locale:
- [1] LC_CTYPE=C                 LC_NUMERIC=C              
- [3] LC_TIME=C                  LC_COLLATE=C              
- [5] LC_MONETARY=C              LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=C                 LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
+> Sys.getlocale('LC_COLLATE')
+[1] "C"
 > 
 > require(haplo.stats)
 Loading required package: haplo.stats
@@ -196,4 +184,4 @@ $power.unphased.haplo
 > 
 > proc.time()
    user  system elapsed 
-  0.995   0.071   1.140 
+  0.956   0.072   1.066 

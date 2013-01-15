@@ -28,8 +28,8 @@ Loading required package: haplo.stats
 > 
 > Sys.setlocale("LC_ALL", "C")
 [1] "LC_CTYPE=C;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C"
-> Sys.getlocale("LC_COLLATE")
-[1] "C"
+> Sys.getlocale()
+[1] "LC_CTYPE=C;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C"
 > 
 > if(verbose) cat("prepare two datasets, one with char alleles, the other 3 loci from hla data\n")
 prepare two datasets, one with char alleles, the other 3 loci from hla data
@@ -561,4 +561,4 @@ Check Phase against SNaP data, phased
 > 
 > proc.time()
    user  system elapsed 
- 39.724   0.194  40.153 
+ 38.970   0.248  39.461 

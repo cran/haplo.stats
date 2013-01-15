@@ -1,8 +1,14 @@
 #$Author: sinnwell $
-#$Date: 2011/12/05 20:56:10 $
-#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/zzz.haplo.stats.R,v 1.2 2011/12/05 20:56:10 sinnwell Exp $
+#$Date: 2013/01/14 19:33:16 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/zzz.haplo.stats.R,v 1.4 2013/01/14 19:33:16 sinnwell Exp $
 #$Locker:  $
 #$Log: zzz.haplo.stats.R,v $
+#Revision 1.4  2013/01/14 19:33:16  sinnwell
+#small changes for 1.5.9
+#
+#Revision 1.3  2012/12/28 21:39:36  sinnwell
+#version with update zzz file
+#
 #Revision 1.2  2011/12/05 20:56:10  sinnwell
 #final manual changes, updated test suite
 #
@@ -25,13 +31,13 @@
 #Initial revision
 #
 
-.onLoad <- function(lib, pkg) {
-   library.dynam("haplo.stats", pkg, lib)
-}
+#.onLoad <- function(lib, pkg) {
+#   library.dynam("haplo.stats", pkg, lib)
+#}
 
-.onAttach <- function(lib, pkg) {
-   library.dynam("haplo.stats", pkg, lib)
-}
+#.onAttach <- function(lib, pkg) {
+#   library.dynam("haplo.stats", pkg, lib)
+#}
 
 ##.First.lib <- function(lib, pkg) {
 ##
@@ -39,9 +45,9 @@
 ##}
 
 
-.Last.lib <- function(libpath) {
-  library.dynam.unload("haplo.stats", libpath)
-}
+##.Last.lib <- function(libpath) {
+##  library.dynam.unload("haplo.stats", libpath)
+##}
 
 .onUnload <- function(libpath) {
   library.dynam.unload("haplo.stats", libpath)

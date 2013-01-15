@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2011/11/23 20:34:02 $ 
-% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/internalHaploStats.Rd,v 1.4 2011/11/23 20:34:02 sinnwell Exp $ 
+% $Date: 2013/01/14 19:27:15 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/internalHaploStats.Rd,v 1.5 2013/01/14 19:27:15 sinnwell Exp $ 
 % $Locker:  $ 
 % $Log: internalHaploStats.Rd,v $
+% Revision 1.5  2013/01/14 19:27:15  sinnwell
+% add haplo.binomial
+%
 % Revision 1.4  2011/11/23 20:34:02  sinnwell
 % release 1.4.81, updates with test scripts
 %

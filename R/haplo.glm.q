@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2012/02/22 14:59:44 $
-#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.glm.q,v 1.21 2012/02/22 14:59:44 sinnwell Exp $
+#$Date: 2013/01/14 19:32:24 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.glm.q,v 1.22 2013/01/14 19:32:24 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.glm.q,v $
+#Revision 1.22  2013/01/14 19:32:24  sinnwell
+#add haplo.binomial, no need glm.fit.nowarn
+#
 #Revision 1.21  2012/02/22 14:59:44  sinnwell
 #make assigning of names to var.mat allow for when haplo.elim=NA
 #

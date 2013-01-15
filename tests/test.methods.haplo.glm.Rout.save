@@ -27,23 +27,8 @@ Type 'q()' to quit R.
 Loading required package: haplo.stats
 > Sys.setlocale("LC_ALL", "C")
 [1] "LC_CTYPE=C;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C"
-> sessionInfo()
-R version 2.15.0 (2012-03-30)
-Platform: x86_64-unknown-linux-gnu (64-bit)
-
-locale:
- [1] LC_CTYPE=C                 LC_NUMERIC=C              
- [3] LC_TIME=C                  LC_COLLATE=C              
- [5] LC_MONETARY=C              LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=C                 LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-other attached packages:
-[1] haplo.stats_1.5.7
+> Sys.getlocale('LC_COLLATE')
+[1] "C"
 > 
 > 
 > if(verbose) cat("setting up data...\n")
@@ -412,4 +397,4 @@ residuals  for hlabin, hla-gaussian, hla-gaussian-hi-variance
 > 
 > proc.time()
    user  system elapsed 
- 97.735   0.719  98.908 
+ 94.082   0.725  95.295 

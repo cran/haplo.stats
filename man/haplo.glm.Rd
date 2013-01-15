@@ -1,8 +1,11 @@
 % $Author: sinnwell $ 
-% $Date: 2011/12/12 17:02:15 $ 
-% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.glm.Rd,v 1.5 2011/12/12 17:02:15 sinnwell Exp $
+% $Date: 2013/01/14 19:27:15 $ 
+% $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/haplo.glm.Rd,v 1.6 2013/01/14 19:27:15 sinnwell Exp $
 % $Locker:  $ 
 % $Log: haplo.glm.Rd,v $
+% Revision 1.6  2013/01/14 19:27:15  sinnwell
+% add haplo.binomial
+%
 % Revision 1.5  2011/12/12 17:02:15  sinnwell
 % notes about LC-COLLATE, and update see-also
 %
