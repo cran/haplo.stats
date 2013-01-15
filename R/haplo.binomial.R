@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date:  $
-#$Header:  $
+#$Date: 2013/01/14 19:32:41 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.binomial.R,v 1.1 2013/01/14 19:32:41 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.binomial.R,v $
+#Revision 1.1  2013/01/14 19:32:41  sinnwell
+#add haplo.binomial, no need glm.fit.nowarn
+#
 
 
 ## Purpose: Extracted from R 2.15.0 to "fix" the init expression to not give warnings

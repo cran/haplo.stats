@@ -104,12 +104,14 @@ association analysis. Genet Epidemiol, in print.
 \code{\link{print.seqhap}}
 }
 \examples{
-data(seqhap.dat)
-mydata.y <- seqhap.dat[,1]
-mydata.x <- seqhap.dat[,-1]
-data(seqhap.pos)
-myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=seqhap.pos$pos)
-plot(myobj)
+  \dontrun{
+    data(seqhap.dat)
+    mydata.y <- seqhap.dat[,1]
+    mydata.x <- seqhap.dat[,-1]
+    data(seqhap.pos)
+    myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=seqhap.pos$pos)
+    plot(myobj)
+  }
 }
 % docclass is function
 % Converted by Sd2Rd version 37351.
