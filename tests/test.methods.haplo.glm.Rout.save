@@ -25,8 +25,8 @@ Type 'q()' to quit R.
 > verbose=TRUE
 > require(haplo.stats)
 Loading required package: haplo.stats
-> Sys.setlocale("LC_ALL", "C")
-[1] "LC_CTYPE=C;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=en_US.UTF-8;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=en_US.UTF-8;LC_IDENTIFICATION=C"
+> Sys.setlocale("LC_COLLATE", "C")
+[1] "C"
 > Sys.getlocale('LC_COLLATE')
 [1] "C"
 > 
@@ -397,4 +397,4 @@ residuals  for hlabin, hla-gaussian, hla-gaussian-hi-variance
 > 
 > proc.time()
    user  system elapsed 
- 94.082   0.725  95.295 
+ 91.809   0.531  92.927 
