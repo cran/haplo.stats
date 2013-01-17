@@ -6,7 +6,7 @@
 ## settings
 verbose=TRUE
 require(haplo.stats)
-Sys.setlocale("LC_ALL", "C")
+Sys.setlocale("LC_COLLATE", "C")
 Sys.getlocale('LC_COLLATE')
 
 
