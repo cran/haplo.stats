@@ -1,8 +1,11 @@
 %  $Author: sinnwell $
-%  $Date: 2011/11/10 15:29:41 $
-%  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/plot.seqhap.Rd,v 1.6 2011/11/10 15:29:41 sinnwell Exp $
+%  $Date: 2013/10/11 20:30:53 $
+%  $Header: /projects/genetics/cvs/cvsroot/haplo.stats/man/plot.seqhap.Rd,v 1.7 2013/10/11 20:30:53 sinnwell Exp $
 %  $Locker:  $ 
 %  $Log: plot.seqhap.Rd,v $
+%  Revision 1.7  2013/10/11 20:30:53  sinnwell
+%  move manual to vignettes
+%
 %  Revision 1.6  2011/11/10 15:29:41  sinnwell
 %  major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
 %

@@ -204,16 +204,20 @@ association analysis. Genet Epidemiol, in print.
 \code{\link{score.sim.control}}
 }
 \examples{
+
 # load example data with response and genotypes. 
 data(seqhap.dat)
 mydata.y <- seqhap.dat[,1]
 mydata.x <- seqhap.dat[,-1]
 # load positions
 data(seqhap.pos)
-pos=seqhap.pos$pos
+pos <- seqhap.pos$pos
 # run seqhap with default settings
-myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=pos)
-print.seqhap(myobj)
+\dontrun{
+  # this example takes 5-10 seconds to run
+  myobj <- seqhap(y=mydata.y, geno=mydata.x, pos=pos)
+  print.seqhap(myobj)
+}
 }
 % docclass is function
 % Converted by Sd2Rd version 37351.
