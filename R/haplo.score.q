@@ -1,8 +1,11 @@
 #$Author: sinnwell $
-#$Date: 2013/01/14 19:33:16 $
-#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.score.q,v 1.31 2013/01/14 19:33:16 sinnwell Exp $
+#$Date: 2013/12/02 21:11:40 $
+#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.score.q,v 1.32 2013/12/02 21:11:40 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.q,v $
+#Revision 1.32  2013/12/02 21:11:40  sinnwell
+#change rms::: to rms::
+#
 #Revision 1.31  2013/01/14 19:33:16  sinnwell
 #small changes for 1.5.9
 #
@@ -303,7 +306,7 @@ haplo.score <- function(y, geno, trait.type="gaussian",
 
       if(adjusted){
          require("rms")
-         reg.out <- rms:::lrm(y ~ x.adj)
+         reg.out <- rms::lrm(y ~ x.adj)
          K <- max(y)
          n.xadj <- ncol(x.adj)
          alpha <- reg.out$coef[1:(K-1)]

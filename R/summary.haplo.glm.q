@@ -95,8 +95,9 @@ print.summary.haplo.glm <- function(x,digits=max(getOption("digits")-3,3), ...)
 
   ## print standard summary.glm, then extra haplotype and missing information
   ## from haplo.glm
-
-  stats:::print.summary.glm(x, digits=digits, ...)
+  tmp <- x
+  class(tmp) <- "summary.glm"
+  print(tmp, digits=digits, ...)
   
   cat("\nHaplotypes:\n")
   print(x$haplotypes, digits=digits)

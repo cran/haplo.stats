@@ -48,9 +48,9 @@ set.seed(seed)
 em.char <- haplo.em(geno.char, miss.val='z',locus.label=char.label,
                     control = haplo.em.control())
 
-print.haplo.em(em.char, digits=5)
-summary(em.char, digits=5, show.haplo=TRUE)
-summary.haplo.em(em.char, digits=5)
+print.haplo.em(em.char, digits=3)
+summary(em.char, digits=3, show.haplo=TRUE)
+summary.haplo.em(em.char, digits=3)
 
   
 if(verbose) cat("hla data, 3 loci\n")
@@ -58,7 +58,7 @@ set.seed(seed)
 em.hla3 <- haplo.em(geno.hla, locus.label=hla.label, miss.val=0,
                     control = haplo.em.control())
 
-print.haplo.em(em.hla3, digits=5)
+print.haplo.em(em.hla3, digits=3)
  
 if(verbose) cat("snap SNP data, unphased\n")
 snapDF <- read.table("snapData.csv",header=TRUE, sep=",", stringsAsFactors=FALSE)
@@ -67,7 +67,7 @@ geno.snap <- setupGeno(geno=snapDF[,-1])
 set.seed(seed)
 em.snap <- haplo.em(geno=geno.snap)
 
-print(em.snap, digits=5)
+print(em.snap, digits=3)
 
 
 if(verbose) cat("Check Phase against SNaP data, phased\n")
@@ -79,9 +79,9 @@ set.seed(seed)
 block2.phase <- checkPhase(snapfile, blocknum=2)
 
 
-print(block1.phase[[2]])
-print(block1.phase[[1]][1:50,])  # long output 1120 lines
-print(block2.phase[[2]])
+print(block1.phase[[2]], digits=3)
+print(block1.phase[[1]][1:50,],digits=3)  # long output 1120 lines
+print(block2.phase[[2]],digits=3)
 
 
 

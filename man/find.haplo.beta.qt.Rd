@@ -11,7 +11,8 @@
 }
 \usage{
 find.haplo.beta.qt(haplo, haplo.freq, base.index, haplo.risk, r2, y.mu=0, y.var=1)
-find.beta.qt.phase.known(beta.size, haplo.risk, base.index, haplo, haplo.freq, r2, y.mu, y.var)
+find.beta.qt.phase.known(beta.size, haplo.risk, base.index, haplo,
+haplo.freq, r2, y.mu, y.var)
 find.intercept.qt.phase.known(beta.no.intercept, base.index, haplo, haplo.freq, y.mu)
 }
 \arguments{

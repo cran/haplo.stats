@@ -14,7 +14,8 @@ the sample size (total number of subjects) to achieve a stated
 power or the power for a stated sample size.
 }
 \usage{
-haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac, prevalence, alpha, sample.size=NULL, power=NULL)
+haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac,
+prevalence, alpha, sample.size=NULL, power=NULL)
 }
 \arguments{
 \item{haplo}{
@@ -50,10 +51,12 @@ haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac, prevalence,
   type-I error rate
 }
 \item{sample.size }{
- total sample size (if power is to be calcualted). Either sample.size or power must be specified, but not both.
+ total sample size (if power is to be calcualted). Either sample.size or
+ power must be specified, but not both.
 }
 \item{power}{
- desired power (if sample.size is to be calculated). Either sample.size or power must be specified, but not both.
+ desired power (if sample.size is to be calculated). Either sample.size
+ or power must be specified, but not both.
 }
 }
 \value{
@@ -147,11 +150,13 @@ haplo.beta[haplo.risk] <-  log(or)
 
 # Compute total sample size for given power
 
-haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac=.5, prevalence=.1, alpha=.05, power=.8)
+haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac=.5,
+prevalence=.1, alpha=.05, power=.8)
 
 # Compute power for given sample size
 
-haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac=.5, prevalence=.1, alpha=.05, sample.size=11978)
+haplo.power.cc(haplo, haplo.freq, base.index, haplo.beta, case.frac=.5,
+prevalence=.1, alpha=.05, sample.size=11978)
 }
 \keyword{design}
 % docclass is function
