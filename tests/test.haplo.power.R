@@ -6,17 +6,14 @@
 #Revision 1.1  2011/12/05 20:53:27  sinnwell
 #changed from .q to .R, to work with R check
 #
-#Revision 1.1  2011/04/28 20:08:12  sinnwell
-#new makefile, pulls R/man files from mgenet, rlocal
-#
 ## package: haplo.stats
 ## test script: haplo.power
 
 ## settings
 
 verbose=TRUE
-Sys.setlocale("LC_COLLATE", "C")
-Sys.getlocale('LC_COLLATE')
+tmp <- Sys.setlocale("LC_COLLATE", "C")
+tmp <- Sys.getlocale('LC_COLLATE')
 
 require(haplo.stats)
 

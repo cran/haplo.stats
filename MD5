@@ -1,4 +1,4 @@
-71291ccd3819f96f8bdbfcbfb389fcd1 *DESCRIPTION
+e61ac195ce38cfa6c68c5c9efcdd1902 *DESCRIPTION
 86c6f4cfd557233b11e596a7cef236d5 *NAMESPACE
 7dcca3f9e623c3309322180daf26c7f5 *R/Ginv.R
 dd3dbda43c57931ca381e580f02bcdca *R/anova.haplo.glm.q
@@ -70,7 +70,7 @@ a7ee89da0aff191a340c312643f7cd73 *data/seqhap.pos.tab.gz
 27bf59c2a37bff07a78c9730061e532b *inst/LICENSE.note
 8cd2f7ee196253d5060a0d627da7c73f *inst/NEWS.Rd
 d368405f1c604912f51ba286eed9944a *inst/doc/GPL.txt
-85a795c8a5321c4d8955fce8ec464697 *inst/doc/manualHaploStats.pdf
+3fabbf8decac206902c9f201109bf5bd *inst/doc/manualHaploStats.pdf
 10ae00dab9c8f986bf5b6c64eef98521 *man/Ginv.Rd
 bf6f1a85454445157ab798632128e8ab *man/anova.haplo.glm.Rd
 66849779ea8731d335378d06d80e2765 *man/chisq.power.Rd
@@ -133,9 +133,9 @@ b953b97d95a90a92318b08d153019d12 *src/haplo_em_pin.c
 6151dce21da5657935a969fb8a6e29f5 *tests/snap.sim.phased.dat
 745e6db55d61c53aa80feb1e7ee69d85 *tests/snapData.csv
 ad627b80335a8f28df2f4b571580801a *tests/snapFUN.s
-2214643057913c5957efd4596af7a1f5 *tests/test.haplo.cc.R
-ad10b2a3eb57ee291b8a4bde099d34c6 *tests/test.haplo.cc.Rout.save
-d5173ca0ee7f1f21b1096f1927cb37ee *tests/test.haplo.em.R
-5347fbe082f9bae4cb3999de95506ebd *tests/test.haplo.em.Rout.save
-cee0d8158aeb89e1e9ab94b6cc842c3c *tests/test.haplo.power.R
-9211ded98f38b081e1ad411eed9755f2 *tests/test.haplo.power.Rout.save
+4e88c18e47fe1a82fb97ed86df5ee647 *tests/test.haplo.cc.R
+c464c4876ccc6c049d29c4d978ec83fb *tests/test.haplo.cc.Rout.save
+5c1ff25580329bfe224481e3b3a4329d *tests/test.haplo.em.R
+9c997ef18b818cadb00312042f8e0702 *tests/test.haplo.em.Rout.save
+60125a03e89b66294090b1fd39e0e870 *tests/test.haplo.power.R
+90d79b14d0f18631653d3ef8c08b210d *tests/test.haplo.power.Rout.save

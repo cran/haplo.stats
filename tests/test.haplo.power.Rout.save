@@ -1,7 +1,6 @@
 
-R version 2.15.0 (2012-03-30)
-Copyright (C) 2012 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -24,19 +23,14 @@ Type 'q()' to quit R.
 > #Revision 1.1  2011/12/05 20:53:27  sinnwell
 > #changed from .q to .R, to work with R check
 > #
-> #Revision 1.1  2011/04/28 20:08:12  sinnwell
-> #new makefile, pulls R/man files from mgenet, rlocal
-> #
 > ## package: haplo.stats
 > ## test script: haplo.power
 > 
 > ## settings
 > 
 > verbose=TRUE
-> Sys.setlocale("LC_COLLATE", "C")
-[1] "C"
-> Sys.getlocale('LC_COLLATE')
-[1] "C"
+> tmp <- Sys.setlocale("LC_COLLATE", "C")
+> tmp <- Sys.getlocale('LC_COLLATE')
 > 
 > require(haplo.stats)
 Loading required package: haplo.stats
@@ -184,4 +178,4 @@ $power.unphased.haplo
 > 
 > proc.time()
    user  system elapsed 
-  1.046   0.070   1.217 
+  1.156   0.058   1.229 

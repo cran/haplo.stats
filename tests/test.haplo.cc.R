@@ -14,12 +14,13 @@
 
 ## settings
 verbose=TRUE
+options(width=140)
 require(haplo.stats)
-Sys.setlocale("LC_ALL", "C")
-Sys.getlocale()
+tmp <- Sys.setlocale("LC_ALL", "C")
+tmp <- Sys.getlocale()
 
 
-# Jason Sinnwell 3/2004
+# Jason Sinnwell, created 3/2004, updated 9/2014
 # Mayo Clinic, Biostatistics
 
   if(verbose) cat("setting up data...\n")
@@ -46,40 +47,25 @@ Sys.getlocale()
   cc.hla <- haplo.cc(y.bin, geno, miss.val=0,locus.label=label, 
                      control=haplo.glm.control(haplo.min.count=8,
                        em.c=haplo.em.control()))
-  
-#merge.hla <- haplo.score.merge(cc.hla$score.lst, group.hla)
-#options(width=120)
-#cat("\nHaplo.score output\n")
-#print(cc.hla$score.lst)
-#cat("\nhaplo.group output\n")
-#print(group.hla)
-#cat("\nhaplo.score.merge output\n")
-#print(merge.hla, order.by="haplotype", digits=4)
-#cat("\nhaplo.glm output\n")
-#print(cc.hla$fit.lst)
-#cat("\nThe whole thing, haplo.cc output\n")
-#print(cc.hla, order.by="haplotype", digits=4)
-   
-  "geno.test" <- 
-  matrix(c(1., 3., 1., 2., 1., 1., 2., 2., 2., 1., 3., 2., 1., 2., 2., 1., 1., 2., 3.,
-        2., 1., 2., 1., 1., 1., 1., 1., 1., 2., 2., 2., 2., 2., 1., 1., 2.,
-        1., 2., 3., 2., 2., 1., 2., 1., 1., 2., 2., 2., 1., 1., 2., 2., 1.,
-        2., 2., 1., 1., 1., 2., 1., 1., 1., 2., 2., 1., 2., 2., 2., 1., 1.,
-        2., 1., 2., 2., 1., 1., 2., 2., 2., 1., 2., 3., 2., 2., 3., 3., 1.,
-        4., 3., 3., 2., 3., 3., 3., 2., 3., 2., 4., 2., 2., 3., 4., 3., 4.,
-        2., 2., 3., 4., 2., 2., 4., 3., 1., 4., 2., 3., 3., 3., 3., 3.)
-  , nrow = 20, ncol = 6)
 
-  "y.test" <-  c(0., 0., 1., 1., 1., 1.,
-               1., 0., 0., 1., 1., 1., 0., 0., 1., 1., 1., 0., 1.,1.)
+set.seed(seed)
+ntest <- 200
+geno.test <- cbind(sample(1:2, size=ntest, replace=TRUE), sample(1:2, size=100, replace=TRUE),
+           sample(2:3,size=ntest, replace=TRUE), sample(2:3, size=100, replace=TRUE),
+           sample(2:4,size=ntest, replace=TRUE, prob=c(.5,.35,.15)), sample(2:4, size=100,
+                                            replace=TRUE, prob=c(.5,.35,.15)))
+y.test <- sample(1:2,size=ntest, replace=TRUE,prob=c(.6, .4)) - 1
+
+locus.label <- c("A", "B", "C")
+
+set.seed(seed)
+
+if(verbose) cat("small numeric data... \n")
+cc.test <- haplo.cc(y.test, geno.test, locus.label=locus.label,
+                  ci.prob=.95, control=haplo.glm.control(haplo.min.count=2))
+
 
   locus.label <- c("A", "B", "C")
-
-  set.seed(seed)
-
-  if(verbose) cat("small numeric data... \n")
-  cc.test <- haplo.cc(y.test, geno.test, locus.label=locus.label,
-                      ci.prob=.95, control=haplo.glm.control(haplo.min.count=2))
 
   geno.char <- ifelse(geno.test==1, 'A',ifelse(geno.test==2, 'T',
                         ifelse(geno.test==3, 'G', 'C')))
@@ -87,14 +73,19 @@ Sys.getlocale()
   set.seed(seed)
   if(verbose) cat("small char data with simulations... \n")
   cc.char.sim <- haplo.cc(y.test, geno.char, locus.label=locus.label, 
-                          ci.prob=.90, simulate=TRUE,
-                          control = haplo.glm.control(haplo.min.count=2))
+                          ci.prob=.90, simulate=FALSE,
+                          control = haplo.glm.control(haplo.min.count=4))
   
 
-  print.haplo.cc(cc.hla, digits=2, nlines=40)
-  print.haplo.cc(cc.test, order.by="score", digits=2)
-  print(cc.test, order.by="freq", digits=2)
-  print(cc.test$fit.lst, digits=2)
-  print.haplo.cc(cc.char.sim, order.by='haplotype', digits=2)
-  print(cc.char.sim$score.lst, digits=2)
+  print.haplo.cc(cc.hla, digits=3, nlines=40)
+#  print(cc.hla$fit.lst, digits=3)
+#  print(cc.hla$score.lst, digits=3)
+  print.haplo.cc(cc.test, order.by='score', digits=3)
+  print.haplo.cc(cc.test, order.by='haplotype', digits=3)
+  print.haplo.cc(cc.test, order.by='freq', digits=3)
+
+  print.haplo.cc(cc.char.sim, digits=3)
+  print(cc.char.sim$fit.lst, digits=3)
+  print(cc.char.sim$score.lst, digits=3)
+
     

@@ -1,5 +1,5 @@
 
-R version 3.0.1 (2013-05-16) -- "Good Sport"
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -25,10 +25,8 @@ Type 'q()' to quit R.
 > require(haplo.stats)
 Loading required package: haplo.stats
 > 
-> Sys.setlocale("LC_COLLATE", "C")
-[1] "C"
-> Sys.getlocale("LC_COLLATE")
-[1] "C"
+> tmp <- Sys.setlocale("LC_COLLATE", "C")
+> tmp <- Sys.getlocale("LC_COLLATE")
 > 
 > if(verbose) cat("prepare two datasets, one with char alleles, the other 3 loci from hla data\n")
 prepare two datasets, one with char alleles, the other 3 loci from hla data
@@ -560,4 +558,4 @@ Check Phase against SNaP data, phased
 > 
 > proc.time()
    user  system elapsed 
- 11.412   0.192  11.647 
+ 12.317   0.101  12.451 

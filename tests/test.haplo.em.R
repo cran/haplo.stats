@@ -7,8 +7,8 @@ verbose=TRUE
 
 require(haplo.stats)
 
-Sys.setlocale("LC_COLLATE", "C")
-Sys.getlocale("LC_COLLATE")
+tmp <- Sys.setlocale("LC_COLLATE", "C")
+tmp <- Sys.getlocale("LC_COLLATE")
 
 if(verbose) cat("prepare two datasets, one with char alleles, the other 3 loci from hla data\n")
   
