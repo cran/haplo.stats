@@ -1,4 +1,13 @@
 useDynLib(haplo.stats)
+importFrom("graphics", "axis", "lines", "locator", "plot", "points", "text")
+importFrom("methods", "existsFunction", "setOldClass")
+importFrom("stats", "anova", "binomial", "dnorm", "dpois", "formula",
+           "gaussian", "glm", "glm.control", "model.extract",
+           "model.matrix", "model.offset", "model.response",
+           "model.weights", "na.omit", "pchisq", "pf", "pt", "qchisq",
+           "qf", "qnorm", "residuals.glm", "runif", "stat.anova",
+           "uniroot", "var", "weights")
+import(rms)
 export(haplo.em, summary.haplo.em, print.haplo.em, haplo.em.control)
 
 export(haplo.score, print.haplo.score, plot.haplo.score,

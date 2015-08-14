@@ -34,7 +34,7 @@
 # 
 # Daniel J. Schaid, Ph.D.
 # Division of Biostatistics
-# Harwick Building – Room 775
+# Harwick Building Room 775
 # Mayo Clinic
 # 200 First St., SW
 # Rochester, MN 55905

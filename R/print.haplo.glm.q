@@ -10,8 +10,7 @@
 #add show.missing and return coeffDF and hapDF by invisible
 #
 #Revision 1.9  2005/03/29 14:18:47  sinnwell
-#fix call to print within widths, different for R/Splus
-#®
+#fix call to print within widths, different for R/S+
 #
 #Revision 1.8  2004/10/22 22:08:27  sinnwell
 #do not drop matrix to vector when subsetting to haplo.unique
