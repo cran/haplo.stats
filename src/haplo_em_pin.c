@@ -42,8 +42,7 @@
 #include <math.h>
 #include <string.h>
 #include <limits.h>
-#include <R.h> 
-#include <S.h> 
+#include <R.h>  
 #include "haplo_em_pin.h"
 
 

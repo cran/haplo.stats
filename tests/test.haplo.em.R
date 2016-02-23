@@ -6,7 +6,7 @@
 verbose=TRUE
 
 require(haplo.stats)
-
+options(stringsAsFactors=FALSE)
 tmp <- Sys.setlocale("LC_COLLATE", "C")
 tmp <- Sys.getlocale("LC_COLLATE")
 
@@ -49,8 +49,9 @@ em.char <- haplo.em(geno.char, miss.val='z',locus.label=char.label,
                     control = haplo.em.control())
 
 print.haplo.em(em.char, digits=3)
-summary(em.char, digits=3, show.haplo=TRUE)
-summary.haplo.em(em.char, digits=3)
+summary(em.char, digits=2, show.haplo=TRUE)
+
+summary.haplo.em(em.char, digits=2)
 
   
 if(verbose) cat("hla data, 3 loci\n")
@@ -79,9 +80,9 @@ set.seed(seed)
 block2.phase <- checkPhase(snapfile, blocknum=2)
 
 
-print(block1.phase[[2]], digits=3)
-print(block1.phase[[1]][1:50,],digits=3)  # long output 1120 lines
-print(block2.phase[[2]],digits=3)
+print(block1.phase[[2]], digits=4)
+print(block1.phase[[1]][1:50,],digits=4)  # long output 1120 lines
+print(block2.phase[[2]],digits=4)
 
 
 

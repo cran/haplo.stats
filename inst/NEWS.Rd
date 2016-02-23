@@ -1,12 +1,20 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.7.3}{
+  \itemize{
+    \item Remove special characters in comments in R code
+    \item Replace S.h with R.h per note from Prof Ripley 1/27/2016
+    \item Vignette manualHaploStats available as pre-made pdf, with R.rsp
+    \item Ensure summary.haplo.em prints haplotypes in alpha-numeric
+    order of the haplotypes and row names are 1:nrow
+  }
+}
 \section{Changes in version 1.6.0}{
   \itemize{
     \item Removed .First.lib and .Last.lib b/c handled via namespace
     \item Updated test scripts to set LC_COLLATE and check values after set
   }
 }
-
 \section{Changes in version 1.5.6}{
   \itemize{
     \item Removed glm.fit.nowarn because glm.fit changed from R 2.15.0

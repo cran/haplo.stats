@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <S.h>
+#include <R.h>
 
 static double **double_vec_to_mat(double *Yvec, int nrow, int ncol);
 static double **double_matrix(int nrow, int ncol);

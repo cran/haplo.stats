@@ -64,16 +64,22 @@ summary.haplo.em <- function(object, show.haplo=FALSE,
                              digits=max(options()$digits-2, 5), nlines=NULL, ...){
   
   printBanner("Subjects: Haplotype Codes and Posterior Probabilities")
-
-  if(show.haplo){
+  hap1sorted <- ifelse(object$hap1code < object$hap2code, object$hap1code, object$hap2code)
+  hap2sorted <- ifelse(object$hap1code < object$hap2code, object$hap2code, object$hap1code)
+  if(show.haplo){    
      hap1 <- object$haplotype[object$hap1code,]
      hap2 <- object$haplotype[object$hap2code,]
-     df <- data.frame(subj.id=object$subj.id, hap1=hap1, hap2=hap2,
+     
+     df <- data.frame(subj.id=object$subj.id, hap1=object$haplotype[hap1sorted,], hap2=object$haplotype[hap2sorted,],
+                      ##hap1=hap1, hap2=hap2,
                     posterior=round(object$post,digits))
   }  else{
-     df <- data.frame(subj.id=object$subj.id, hap1code=object$hap1code, hap2code=object$hap2code,
+     df <- data.frame(subj.id=object$subj.id, hap1=hap1sorted, hap2=hap2sorted,
+                      #hap1code=object$hap1code, hap2code=object$hap2code,
                     posterior=round(object$post, digits))
   }
+  df <- df[order(max(df$subj.id)-df$subj.id, df$posterior, decreasing=TRUE),]
+  rownames(df) <- 1:nrow(df)
   if(is.null(nlines)) print(df)
   else print(df[1:nlines,])
   

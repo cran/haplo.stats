@@ -11,7 +11,7 @@
  * Initial revision
  * */
 #include <math.h>
-#include <S.h>
+#include <R.h>
 
 
 /* groupsum

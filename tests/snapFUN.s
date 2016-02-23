@@ -43,9 +43,11 @@ checkPhase <- function(snapfile, blocknum=1, miss.val=c(0,NA), em.control=haplo.
 
    # construct data.frame of hap-pairs estimated by haplo.em for each
    # subject, with post prob of hap-pair, merge with snap haplotype pairs
+   hap1sorted <- ifelse(em.block$hap1code < em.block$hap2code, em.block$hap1code, em.block$hap2code)
+   hap2sorted <- ifelse(em.block$hap1code < em.block$hap2code, em.block$hap2code, em.block$hap1code)
    emhaps <- data.frame(subj=em.block$subj.id,
-                       emhap1=apply(em.block$haplotype[em.block$hap1code,],1, paste, collapse=""),
-                       emhap2=apply(em.block$haplotype[em.block$hap2code,], 1, paste, collapse=""),
+                       emhap1=apply(em.block$haplotype[hap1sorted,],1, paste, collapse=""),
+                       emhap2=apply(em.block$haplotype[hap2sorted,], 1, paste, collapse=""),
                        post=em.block$post)
 
    snaphaps <- data.frame(subj=1:nsubj, snaphap1=charhap1, snaphap2=charhap2)

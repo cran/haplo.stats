@@ -5,8 +5,7 @@
 #$Log: 
 #$
 
-summary.haplo.glm <- function(object, show.all.haplo=FALSE,
-                              show.missing=FALSE, ...){
+summary.haplo.glm <- function(object, show.all.haplo=FALSE, show.missing=FALSE, ...){
 
   ## Scaled Residuals, and dispersion (a.phi)
   residList <- residScaledGlmFit(object)
