@@ -1,4 +1,4 @@
-427f68ed7d4524069ca6e70b7c7d3655 *DESCRIPTION
+a56fde374a23fde374e8aa2cb4fe7c52 *DESCRIPTION
 cc6735f8676368025526d36674d55a22 *NAMESPACE
 7400078d1007c803b9974870d9609cc0 *R/Ginv.R
 dd3dbda43c57931ca381e580f02bcdca *R/anova.haplo.glm.q
@@ -19,7 +19,7 @@ c77fee4cb2c0d60e57f47c42bf6a39ee *R/haplo.em.q
 b0f228cde52a939325ab8b608a7a41e6 *R/haplo.enum.q
 fff31375db75a909b6d9f9492714bc15 *R/haplo.glm.control.q
 6cf905edddd28f4580d5a4537e534df4 *R/haplo.glm.q
-f15c87e9615700acfa9d190e5b9a2c1c *R/haplo.group.q
+32c0e6056549eb73e2cddd27fccdfbb9 *R/haplo.group.q
 b7a2096b6ddd71dd7c659acf2c935d7a *R/haplo.hash.q
 f72942fbab0e6563717da0630124dd8d *R/haplo.model.frame.q
 9a768625bea2ee49167a2cdd75755b89 *R/haplo.power.cc.ncp.q
@@ -63,15 +63,15 @@ a8c35b8fe35aee47209ade1d9f7b9d91 *R/seqhap.q
 1248bf03ef39261e6a9eeb641acbaa42 *R/varfunc.glm.fit.q
 a030452a0250f7d1003029e33aed5813 *R/x.sexcheck.q
 118ae8ba1c9a51017cd121ac33606ac6 *R/zzz.haplo.stats.R
-129d87f8d48e6e2bfb36a0ecb46c8e81 *build/vignette.rds
+7a57a0991195ba48c8ca25a334135fec *build/vignette.rds
 4eed20f1d136a50e9996fb5802b0ca28 *data/hapPower.demo.tab.gz
 b395516007295803e95e4951b0066373 *data/hla.demo.tab.gz
 57ef4a88591f0afdc4c9cfb4421c83eb *data/seqhap.dat.tab.gz
 a7ee89da0aff191a340c312643f7cd73 *data/seqhap.pos.tab.gz
 27bf59c2a37bff07a78c9730061e532b *inst/LICENSE.note
-948f482fc4789f5c2c85ea285a5ce6ee *inst/NEWS.Rd
+af25d04d35b06c8ce6fc37d7d9b320b1 *inst/NEWS.Rd
 d368405f1c604912f51ba286eed9944a *inst/doc/GPL.txt
-120f7cc24bbe71b60aa91cb556833846 *inst/doc/manualHaploStats.pdf
+5fba89fa8eb4af4569e969c7cdaccc78 *inst/doc/manualHaploStats.pdf
 2413e1f391f3cee0b780a174df883c95 *inst/doc/manualHaploStats.pdf.asis
 10ae00dab9c8f986bf5b6c64eef98521 *man/Ginv.Rd
 bf6f1a85454445157ab798632128e8ab *man/anova.haplo.glm.Rd
@@ -136,7 +136,7 @@ e65fb3a41dda5bad22a4eca7e3768330 *src/haplo_em_pin.c
 745e6db55d61c53aa80feb1e7ee69d85 *tests/snapData.csv
 79d845076b2e3c3ce0a009653826e1c0 *tests/snapFUN.s
 4e88c18e47fe1a82fb97ed86df5ee647 *tests/test.haplo.cc.R
-c464c4876ccc6c049d29c4d978ec83fb *tests/test.haplo.cc.Rout.save
+4f0ab6d849b7b05a7375a4e0817db0b4 *tests/test.haplo.cc.Rout.save
 c0b3cd083a8dd73806905086101871a8 *tests/test.haplo.em.R
 487f8f68c17ef10f8c92b928ead56c73 *tests/test.haplo.em.Rout.save
 60125a03e89b66294090b1fd39e0e870 *tests/test.haplo.power.R

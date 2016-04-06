@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.7.7}{
+  \itemize{
+    \item Make test.haplo.em robust to system char/int recoding
+    \item Add all.y=TRUE in merge in haplo.group so colSums of group
+    haplotypes sum to 1. Creates NAs in pooled frequencies because some
+    haplotypes only estimated within groups.
+    \item The change above changes haplo.score.merge and haplo.cc
+    results with more haplotypes
+  }
+}
 \section{Changes in version 1.7.3}{
   \itemize{
     \item Remove special characters in comments in R code

@@ -146,7 +146,7 @@ haplo.group <- function(group, geno, locus.label=NA,
 
     # Merge matching the haplotypes (cols 1:n.loci) and keep all rows
     # This will leave NA's where no match in sub group
-    haplo.freq <- merge(haplo.freq, df.sub, by.x=1:n.loci, by.y=1:n.loci, all.x=TRUE)
+    haplo.freq <- merge(haplo.freq, df.sub, by.x=1:n.loci, by.y=1:n.loci, all.x=TRUE, all.y=TRUE)
 
   }   # end for i.group
   
