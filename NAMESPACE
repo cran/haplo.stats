@@ -1,4 +1,4 @@
-useDynLib(haplo.stats)
+useDynLib(haplo.stats, .registration=TRUE)
 importFrom("graphics", "axis", "lines", "locator", "plot", "points", "text")
 importFrom("methods", "existsFunction", "setOldClass")
 importFrom("stats", "anova", "binomial", "dnorm", "dpois", "formula",

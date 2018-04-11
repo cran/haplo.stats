@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.7.9}{
+  \itemize{
+    \item Updated parenthesis in if() statement of seqhap.c
+    \item registered C code routines, per instructions from section 5.4.1
+    of Writing R Extensions
+  }
+}
 \section{Changes in version 1.7.7}{
   \itemize{
     \item Make test.haplo.em robust to system char/int recoding

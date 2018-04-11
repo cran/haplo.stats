@@ -43,7 +43,7 @@ static double r2_threshold, mh_threshold, haplo_freq_min, p_threshold; /*paramet
 static int nsnp, nhap, nsub, npost, newnhap, flag, hap_df;
 
 
-void seqhap(
+void seqhapC(
 	    int *nsnp_c, /*number of SNPs*/
 	    int *nsub_c, /*number of subjects*/
 	    int *npost_c, /*length of posterior probabilities*/
@@ -259,7 +259,7 @@ void seqhap(
       /* added by JPS:  apply Besag and Clifford permutation 
          p-values rules to region p-values */
 	h_region = 1/((p_threshold * p_threshold) + 1/N_PERM);
-	if( (h_region <= hap_p & h_region <= chi_p & h_region <= sum_p) | N_PERM == MAX_PERM) {
+	if( ((h_region <= hap_p) & (h_region <= chi_p) & (h_region <= sum_p)) | (N_PERM == MAX_PERM) ) {
  	  doneperm = 1;
 	}
       }

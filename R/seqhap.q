@@ -111,7 +111,7 @@ seqhap <- function(y, geno, pos, locus.label=NA, weight=NULL,
   hap <-as.numeric(apply(hapmatrix,2,factor)) - 1
   inlist <- numeric(nsnp*nsnp)
   
-  tmp <- .C("seqhap",
+  tmp <- .C("seqhapC",
             nsnp =as.integer(nsnp),
             nsub=as.integer(nsub),
             npost=as.integer(npost),
