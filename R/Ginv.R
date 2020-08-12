@@ -116,8 +116,7 @@ Ginv<-function(x, eps=1e-6) {
   # needMatrix <- TRUE
 
   if(length(x)>1) {
-    #if(exists("is.R") && is.function(is.R) && is.R()) {
-      savesvd <- svd(x, LINPACK=FALSE)
+      savesvd <- svd(x)
       U.svd<-savesvd$u
       V.svd<-savesvd$v
       d.svd<-savesvd$d

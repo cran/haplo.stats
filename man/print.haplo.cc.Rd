@@ -6,27 +6,7 @@
 %$Log: print.haplo.cc.Rd,v $
 %Revision 1.4  2011/11/10 15:29:41  sinnwell
 %major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
-%
-%Revision 1.3  2008/01/08 20:39:17  sinnwell
-%fix comments
-%
-%Revision 1.2  2008/01/08 16:01:55  sinnwell
-%add comments from sgml file
-%
-%Revision 1.5  2005/05/09 21:10:46  sinnwell
-%entry for '...'
-%
-%Revision 1.4  2005/05/09 15:45:18  sinnwell
-%comma in \usage
-%
-%Revision 1.3  2005/05/09 15:25:48  sinnwell
-%remove ',' in <\see>
-%
-%Revision 1.2  2005/03/31 16:34:24  sinnwell
-%comment out example
-%
-%Revision 1.1  2004/04/23 21:25:46  sinnwell
-%Initial revision
+
 
 \name{print.haplo.cc}
 \alias{print.haplo.cc}
@@ -37,7 +17,7 @@
 Display results for a haplotype analysis on a case-control study.  
 }
 \usage{
-\method{print}{haplo.cc}(x, order.by="score", digits=max(options()$digits-2, 5),
+\method{print}{haplo.cc}(x, order.by=c("score","haplotype","freq"), digits=max(options()$digits-2, 5),
     nlines=NULL, ...)
 }
 \arguments{
@@ -45,7 +25,7 @@ Display results for a haplotype analysis on a case-control study.
 A haplo.cc object, made by the haplo.cc function.
 }
 \item{order.by}{
-Order the printed data frame by haplotype score (score), haplotype alleles
+Order the printed data frame by the column: haplotype score (score), haplotype alleles
 (haplotype), or haplotype frequency (freq).
 }
 \item{digits}{

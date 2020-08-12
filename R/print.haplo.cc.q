@@ -1,19 +1,8 @@
 #$Author: sinnwell $
 #$Date: 2005/03/30 16:40:08 $
 #$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/print.haplo.cc.q,v 1.3 2005/03/30 16:40:08 sinnwell Exp $
-#$Locker:  $
-#$Log: print.haplo.cc.q,v $
-#Revision 1.3  2005/03/30 16:40:08  sinnwell
-#remove banner.width from printBanner
-#
-#Revision 1.2  2004/12/02 15:55:51  sinnwell
-#round to signif for p-values
-#
-#Revision 1.1  2004/04/23 21:25:31  sinnwell
-#Initial revision
-#
 
-print.haplo.cc <- function(x, order.by="score",
+print.haplo.cc <- function(x, order.by=c("score","haplotype","freq"),
                            digits=max(options()$digits-2, 5), nlines=NULL, ...)
 {
 
@@ -48,11 +37,12 @@ print.haplo.cc <- function(x, order.by="score",
   print(x$group.count)
   cat("\n\n")
   
-   # print a banner for the data frame
-  printBanner(paste("Haplotype Scores, p-values, Hap-Frequencies (hf), and Odds Ratios (",
-                     round(x$ci.prob*100, 0), "% CI)", sep=""), border = "-")
+  # print a banner for the data frame
+  #printBanner(paste("Haplotype Scores, p-values, Hap-Frequencies (hf), and Odds Ratios (",
+  #                   round(x$ci.prob*100, 0), "% CI)", sep=""), border = "-")
 
   # get the order and choose all.haps to print or not
+  if(length(order.by)>1) order.by=order.by[1]    
   order.vec <- c("haplotype","score","freq")
   order.int <- pmatch(order.by, order.vec)
   if(all(is.na(order.int))) order.int <- 1
@@ -69,5 +59,5 @@ print.haplo.cc <- function(x, order.by="score",
          })
   nlines <- if(is.null(nlines)) nrow(df.out) else nlines
   print(df.out[ord[1:nlines],], digits=digits, ...)
-  invisible(df.out)   
+  invisible(df.out[ord[1:nlines],])   
 }

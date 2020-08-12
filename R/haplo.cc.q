@@ -1,60 +1,13 @@
 #$Author: sinnwell $
 #$Date: 2011/11/10 15:29:40 $
-#$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.cc.q,v 1.14 2011/11/10 15:29:40 sinnwell Exp $
-#$Locker:  $
-#$Log: haplo.cc.q,v $
-#Revision 1.14  2011/11/10 15:29:40  sinnwell
-#major update to hapglm, minor changes to Rd files, prepare for version 1.5.0 release
-#
-#Revision 1.13  2008/04/10 20:58:36  sinnwell
-#add eps.svd, only allow haplo.min.count in control()
-#
-#Revision 1.12  2007/03/30 20:02:39  sinnwell
-#control random seed values before each call
-#
-#Revision 1.11  2007/03/23 19:08:37  sinnwell
-#take out weights for haplo.glm, they don't work for haplo.glm in Splus
-#
-#Revision 1.10  2007/03/22 20:08:46  sinnwell
-#insert line to check weights for NULL before passing to haplo.glm
-#
-#Revision 1.9  2007/03/13 18:14:40  sinnwell
-#add weights parameter
-#
-#Revision 1.8  2005/06/03 14:32:58  sinnwell
-#adjust haplo.rare if l.t. haplo.min.info
-#
-#Revision 1.7  2005/03/10 17:36:16  sinnwell
-#make haplo.min.count persist in haplo.glm
-#
-#Revision 1.6  2005/01/04 20:22:29  sinnwell
-#min.count to haplo.min.count
-#
-#Revision 1.5  2004/12/02 15:56:12  sinnwell
-#logical vectors y==0 + y==1 to y==0 | y==1. R doesn't add logicals.
-#
-#Revision 1.4  2004/11/10 21:16:17  sinnwell
-#problems with setupGeno before haplo.glm
-#
-#Revision 1.3  2004/07/13 22:02:27  sinnwell
-#T to TRUE
-#
-#Revision 1.2  2004/06/09 18:57:55  sinnwell
-#fix for when glm.object$haplo.rare is zero length
-#
-#Revision 1.1  2004/04/23 21:24:56  sinnwell
-#Initial revision
-#
-
 
 ## Sinnwell JP and Schaid DJ
 ## Mayo Clinic, Rochester MN
 ## 1/2004
 
-haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
+haplo.cc <- function(y, geno, x.adj=NA, locus.label=NA, ci.prob=0.95,
                      miss.val=c(0,NA), weights=NULL, eps.svd=1e-5, simulate=FALSE,
-                     sim.control=score.sim.control(),
-                     control=haplo.glm.control())
+                     sim.control=score.sim.control(), control=haplo.glm.control())
 
 {
   ## wrap the execution of haplo.score, haplo.group and haplo.glm
@@ -70,17 +23,24 @@ haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
   
   # check for missing values in y and geno
   n.subj <- length(y)
-  if(n.subj != nrow(geno))
+  if(n.subj != nrow(geno)) {
     stop("Different number of rows for y and geno!")
- 
+  }
+  if(!all(is.na(x.adj)) && n.subj != nrow(x.adj)) {
+    stop("Different number of rows for y and x.adj")
+  }
+  
   exclude <- which(is.na(y))
   tmp <- which(apply(is.na(geno),1,all))
   exclude <- unique(c(exclude,tmp))
   if(length(exclude)) {
     warning(paste("Subjects ", exclude,
                   " removed for missing y or all alleles missing."))
-    geno <- geno[-exclude,]
+    geno <- geno[-exclude,,drop=FALSE]
     y <- y[-exclude]
+    if(!all(is.na(x.adj)))
+      x.adj <- as.matrix(x.adj)
+      x.adj <- x.adj[-exclude,,drop=FALSE]
   }
 
   if(is.null(control$em.control$iseed)) {
@@ -89,10 +49,10 @@ haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
   }
  
   # check y to be 0's and 1's
-  if(!all(y==0 | y==1))
+  if(!all(y==0 | y==1)) {
     stop("y must be binary with 0=controls and 1=cases")
-  
-  n.subj <- nrow(geno)
+  }
+  n.subj <- nrow(geno) 
   
   # set skip.haplo and hap.freq.min for haplo.glm to be the same, meeting
   # min. number of expected counts per haplotypes
@@ -104,7 +64,7 @@ haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
     warning("haplo.min.count may be too small for reliable results\n")
 
   set.seed(control$em.control$iseed)
-  score.lst <- haplo.score(y=y, geno=geno, trait.type="binomial",
+  score.lst <- haplo.score(y=y, geno=geno, x.adj=x.adj, trait.type="binomial",
                         min.count=haplo.min.count, 
                         locus.label=locus.label,
                         miss.val=miss.val, haplo.effect=control$haplo.effect,
@@ -131,24 +91,32 @@ haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
   # extract for Odds Ratios, exp(betas)
   geno.glm <- setupGeno(geno, miss.val=miss.val)
   
-  glm.data <- data.frame(geno.glm, y=y)
-
 # weights are not supported for haplo.glm in S-PLUS--take out for now
 #  if (is.null(weights)) weights=rep(1,n.subj)
-   
+
+  if(!all(is.na(x.adj))) {
+    glm.data <- data.frame(geno.glm, y=y, x.adj)
+    hglm.formula <- formulize(y="y",
+          x=c("geno.glm", names(glm.data)[names(glm.data) %nin% c("y","geno.glm")]),
+                              data=glm.data)
+  } else {
+    glm.data <- data.frame(geno.glm, y=y)
+    hglm.formula <- formulize(y="y", x="geno.glm",data=glm.data)
+  }
   # will only get OR's for haplotypes with freq > haplo.freq.min, based on min.count
   # should be set same as skip.haplo so 1:1 merge of haps from merge.lst
+  
   set.seed(control$em.control$iseed)
-  fit.lst <- haplo.glm(y~geno.glm, family=binomial, data=glm.data, 
+  fit.lst <- haplo.glm(hglm.formula, family=binomial, data=glm.data, 
                        locus.label=locus.label,
                        miss.val=miss.val, control=control)
 
-  ncoef <- length(fit.lst$coef)
-  
+#  ncoef <- length(fit.lst$coef)
+  hapcoef.idx <- grep("^geno.glm", names(fit.lst$coeff)) 
   # get OR's and variance estimates based on var(b's)
   # make base haplo coef zero b/c or will be 1
-  hap.coef <- (fit.lst$coefficients)[2:ncoef]
-  se.bet <- sqrt(fit.lst$var.mat[cbind(2:ncoef, 2:ncoef)])
+  hap.coef <- (fit.lst$coefficients)[hapcoef.idx]
+  se.bet <- sqrt(fit.lst$var.mat[cbind(hapcoef.idx, hapcoef.idx)])
 
   # find CI's for OR's transormed from CI's on Betas 
   if(0 > ci.prob || ci.prob > 1) {
@@ -175,9 +143,10 @@ haplo.cc <- function(y, geno, locus.label=NA, ci.prob=0.95,
 
   # if rare term replicate rare coeff for every rare hap
   if(length(fit.lst$haplo.rare) > 0) {
-    rare.df <- matrix(rep(OR.df[ncoef,],length(fit.lst$haplo.rare)),ncol=3,byrow=TRUE)
+    rarehap.idx <- grep("rare$", rownames(OR.df))
+    rare.df <- matrix(rep(OR.df[rarehap.idx,],length(fit.lst$haplo.rare)),ncol=3,byrow=TRUE)
     if(control$keep.rare.haplo) {
-      OR.df <- rbind(OR.df[-ncoef,],rare.df)
+      OR.df <- rbind(OR.df[-rarehap.idx,],rare.df)
     } else OR.df <- rbind(OR.df,rare.df)
   }
   

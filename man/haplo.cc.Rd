@@ -6,31 +6,6 @@
 %$Log: haplo.cc.Rd,v $
 %Revision 1.5  2009/09/30 19:58:16  sinnwell
 %remove keywords section
-%
-%Revision 1.4  2009/09/30 19:03:54  sinnwell
-%rm section{side effects}, itemize the references
-%
-%Revision 1.3  2008/04/10 20:45:41  sinnwell
-%add eps.svd, leave haplo.min.count in haplo.glm.control
-%
-%Revision 1.2  2008/01/08 20:23:26  sinnwell
-%comments from ~~ to %
-%
-%Revision 1.1  2008/01/08 19:56:18  sinnwell
-%Initial revision
-%
-%Revision 1.4  2007/03/13 18:14:34  sinnwell
-%add weights
-%
-%Revision 1.3  2005/01/28 21:49:42  sinnwell
-%comment out example
-%
-%Revision 1.2  2005/01/04 20:22:17  sinnwell
-%change min.count to haplo.min.count
-%
-%Revision 1.1  2004/04/23 21:25:19  sinnwell
-%Initial revision
-
 \name{haplo.cc}
 \alias{haplo.cc}
 \title{
@@ -43,10 +18,9 @@ binary (case-control) trait and the haplotypes relevant to the
 unrelated individuals' genotypes.
 }
 \usage{
-haplo.cc(y, geno, locus.label=NA, ci.prob=0.95, 
-         miss.val=c(0,NA), weights=NULL, eps.svd=1e-5,
-         simulate=FALSE, sim.control=score.sim.control(),
-         control=haplo.glm.control())
+haplo.cc(y, geno, x.adj=NA, locus.label=NA, ci.prob=0.95,
+         miss.val=c(0,NA), weights=NULL, eps.svd=1e-5, simulate=FALSE,
+         sim.control=score.sim.control(), control=haplo.glm.control())
 }
 \arguments{
 \item{y}{
@@ -58,6 +32,11 @@ adjacent columns of alleles, and the order of columns
 corresponds to the order of loci on a chromosome.  If
 there are K loci, then ncol(geno) = 2*K. Rows represent
 alleles for each subject.
+}
+\item{x.adj}{
+Matrix of non-genetic covariates used to adjust the score 
+statistics.  Note that intercept should not be included, 
+as it will be added in this function.
 }
 \item{ci.prob }{
 Probability level for confidence interval on the Odds Ratios of

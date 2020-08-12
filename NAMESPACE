@@ -7,7 +7,7 @@ importFrom("stats", "anova", "binomial", "dnorm", "dpois", "formula",
            "model.weights", "na.omit", "pchisq", "pf", "pt", "qchisq",
            "qf", "qnorm", "residuals.glm", "runif", "stat.anova",
            "uniroot", "var", "weights")
-import(rms)
+import(rms, arsenal)
 export(haplo.em, summary.haplo.em, print.haplo.em, haplo.em.control)
 
 export(haplo.score, print.haplo.score, plot.haplo.score,
