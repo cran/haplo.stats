@@ -1,4 +1,4 @@
-686f5e0f20f7f40a78caa87b4cbb0437 *DESCRIPTION
+189127ec9336d2fde536c209ee5a54c8 *DESCRIPTION
 148cd7ca49bbec4e13196fdd5986324d *NAMESPACE
 e8c5d27eab400e1c1faa48dc31466053 *R/Ginv.R
 dd3dbda43c57931ca381e580f02bcdca *R/anova.haplo.glm.q
@@ -18,7 +18,7 @@ eb53f16706da9d96b3a794bd15119b35 *R/get.hapPair.q
 c77fee4cb2c0d60e57f47c42bf6a39ee *R/haplo.em.q
 b0f228cde52a939325ab8b608a7a41e6 *R/haplo.enum.q
 fff31375db75a909b6d9f9492714bc15 *R/haplo.glm.control.q
-6cf905edddd28f4580d5a4537e534df4 *R/haplo.glm.q
+72fd5cb4b3c99d63c63b28cb0a59b80f *R/haplo.glm.q
 32c0e6056549eb73e2cddd27fccdfbb9 *R/haplo.group.q
 b7a2096b6ddd71dd7c659acf2c935d7a *R/haplo.hash.q
 f72942fbab0e6563717da0630124dd8d *R/haplo.model.frame.q
@@ -69,11 +69,11 @@ b82b4a417441299c41f85fddf41ba7de *build/vignette.rds
 6845c2953772c2e671e2e4ab94188ac9 *data/hla.demo.tab.gz
 2ef2670db0175457b501347944d6c47c *data/seqhap.dat.tab.gz
 bb38d8e5a3d0917f36de78cc6b0c9f99 *data/seqhap.pos.tab.gz
-3be71c07b11ecfcba11369c1b60b06a6 *inst/NEWS.Rd
+30ff927cae23b6707c334c3d542979c4 *inst/NEWS.Rd
 d368405f1c604912f51ba286eed9944a *inst/doc/GPL.txt
 27bf59c2a37bff07a78c9730061e532b *inst/doc/LICENSE.mayo
 2bb9d322fe512aa29e056ca74f24b67c *inst/doc/haplostats.Rnw
-20d64e45ca41cae8251281da52d65470 *inst/doc/haplostats.pdf
+06b831513ac263da76fca3409ff7c82a *inst/doc/haplostats.pdf
 2413e1f391f3cee0b780a174df883c95 *inst/doc/manualHaploStats.pdf.asis
 4b1e3869e6d210fe5b94b8cafadc3cb7 *inst/doc/manualHaploStats.rnwsave
 10ae00dab9c8f986bf5b6c64eef98521 *man/Ginv.Rd
@@ -91,7 +91,7 @@ d92d8a6803b1d691b3c9abc222d96ff6 *man/haplo.cc.Rd
 e0339787d1b0f74db1824e48dd4afd89 *man/haplo.em.Rd
 893eb6068777d212c75dd717b4a8b17b *man/haplo.em.control.Rd
 6e75eaa661ff17a0461a50a4a7a98612 *man/haplo.em.fitter.Rd
-bf9ae3a0353c22482315866ebbafb373 *man/haplo.glm.Rd
+d8cd6340a2cdc75bf4a47f8462d1fe07 *man/haplo.glm.Rd
 d9a1a556832dae001e6393605d26bfe9 *man/haplo.glm.control.Rd
 c80a3a8a7ac0f61128cd6d5efe8f341f *man/haplo.group.Rd
 6dd0e65f2b9fa8ced4db590319a8df34 *man/haplo.hash.Rd
@@ -167,11 +167,11 @@ d550dc92816cb2ab6d279dc3b3e39ed7 *tests/expanded/test.seqhap.Rout.save
 5f0400aa7341d81e956dfd67d7ff486a *tests/testthat.R
 6e65eae10cfee4223421124b83d4ff4e *tests/testthat/cc.hla.adj.rds
 f6c8416f51ef156d91ece2c763347732 *tests/testthat/cc.test.rds
-b533fd1134613f4380beddd339799d22 *tests/testthat/fit.gaus.gender.rds
-5d5b5ab20c303dc93079b6ef546e7ee1 *tests/testthat/fit.gaus.inter.rds
+1ed75855a61ede3e4ecf6f0ab0d60669 *tests/testthat/fit.gaus.gender.rds
+04792b4749a6d8b69a1826ed21d837ad *tests/testthat/fit.gaus.inter.rds
 13712182992782099d2f8b4cdfa20da1 *tests/testthat/powercc.rds
-31c232f14c83901f9ab5bb98ceabef3f *tests/testthat/test.anova.haplo.glm.R
 3f858918326f24cf46a16cc73f96d644 *tests/testthat/test.haplo.cc.R
+7a2df16ffdc77cb237051b803232b3cd *tests/testthat/test.haplo.glm.R
 df098cf1ae48aa75d4e6d15860330418 *tests/testthat/test.haplo.power.R
 2bb9d322fe512aa29e056ca74f24b67c *vignettes/haplostats.Rnw
 b630e4dd78f49fc4e800f5fa38c75294 *vignettes/manualHaploStats.pdf

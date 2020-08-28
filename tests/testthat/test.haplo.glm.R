@@ -27,16 +27,16 @@ set.seed(seed)
 fit.hla.gaus.gender <- haplo.glm(y ~ male + geno, family = gaussian,
                  na.action="na.geno.keep",
                  data=my.data, locus.label=label,
-                 control = haplo.glm.control(haplo.min.count=5))
-
+                 control = haplo.glm.control(haplo.min.count=10))
+coeff.hla.gender <- summary(fit.hla.gaus.gender)$coefficients
 ##if(verbose) cat("gaussian with covariate, multiplicative\n")
 set.seed(seed)
 fit.hla.gaus.inter <- haplo.glm(y ~ male * geno, family = gaussian,
                    na.action="na.geno.keep", data=my.data, locus.label=label,
-                   control = haplo.glm.control(haplo.min.count = 5))
+                   control = haplo.glm.control(haplo.min.count = 10))
 
 coeff.hla.inter <- summary(fit.hla.gaus.inter)$coefficients
-anova.hlagaus <- anova(fit.hla.gaus.gender, fit.hla.gaus.inter)
+#anova.hlagaus <- anova(fit.hla.gaus.gender, fit.hla.gaus.inter)
 
 if(0) {
   saveRDS(fit.hla.gaus.gender, "fit.gaus.gender.rds")
@@ -48,11 +48,11 @@ if(0) {
 ###################################################################
 fit.gender <- readRDS("fit.gaus.gender.rds")
 fit.inter <- readRDS("fit.gaus.inter.rds")
-anova.inter <- anova(fit.gender, fit.inter)
-
+#anova.inter <- anova(fit.gender, fit.inter)
+coeffgender <- summary(fit.gender)$coefficients
 coeffinter <- summary(fit.inter)$coefficients
 test_that("Basic haplo.glm anova and glm coefficients", {
-  expect_equal(anova.hlagaus, expected=anova.inter, tolerance=1e-3)
+  expect_equal(coeff.hla.gender, expected=coeffgender, tolerance=1e-3)
   expect_equal(coeff.hla.inter, expected=coeffinter, tolerance=1e-3)
   })
 

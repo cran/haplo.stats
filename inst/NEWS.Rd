@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.8.5}{
+  \itemize{
+    \item updated to testthat mechanisms to allow for tolerance
+    differences
+    \item take out linpack option in the svd call within Ginv().
+    \item embed use manual into vignette.
+    \item expanded haplo.cc to allow covariates as done in haplo.score
+    with x.adj matrix
+  }
+}
 \section{Changes in version 1.7.9}{
   \itemize{
     \item Updated parenthesis in if() statement of seqhap.c

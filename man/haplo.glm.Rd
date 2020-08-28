@@ -63,7 +63,7 @@ weights to update the regression coefficients, and the regression
 coefficients used to update the posterior probabilities.
 }
 \usage{
-haplo.glm(formula=formula(data), family=gaussian, data=sys.parent(),
+haplo.glm(formula=formula(data), family=gaussian, data=parent.frame(),
            weights, na.action="na.geno.keep", start=NULL, 
            locus.label=NA, control=haplo.glm.control(), 
            method="glm.fit", model=TRUE, x=FALSE, y=TRUE, 

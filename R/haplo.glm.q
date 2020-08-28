@@ -78,7 +78,7 @@
 
 haplo.glm  <- function(formula = formula(data),
                        family = gaussian, 
-                       data = sys.parent(),
+                       data = parent.frame(),
                        weights,
                        na.action="na.geno.keep",
                        start=NULL,
@@ -121,7 +121,7 @@ haplo.glm  <- function(formula = formula(data),
     frame.call$na.action=as.list(args(haplo.glm))$na.action
   
   # evaluate the call
-  m <- eval(frame.call, sys.parent())
+  m <- eval(frame.call, parent.frame())
 
   Terms <- attr(m, "terms")
 
