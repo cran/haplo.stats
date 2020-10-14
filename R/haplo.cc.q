@@ -38,9 +38,10 @@ haplo.cc <- function(y, geno, x.adj=NA, locus.label=NA, ci.prob=0.95,
                   " removed for missing y or all alleles missing."))
     geno <- geno[-exclude,,drop=FALSE]
     y <- y[-exclude]
-    if(!all(is.na(x.adj)))
+    if(!all(is.na(x.adj))) {
       x.adj <- as.matrix(x.adj)
       x.adj <- x.adj[-exclude,,drop=FALSE]
+    } 
   }
 
   if(is.null(control$em.control$iseed)) {

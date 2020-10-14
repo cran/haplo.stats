@@ -1,4 +1,4 @@
-189127ec9336d2fde536c209ee5a54c8 *DESCRIPTION
+c332e10b07f0997894a977d35e223ec5 *DESCRIPTION
 148cd7ca49bbec4e13196fdd5986324d *NAMESPACE
 e8c5d27eab400e1c1faa48dc31466053 *R/Ginv.R
 dd3dbda43c57931ca381e580f02bcdca *R/anova.haplo.glm.q
@@ -10,7 +10,7 @@ e25d932260f95f734c3d44e876b2c282 *R/find.haplo.beta.qt.q
 b5dda9e515218788c391762993f80de2 *R/geno1to2.q
 eb53f16706da9d96b3a794bd15119b35 *R/get.hapPair.q
 17f0e7fff27e71366aeafa44002c50d1 *R/haplo.binomial.R
-50461b6bf26a5f90069ab2528c79be4a *R/haplo.cc.q
+8d5f3209e2fc5b2784c019e6d38e3f5e *R/haplo.cc.q
 6647804e93266e284a41584ea2145d9a *R/haplo.chistat.q
 3b37072ec8e4924832839938b3f854ab *R/haplo.design.q
 4f67d80da32cc77d20cd61094109284c *R/haplo.em.control.q
@@ -73,7 +73,7 @@ bb38d8e5a3d0917f36de78cc6b0c9f99 *data/seqhap.pos.tab.gz
 d368405f1c604912f51ba286eed9944a *inst/doc/GPL.txt
 27bf59c2a37bff07a78c9730061e532b *inst/doc/LICENSE.mayo
 2bb9d322fe512aa29e056ca74f24b67c *inst/doc/haplostats.Rnw
-06b831513ac263da76fca3409ff7c82a *inst/doc/haplostats.pdf
+337ae88e64641d6c6b4f635cbe713488 *inst/doc/haplostats.pdf
 2413e1f391f3cee0b780a174df883c95 *inst/doc/manualHaploStats.pdf.asis
 4b1e3869e6d210fe5b94b8cafadc3cb7 *inst/doc/manualHaploStats.rnwsave
 10ae00dab9c8f986bf5b6c64eef98521 *man/Ginv.Rd
