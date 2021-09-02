@@ -33,6 +33,7 @@
 #include <math.h>
 #include <string.h>
 #include <R.h>
+#include <R_ext/Error.h>
 
 static double **double_vec_to_mat(double *Yvec, int nrow, int ncol);
 static double **double_matrix(int nrow, int ncol);
@@ -461,8 +462,10 @@ static void errmsg(char *string){
 
   /* Function to emulate "stop" of S+ - see page 134, S Programing, by
      Venables and Ripley */
-
-   PROBLEM "%s", string RECOVER(NULL_ENTRY);
+  /* replace problem with Rf_error for 4.1.x
+     PROBLEM "%s", string RECOVER(NULL_ENTRY);
+  */
+  Rf_error(string);
 }
 
 

@@ -1,4 +1,4 @@
-c332e10b07f0997894a977d35e223ec5 *DESCRIPTION
+36095865d065b966d73378a09f961646 *DESCRIPTION
 148cd7ca49bbec4e13196fdd5986324d *NAMESPACE
 e8c5d27eab400e1c1faa48dc31466053 *R/Ginv.R
 dd3dbda43c57931ca381e580f02bcdca *R/anova.haplo.glm.q
@@ -64,7 +64,7 @@ b9d82ad608c6eb8dcb8633f0c8af25d9 *R/residScaledGlmFit.q
 a030452a0250f7d1003029e33aed5813 *R/x.sexcheck.q
 118ae8ba1c9a51017cd121ac33606ac6 *R/zzz.haplo.stats.R
 5b91c4da7ebc4d917582e24fc5d664c1 *README.md
-b82b4a417441299c41f85fddf41ba7de *build/vignette.rds
+61d6ea1e3670df305a060a9684ad6108 *build/vignette.rds
 1dd590a772664a4981a9fd6a1502e336 *data/hapPower.demo.tab.gz
 6845c2953772c2e671e2e4ab94188ac9 *data/hla.demo.tab.gz
 2ef2670db0175457b501347944d6c47c *data/seqhap.dat.tab.gz
@@ -73,7 +73,7 @@ bb38d8e5a3d0917f36de78cc6b0c9f99 *data/seqhap.pos.tab.gz
 d368405f1c604912f51ba286eed9944a *inst/doc/GPL.txt
 27bf59c2a37bff07a78c9730061e532b *inst/doc/LICENSE.mayo
 2bb9d322fe512aa29e056ca74f24b67c *inst/doc/haplostats.Rnw
-337ae88e64641d6c6b4f635cbe713488 *inst/doc/haplostats.pdf
+c6b10001e22d45d0125cf2176a14f32b *inst/doc/haplostats.pdf
 2413e1f391f3cee0b780a174df883c95 *inst/doc/manualHaploStats.pdf.asis
 4b1e3869e6d210fe5b94b8cafadc3cb7 *inst/doc/manualHaploStats.rnwsave
 10ae00dab9c8f986bf5b6c64eef98521 *man/Ginv.Rd
@@ -131,9 +131,9 @@ d1cfb119490d981c6a87139f300a2e64 *man/summary.haplo.em.Rd
 03e1d61ee4c2c81c306a08fa00f86e92 *man/x.sexcheck.Rd
 13955bba60467a8f8bb9ae0ace29f3e4 *src/groupsum.c
 66db9d129ba489b97d3c0fb81cd7ea29 *src/haplo.stats_init.c
-e65fb3a41dda5bad22a4eca7e3768330 *src/haplo_em_pin.c
+cc8d87d2ff8bc6408ac033430d5d9566 *src/haplo_em_pin.c
 55c60fb632f1f32c26c983f1c78f7baf *src/haplo_em_pin.h
-77b64793b5317368e476ba0b17459884 *src/louis_info.c
+4eb43a647f0e4e6b56bccf1976f0be1b *src/louis_info.c
 0f2bd7386b20d6803eed83e0b163a844 *src/seqhap.c
 6f59f054e8161ced7c337e71e5ce7aaf *tests/expanded/dump.varx.s
 6151dce21da5657935a969fb8a6e29f5 *tests/expanded/snap.sim.phased.dat

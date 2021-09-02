@@ -42,7 +42,8 @@
 #include <math.h>
 #include <string.h>
 #include <limits.h>
-#include <R.h>  
+#include <R.h> 
+#include <R_ext/Error.h>
 #include "haplo_em_pin.h"
 
 
@@ -285,29 +286,32 @@ void haplo_em_pin(
 
      } /* end of EM loop */
 
-      if( (*converge)==0){
-        PROBLEM "failed to converge for batch %i after %i iterations", n_batch, n_iter
-		RECOVER(NULL_ENTRY);
-      }
+    if( (*converge)==0){        
+      /* Replaced with call to REprintf for 4.1.x  
+	 PROBLEM "failed to converge for batch %i after %i iterations", n_batch, n_iter
+	 RECOVER(NULL_ENTRY);
+      */
+      REprintf("failed to converge for batch %i after %i iterations", n_batch, n_iter);
+    }
 
 
-       divideKeep(hap_list, n_hap, &len_hap_list);
-       n_hap = len_hap_list;
+    divideKeep(hap_list, n_hap, &len_hap_list);
+    n_hap = len_hap_list;
 
 
-       if(*verbose){
-	 REprintf("\nhap_list after EM and after divideKeep \n\n",n_trim);
-	 write_hap_list(hap_list, n_hap);
-       }
+    if(*verbose){
+      REprintf("\nhap_list after EM and after divideKeep \n\n",n_trim);
+      write_hap_list(hap_list, n_hap);
+    }
      
    
-      /* update priors, in case haplos were trimmed during posteior calculations */
-
-      hap_prior(n_hap, hap_list, prior, n_u_hap, *min_prior); 
-
-      if(*verbose){
-        if( (*converge)==1){
-          REprintf("\n\nConverged after batch insertion, lnlike = %8.5f, n_iter = %i\n\n", lnlike, n_iter);
+    /* update priors, in case haplos were trimmed during posteior calculations */
+    
+    hap_prior(n_hap, hap_list, prior, n_u_hap, *min_prior); 
+    
+    if(*verbose){
+      if( (*converge)==1){
+	REprintf("\n\nConverged after batch insertion, lnlike = %8.5f, n_iter = %i\n\n", lnlike, n_iter);
         }
       }
 
@@ -1153,7 +1157,10 @@ static void errmsg(char *string){
   /* Function to emulate "stop" of S+ - see page 134, S Programing, by
      Venables and Ripley */
 
-   PROBLEM "%s", string RECOVER(NULL_ENTRY);
+  /* PROBLEM "%s", string RECOVER(NULL_ENTRY);
+     Replace with call to Rf_error for R 4.1.x 
+  */
+  Rf_error(string);
 }
 
 
