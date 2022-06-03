@@ -1,6 +1,6 @@
 Package: haplo.stats
-Version: 1.8.7
-Date: 2021-08-27
+Version: 1.8.9
+Date: 2022-06-02
 Title: Statistical Analysis of Haplotypes with Traits and Covariates
         when Linkage Phase is Ambiguous
 Author: Sinnwell JP, Schaid DJ
@@ -13,6 +13,6 @@ Suggests: R.rsp, testthat
 VignetteBuilder: R.rsp
 URL: https://analytictools.mayo.edu/research/haplo-stats/
 NeedsCompilation: yes
-Packaged: 2021-08-27 21:24:21 UTC; sinnwell
+Packaged: 2022-06-02 12:03:03 UTC; sinnwell
 Repository: CRAN
-Date/Publication: 2021-09-02 14:50:31 UTC
+Date/Publication: 2022-06-03 08:50:02 UTC

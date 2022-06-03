@@ -38,7 +38,7 @@ x.sexcheck <- function(x,sex,stop=FALSE) {
     return(TRUE)
   }
   
-  if (class(x)!="model.matrix") {
+  if (!("model.matrix" %in% class(x))) {
     warning("argument x must be of class locus")
     return(TRUE)
   }

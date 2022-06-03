@@ -84,7 +84,7 @@ list of control parameters for haplo.em (see haplo.em.control).
 }
 }
 \value{
-\item{ }{
+\item{list}{
 A list as an object of the haplo.group class.  The three
 elements of the list are described below.
 }

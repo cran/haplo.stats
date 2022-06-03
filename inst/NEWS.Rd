@@ -1,6 +1,6 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
-\section{Changes in version 1.8.5}{
+\section{Changes in version 1.8.7}{
   \itemize{
     \item updated to testthat mechanisms to allow for tolerance
     differences
@@ -8,6 +8,7 @@
     \item embed use manual into vignette.
     \item expanded haplo.cc to allow covariates as done in haplo.score
     with x.adj matrix
+    \item removed PROBLEM S-macro in C code for R 4.1.x checks.
   }
 }
 \section{Changes in version 1.7.9}{
