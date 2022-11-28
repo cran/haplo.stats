@@ -165,23 +165,22 @@ haplo.glm(formula=formula(data), family=gaussian, data=parent.frame(),
   component.
   
   These expanded components may need to be collapsed, depending on the
-  user's objectives. For example, when considering the influence of 
+  objective of the user. For example, when considering the influence of 
   an observation, it may make sense to examine the expanded residuals
   for a single observation, perhaps plotted against the haplotypes
   for that observation. In contrast, it would not be sensible to plot
-  all residuals against non-genetic covaraites, without first
+  all residuals against non-genetic covariates, without first
   collapsing the expanded residuals for each observation. To collapse,
   one can use the average residual per observation, weighted according
   to the posterior probabilities. The appropriate weight can be
-  computed as wt = fit\$weight.expanded * fit\$haplo.post.info\$post.
+  computed as wt = weight.expanded * haplo.post.info[[post]].
   Then, the weighted average can be calculated as
-  tapply(fit\$residuals * wt, fit\$haplo.post.info\$indx, sum).
+  with(fit, tapply(residuals * wt, haplo.post.info[["indx"]], sum).
 
 \item{coefficients}{
 the coefficients of the linear.predictors, which multiply the
   columns of the model matrix. The names of the coefficients are
-  the names of the columns
-  of the model matrix. For haplotype coefficients, the names
+  the names of the column of the model matrix. For haplotype coefficients, the names
   are the concatentation of name of the geno matrix with a haplotype
   number. The haplotype number corresponds to the index of the
   haplotype. The default print will show the coefficients with haplotype
@@ -280,7 +279,7 @@ the data.frame of unique haplotypes
 \item{haplo.base}{
 the index of the haplotype used as the base-line for the regression
   model. To see the actual haplotype definition, use the following: 
-  fit\$haplo.unique[fit\$haplo.base,], where fit is the saved haplo.glm
+  with(fit, haplo.unique[haplo.base,]), where fit is the saved haplo.glm
   object (e.g., fit <- haplo.glm(y ~ geno, ...) ).
 }
 \item{haplo.freq}{
@@ -289,7 +288,7 @@ the final estimates of haplotype frequencies, after completing EM
   The length of haplo.freq is the number of rows of haplo.unique, and
   the order of haplo.freq is the same as that for the rows of
   haplo.unique. So, the frequencies of the unique haplotypes can be 
-  viewed as cbind(fit\$haplo.unique, fit\$haplo.freq).
+  viewed as with(fit, cbind(haplo.unique, haplo.freq)).
 }
 \item{haplo.freq.init}{
 the initial estimates of haplotype frequencies, based on the EM
@@ -321,7 +320,7 @@ a data.frame of information regarding the posterior
   indx will show m replicates of i; hence, indx will correspond to the
   "expanded" observations); hap1 and hap2 (the indices of the
   haplotypes; if hap1=j and hap2=k, then the two haplotypes in terms
-  of alleles are fit\$haplo.unique[j,] and fit\$haplo.unique[k,]);
+  of alleles are haplo.unique[j,] and haplo.unique[k,] from the fitted object);
   post.init (the initial posterior probability, based on
   haplo.freq.init); post (the final posterior probability, based on
   haplo.freq).

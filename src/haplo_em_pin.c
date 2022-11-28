@@ -1,11 +1,5 @@
 /* $Author: sinnwell $ */
-/* $Date: 2013/01/14 19:10:42 $ */
-/* $Header: /projects/genetics/cvs/cvsroot/haplo.stats/src/haplo_em_pin.c,v 1.18 2013/01/14 19:10:42 sinnwell Exp $ */
-/* $Locker:  $ */
-/*
- * $Log:
-*/
-/*
+/* $Date: 2013/01/14 19:10:42 $ 
 *License: 
 *
 *Copyright 2003 Mayo Foundation for Medical Education and Research. 
@@ -27,7 +21,7 @@
 *
 *Daniel J. Schaid, Ph.D.
 *Division of Biostatistics
-*Harwick Building û Room 775
+*Harwick Building Room 775
 *Mayo Clinic
 *200 First St., SW
 *Rochester, MN 55905
@@ -46,9 +40,7 @@
 #include <R_ext/Error.h>
 #include "haplo_em_pin.h"
 
-
 /* Progressive insertion of loci into haplotypes with EM algorithm */
-
 
 /*************** Global vars ******************************************************/
 
@@ -106,7 +98,6 @@ void haplo_em_pin(
 
   HAP **hap_list;     /* List of all haplotypes = array of pointers to hap structs */
   HAPUNIQUE **u_hap_list;   /* List of unique haplotypes */
-  HAP *h1, *h2;
 
   /* convert from S vecs to  C structures */
 
@@ -300,7 +291,7 @@ void haplo_em_pin(
 
 
     if(*verbose){
-      REprintf("\nhap_list after EM and after divideKeep \n\n",n_trim);
+      /*REprintf("\nhap_list after EM and after divideKeep \n\n",n_trim);*/
       write_hap_list(hap_list, n_hap);
     }
      
@@ -1140,7 +1131,7 @@ static int ranAS183_seed(int iseed1, int iseed2, int iseed3)
 
 /***********************************************************************************/
 
-static double ranAS183()
+static double ranAS183(void)
 {
    double u;
 

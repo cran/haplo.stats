@@ -10,8 +10,7 @@
   Build a design matrix for haplotypes
 }
 \description{
-Build a design matrix for haplotypes estimated from a haplo.em
-object. 
+Build a design matrix for haplotypes estimated from a haplo.em object. 
 }
 \usage{
 haplo.design(obj, haplo.effect="additive", hapcodes=NA, min.count=5, haplo.base=NA)
@@ -30,7 +29,7 @@ respectively).
 }
 \item{hapcodes}{
 codes assigned in haplo.em, corresponding to the row numbers in the
-obj\$haplotypes matrix
+haplotypes matrix item in \code{obj}
 }
 \item{min.count }{
 The minimum number of estimated counts of the haplotype in the sample
@@ -39,7 +38,8 @@ in order for a haplotype to be included in the design matrix.
 \item{haplo.base }{
 code for which haplotype will be the reference group, or to be
 considered the baseline of a model.  The code is the row number of the
-obj\$haplotypes matrix. This haplotype is removed from the design matrix.
+\code{haplotypes} matrix in \code{obj}. This haplotype is removed from
+the design matrix.
 }
 }
 \value{

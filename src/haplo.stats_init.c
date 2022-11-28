@@ -19,7 +19,7 @@ extern void checkIntMax(void *);
 extern void groupsum(void *, void *, void *, void *, void *);
 extern void haplo_em_pin(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void haplo_em_ret_info(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-extern void haplo_free_memory();
+extern void haplo_free_memory(void);
 extern void louis_info(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void seqhapC(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 
@@ -30,7 +30,7 @@ static const R_CMethodDef CEntries[] = {
     {"haplo_em_ret_info", (DL_FUNC) &haplo_em_ret_info, 10},
     {"haplo_free_memory", (DL_FUNC) &haplo_free_memory,  0},
     {"louis_info",        (DL_FUNC) &louis_info,        15},
-    {"seqhapC",            (DL_FUNC) &seqhapC,            31},
+    {"seqhapC",           (DL_FUNC) &seqhapC,           31},
     {NULL, NULL, 0}
 };
 

@@ -14,9 +14,9 @@
 /*ranAS183_seed reads three random seeds*/
 static int ranAS183_seed(int, int, int);
 /*ranAS183 generates random values*/
-static double ranAS183();
+static double ranAS183(void);
 /*redefine haplotype memberships for a subset of SNPs from a set of SNPs*/
-static int creatsubhap();
+static int creatsubhap(void);
 /*calculate the chi^2 statistics for a 2-by-h table*/
 static double chisq2h(int *);
 /*calculate a Mantel-Haenszel statistic*/
@@ -97,17 +97,21 @@ void seqhapC(
   nhap = *nhap_c;
   haplo_freq_min = *haplo_freq_min_c;
 
-  FILE *fp;
-  int nperm, si, i, j, k;
+  int si, i, j, k;
   double chi_stat0i[nsnp], chi_max=0, chi_max0=0, chi_pi[nsnp], chi_p=0,
     hap_stat0i[nsnp], hap_min=1, hap_min0=1, hap_pi[nsnp], hap_p=0,
     sum_stat0i[nsnp], sum_min=1, sum_min0=1, sum_pi[nsnp], sum_p=0; 
+
   for(i=0; i<nsnp; i++){
-    chi_pi[i]=0; hap_pi[i]=0; sum_pi[i]=0;}
+    chi_pi[i]=0; hap_pi[i]=0; sum_pi[i]=0;
+  }
 
   int seed[3];
+
   for(i=0; i<3; i++) seed[i]=seed_c[i];
-  double ran1();
+
+  /* double ran1(); */
+
   ranAS183_seed(seed[0],seed[1],seed[2]);
 
   haplist = (int **) malloc (nhap *sizeof (int *));
@@ -207,8 +211,6 @@ void seqhapC(
   N_PERM = 0;
   while(!doneperm) {  /* while() used to keep permuting until p-threshold met -JPS*/
 
-  /*  for(nperm=0; nperm<N_PERM; nperm++)  { */  
-
       /*permute disease status*/
       for(i=0; i<nsub; i++)
 	perm_rand[i]=ranAS183();
@@ -289,141 +291,130 @@ void seqhapC(
 }
 
 /*search for the list of SNPs to be combined to SNP si*/
-static double combine(int *d, int si, int k)
-{
+static double combine(int *d, int si, int k) {
   int j, flagl, flagr;
   double mh_sum=0, mh_tmp;
-	  if(si-k>=0 && si+k<nsnp)
-	    if(pos[si]-pos[si-k] > pos[si+k]-pos[si])
-	      {
-		/*check si+k*/
-		flagr=1;
-		if(r2test(si, si+k)<r2_threshold) /*if ">=", keep growing on the right direction, but do not add si+k to inlist*/
-		  {
-		    for(j=0; j<npost; j++)
-		      {
-			newhap1codesingle[j] = haplist[hap1code[j]-1][si+k];
-			newhap2codesingle[j] = haplist[hap2code[j]-1][si+k];
-		      }
-		    mh_tmp=mantel(d); /*calculate the MH statistic*/
-		    if(mh_tmp>mh_threshold){
-		      mh_sum=mh_sum + mh_tmp; 
-		      inlist_length++;
-		      inlist[inlist_length-1]=si+k;
-		      newnhap=creatsubhap();}
-		    else flagr=0;
-		  }
-
-		/*if r2>r2_threshold, do NOT add si+k into inlist, but continue search;
-		  if r2<r2_threshold && mh_tmp>mh_threshold, add si+k into inlist;
-		  if r2<r2_threshold && mh_tmp<mh_threshold, do NOT add si+k into inlist,
-  		  but continue search*/
-
-		/*check si-k */
-		flagl=1;
-		if(r2test(si,si-k)<r2_threshold) /*if ">=", keep growing on the left direction, but do not add si-k to inlist*/
-		  {
-		    for(j=0; j<npost; j++)
-		      {
-			newhap1codesingle[j] = haplist[hap1code[j]-1][si-k];
-			newhap2codesingle[j] = haplist[hap2code[j]-1][si-k];
-		      }
-		    mh_tmp=mantel(d);
-		    if(mh_tmp>mh_threshold){
-		      mh_sum=mh_sum + mh_tmp;
-		      inlist_length++;
-		      inlist[inlist_length-1]=si-k;
-		      newnhap=creatsubhap();}
-		    else flagl=0;
-		  }
-
-		if(flagl!=1 && flagr!=1) flag=0; /* if either direction is kept for growing, stop*/
-	      }
-	    else
-	      {
-		/*check si-k*/
-		flagl=1;
-		if(r2test(si,si-k)<r2_threshold) 
-		  {
-		    for(j=0; j<npost; j++)
-		      {
-			newhap1codesingle[j] = haplist[hap1code[j]-1][si-k];
-			newhap2codesingle[j] = haplist[hap2code[j]-1][si-k];
-		      }
-		    mh_tmp=mantel(d);
-		    if(mh_tmp>mh_threshold){
-		      mh_sum=mh_sum + mh_tmp;
-		      inlist_length++;
-		      inlist[inlist_length-1]=si-k;
-		      newnhap=creatsubhap();}
-		    else flagl=0;
-		  }
-
-		/*check si+k */
-		flagr=1;
-		if(r2test(si, si+k)<r2_threshold) 
-		  {
-		    for(j=0; j<npost; j++)
-		      {
-			newhap1codesingle[j] = haplist[hap1code[j]-1][si+k];
-			newhap2codesingle[j] = haplist[hap2code[j]-1][si+k];
-		      }
-		    mh_tmp=mantel(d);
-		    if(mh_tmp>mh_threshold){
-		      mh_sum=mh_sum + mh_tmp;
-		      inlist_length++;
-		      inlist[inlist_length-1]=si+k;
-		      newnhap=creatsubhap();}
-		    else flagr=0;
-		  }
-
-		if(flagl!=1 && flagr!=1) flag=0;/*if neither direction is kept for growing, stop*/
-	      }
-
-	  if(si-k<0 && si+k<nsnp)
-	    {
-	      /*check si+k*/
-	      flagr=1;
-	      if(r2test(si, si+k)<r2_threshold) 
-		{
-		  for(j=0; j<npost; j++)
-		    {
-		      newhap1codesingle[j] = haplist[hap1code[j]-1][si+k];
-		      newhap2codesingle[j] = haplist[hap2code[j]-1][si+k];
-		    }
-		  mh_tmp=mantel(d);
-		  if(mh_tmp>mh_threshold){
-		    mh_sum=mh_sum + mh_tmp;
-		    inlist_length++;
-		    inlist[inlist_length-1]=si+k;
-		    newnhap=creatsubhap();}
-		  else flagr=0;
-		}
-	      if(flagr!=1) flag=0;
-	    }
-	  if(si+k>=nsnp && si-k>0)
-	    {
-	      /*check si-k*/
-	      flagl=1;
-	      if(r2test(si, si-k)<r2_threshold) 
-		{
-		  for(j=0; j<npost; j++)
-		    {
-		      newhap1codesingle[j] = haplist[hap1code[j]-1][si-k];
-		      newhap2codesingle[j] = haplist[hap2code[j]-1][si-k];
-		    }
-		  mh_tmp=mantel(d);
-		  if(mh_tmp>mh_threshold){
-		    mh_sum=mh_sum + mh_tmp;
-		    inlist_length++;
-		    inlist[inlist_length-1]=si-k;
-		    newnhap=creatsubhap();}
-		  else flagl=0;
-		}
-	      if(flagl!=1) flag=0;
-	    }
-	  return(mh_sum);
+  if( ((si - k) >= 0) && ((si + k) < nsnp)) {
+    if(pos[si] - pos[si-k] > pos[si+k] - pos[si]) {
+      /*check si+k*/
+      flagr=1;
+      if(r2test(si, si+k)<r2_threshold)  {
+	/*if ">=", keep growing on the right direction, but do not add si+k to inlist*/
+	
+	for(j=0; j<npost; j++) {
+	  newhap1codesingle[j] = haplist[hap1code[j]-1][si+k];
+	  newhap2codesingle[j] = haplist[hap2code[j]-1][si+k];
+	}
+	mh_tmp=mantel(d); /*calculate the MH statistic*/
+	if(mh_tmp > mh_threshold) {
+	  mh_sum=mh_sum + mh_tmp; 
+	  inlist_length++;
+	  inlist[inlist_length-1]=si+k;
+	  newnhap=creatsubhap();
+	}
+	else flagr=0;
+      }
+      
+      /*if r2>r2_threshold, do NOT add si+k into inlist, but continue search;
+	if r2<r2_threshold && mh_tmp>mh_threshold, add si+k into inlist;
+	if r2<r2_threshold && mh_tmp<mh_threshold, do NOT add si+k into inlist,
+	but continue search*/
+      
+      /*check si-k */
+      flagl=1;
+      if(r2test(si,si-k)<r2_threshold) {
+	/*if ">=", keep growing on the left direction, but do not add si-k to inlist*/
+	for(j=0; j<npost; j++)  {
+	  newhap1codesingle[j] = haplist[hap1code[j]-1][si-k];
+	  newhap2codesingle[j] = haplist[hap2code[j]-1][si-k];
+	}
+	mh_tmp=mantel(d);
+	if(mh_tmp > mh_threshold) {
+	  mh_sum=mh_sum + mh_tmp;
+	  inlist_length++;
+	  inlist[inlist_length-1]=si-k;
+	  newnhap=creatsubhap();
+	}
+	else flagl=0;
+      }
+      
+      if(flagl!=1 && flagr!=1) flag=0; /* if either direction is kept for growing, stop*/
+    }  else {
+      /*check si-k*/
+      flagl=1;
+      if(r2test(si,si-k)<r2_threshold) {
+	for(j=0; j<npost; j++) {
+	  newhap1codesingle[j] = haplist[hap1code[j]-1][si-k];
+	  newhap2codesingle[j] = haplist[hap2code[j]-1][si-k];
+	}
+	mh_tmp=mantel(d);
+	if(mh_tmp>mh_threshold) {
+	  mh_sum=mh_sum + mh_tmp;
+	  inlist_length++;
+	  inlist[inlist_length-1]=si-k;
+	  newnhap=creatsubhap();
+	} else flagl=0;
+      }
+      
+      /*check si+k */
+      flagr=1;
+      if(r2test(si, si+k)<r2_threshold) {
+	for(j=0; j<npost; j++) {
+	  newhap1codesingle[j] = haplist[hap1code[j]-1][si+k];
+	  newhap2codesingle[j] = haplist[hap2code[j]-1][si+k];
+	}
+	mh_tmp=mantel(d);
+	if(mh_tmp>mh_threshold){
+	  mh_sum=mh_sum + mh_tmp;
+	  inlist_length++;
+	  inlist[inlist_length-1]=si+k;
+	  newnhap=creatsubhap();
+	} else flagr=0;
+      }
+      
+      if(flagl!=1 && flagr!=1) flag=0;/*if neither direction is kept for growing, stop*/
+    }
+    
+    if(si-k<0 && si+k<nsnp) {
+      /*check si+k*/
+      flagr=1;
+      if(r2test(si, si+k)<r2_threshold) {
+	for(j=0; j<npost; j++) {
+	  newhap1codesingle[j] = haplist[hap1code[j]-1][si+k];
+	  newhap2codesingle[j] = haplist[hap2code[j]-1][si+k];
+	}
+	mh_tmp=mantel(d);
+	if(mh_tmp>mh_threshold){
+	  mh_sum=mh_sum + mh_tmp;
+	  inlist_length++;
+	  inlist[inlist_length-1]=si+k;
+	  newnhap=creatsubhap();}
+	else flagr=0;
+      }
+      if(flagr!=1) flag=0;
+    }
+    if(si+k>=nsnp && si-k>0)  {
+      /*check si-k*/
+      flagl=1;
+      if(r2test(si, si-k)<r2_threshold) {
+	for(j=0; j<npost; j++)   {
+	  newhap1codesingle[j] = haplist[hap1code[j]-1][si-k];
+	  newhap2codesingle[j] = haplist[hap2code[j]-1][si-k];
+	}
+	mh_tmp=mantel(d);
+	if(mh_tmp>mh_threshold){
+	  mh_sum=mh_sum + mh_tmp;
+	  inlist_length++;
+	  inlist[inlist_length-1]=si-k;
+	  newnhap=creatsubhap();}
+	else flagl=0;
+      }
+      if(flagl!=1) flag=0;
+    }
+  }
+  return(mh_sum);
 }
+
 
 /*permute disease status*/
 static void permute(int *nondup_disease, double *perm_rand, int *perm_disease)
@@ -476,7 +467,7 @@ static double r2test(int site1, int site2)
 /*calculate the Mantel-Haenszel statistic for */
 static double mantel(int *d)
 {
-  int i,j;
+  int i;
   double mh_stat=0, maxcount=0, num=0, denom=0, n00[newnhap], n0plus[newnhap], 
     n1plus[newnhap], nplus0[newnhap],nplus1[newnhap], ntotal[newnhap], n=0;
   /*initialize*/
@@ -567,7 +558,7 @@ static double chisq2h(int *d)
 {
   double n0[newnhap], n1[newnhap], n0sum=0, n1sum=0, nhapsum[newnhap];
   double en0[newnhap], en1[newnhap], ntotal=0, chi2h_stat=0;
-  int i, j;
+  int i;
 
   /*initialize*/
   for(i=0; i<newnhap; i++)
@@ -624,7 +615,7 @@ static double chisq2h(int *d)
 }
 
 /*the creatsubhap function identifies the subhaplotypes for a chosen set of loci*/
-static int creatsubhap()
+static int creatsubhap(void)
 {
   int i, j, a, duplicated[nhap];
   newnhap =0;
@@ -664,9 +655,7 @@ static int creatsubhap()
       newhap1code[i] = newhapcode[hap1code[i]-1];
       newhap2code[i] = newhapcode[hap2code[i]-1];
     }
-
   return(newnhap);
-
 }
 
 /*the pchisq function calculates the cumulative distribution function of 
@@ -749,38 +738,31 @@ void gcf(double *gammcf, double a, double x, double *gln)
 #define ITMAX 100
 #define EPS 3.0e-7
 
-void gser (double *gamser, double a, double x, double *gln)
-{
+void gser (double *gamser, double a, double x, double *gln) {
 	double gammln(double xx);
-/*
-	void nrerror(char error_text[]);
-*/
+
 	int n;
 	double sum,del,ap;
 
 	*gln=gammln(a);
 	if (x <= 0.0) {
-/*
-		if (x < 0.0) nrerror("x less than 0 in routine gser");
-*/
-		*gamser=0.0;
-		return;
+	  
+	  *gamser=0.0;
+	  return;
 	} else {
-		ap=a;
-		del=sum=1.0/a;
-		for (n=1;n<=ITMAX;n++) {
-			++ap;
-			del *= x/ap;
-			sum += del;
-			if (fabs(del) < fabs(sum)*EPS) {
-				*gamser=sum*exp(-x+a*log(x)-(*gln));
-				return;
-			}
-		}
-/*
-		nrerror("a too large, ITMAX too small in routine gser");
-*/
-		return;
+	  ap=a;
+	  del=sum=1.0/a;
+	  for (n=1;n<=ITMAX;n++) {
+	    ++ap;
+	    del *= x/ap;
+	    sum += del;
+	    if (fabs(del) < fabs(sum)*EPS) {
+	      *gamser=sum*exp(-x+a*log(x)-(*gln));
+	      return;
+	    }
+	  }
+	  
+	  return;
 	}
 }
 #undef ITMAX
@@ -804,8 +786,7 @@ static int ranAS183_seed(int iseed1, int iseed2, int iseed3) {
 
 /***********************************************************************************/
 
-static double ranAS183()
-{
+static double ranAS183(void) {
    double u;
 
    ix = (171*ix) % 30269;
