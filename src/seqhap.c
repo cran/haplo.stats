@@ -633,8 +633,8 @@ static int creatsubhap(void)
 	while(j<i && duplicated[i]==0)
 	  {
 	    for(a=0; a<inlist_length; a++){
-	      sprintf(&temp1[a], "%d", haplist[i][inlist[a]]);
-	      sprintf(&temp2[a], "%d", haplist[j][inlist[a]]);}
+	      snprintf(&temp1[a], inlist_length, "%d", haplist[i][inlist[a]]);
+	      snprintf(&temp2[a], inlist_length, "%d", haplist[j][inlist[a]]);}
 	    if(strncmp(temp1, temp2,inlist_length)==0) 
 	      {
 		duplicated[i] = 1;
