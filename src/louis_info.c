@@ -465,7 +465,7 @@ static void errmsg(char *string){
   /* replace problem with Rf_error for 4.1.x
      PROBLEM "%s", string RECOVER(NULL_ENTRY);
   */
-  Rf_error(string);
+  Rf_error(string, "%s");
 }
 
 

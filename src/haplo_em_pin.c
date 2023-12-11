@@ -233,7 +233,7 @@ void haplo_em_pin(
      qsort(hap_list, n_hap, sizeof(HAP *), cmp_subId_hapPairId);
 
     if(*verbose){
-      REprintf("\nhap_list after code haplo, before EM\n\n",n_batch);
+      REprintf("\nhap_list: %4i after code haplo, before EM\n",n_batch);
       write_hap_list(hap_list, n_hap);
     }
 
@@ -255,7 +255,7 @@ void haplo_em_pin(
       if(*verbose){
         REprintf("\nprior probabilities\n\n");
         write_prior(n_u_hap, prior);
-        REprintf("\nhap_list after compute posterior (n_trim = %ld))\n\n",n_trim);
+        REprintf("\nhap_list after compute posterior (n_trim = %d))\n\n",n_trim);
         write_hap_list(hap_list, n_hap);
         REprintf("     iter = %3i, max_iter=%3i, lnlike = %f\n",iter, *max_iter, lnlike);
       }
@@ -338,7 +338,7 @@ void haplo_em_pin(
   unique_haps(n_hap, hap_list, u_hap_list, prior);
 
   if(*verbose){
-    REprintf("\nn_u_hap = %ld\n",n_u_hap);
+    REprintf("\nn_u_hap = %d\n",n_u_hap);
     REprintf("\nunique haps\n\n"); 
     write_unique_hap_list(u_hap_list, n_u_hap); 
   }
@@ -416,15 +416,15 @@ static void write_hap_list(HAP** so, int n_hap){
   REprintf("subID     wt hapPairID hapCode keep");
   for(i=0;i<n_loci;i++){
      if(loci_used[i]==0) continue; 
-    REprintf(" L%2ld",i);
+    REprintf(" L%2d",i);
   }
   REprintf("    post\n");
 
   for(i=0; i< n_hap ;i++){
-    REprintf("%5ld %6.4f %9ld %7ld %4i", so[i]->id, so[i]->wt, so[i]->pair_id,so[i]->code,so[i]->keep);
+    REprintf("%5d %6.4f %9d %7d %4i", so[i]->id, so[i]->wt, so[i]->pair_id,so[i]->code,so[i]->keep);
     for(j=0;j<n_loci;j++){
        if(loci_used[j]==0) continue; 
-      REprintf("%4ld",so[i]->loci[j]);
+      REprintf("%4d",so[i]->loci[j]);
     }
 
     REprintf("    %6.4f", so[i]->post);
@@ -440,15 +440,15 @@ static void write_unique_hap_list(HAPUNIQUE** so, int n_hap){
   REprintf("hapCode keep");
   for(i=0;i<n_loci;i++){
      if(loci_used[i]==0) continue; 
-    REprintf(" L%2ld",i);
+    REprintf(" L%2d",i);
   }
   REprintf("  prior\n");
 
   for(i=0; i< n_hap ;i++){
-    REprintf("%6ld %4i",so[i]->code,so[i]->keep);
+    REprintf("%6d %4i",so[i]->code,so[i]->keep);
     for(j=0;j<n_loci;j++){
        if(loci_used[j]==0) continue; 
-      REprintf("%4ld",so[i]->loci[j]);
+      REprintf("%4d",so[i]->loci[j]);
     }
 
     REprintf("    %6.4f", so[i]->prior);
@@ -463,7 +463,7 @@ static void write_prior(int n, double *prior){
 
   REprintf("hapCode  prior\n");
   for(i=0;i<n;i++){
-    REprintf(" %5ld  %6.4f\n", i, prior[i]);
+    REprintf(" %5d  %6.4f\n", i, prior[i]);
   }
 
 }
@@ -1151,7 +1151,7 @@ static void errmsg(char *string){
   /* PROBLEM "%s", string RECOVER(NULL_ENTRY);
      Replace with call to Rf_error for R 4.1.x 
   */
-  Rf_error(string);
+  Rf_error(string, "%s");
 }
 
 

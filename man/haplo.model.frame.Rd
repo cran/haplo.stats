@@ -45,7 +45,7 @@ model.frame from evaluated formula
 labels for loci in genotype matrix
 }
 \item{control}{
-
+control parameters for haplo.glm
 }
 }
 \value{

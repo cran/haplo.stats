@@ -151,7 +151,7 @@ criteria are controlled by score.sim.control. See the note for long run
 times.
 }
 \references{
-  \itemize{
+  \describe{
     \item{Cheng et al-1}{Cheng R, Ma JZ, Wright FA, Lin S, Gau X, Wang
       D, Elston RC, Li MD. "Nonparametric disequilibrium mapping of
       functional sites using haplotypes of multiple tightly linked

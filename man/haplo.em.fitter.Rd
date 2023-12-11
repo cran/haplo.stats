@@ -29,7 +29,6 @@ haplo.em.fitter(n.loci, n.subject, weight, geno.vec, n.alleles,
                 iseed3, verbose)
 }
 \arguments{
-
 \item{n.loci }{
 number of loci in genotype matrix
 }
@@ -64,8 +63,8 @@ order to insert loci for progressive insertion
 \item{insert.batch.size }{
   number of markers to insert per batch
 }
-\item{random.start }{
- 
+\item{random.start}{
+  logical; if TRUE, allow for random starting values of haplotype frequencies 
 }
 \item{iseed1}{
 random seed for algorithm

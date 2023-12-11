@@ -134,16 +134,14 @@ are in reference to the baseline haplotype.  Odds Ratios will change
 if a different baseline is chosen using haplo.glm.control.
 }
 \references{
-  \itemize{
-    \item{Schaid et al}{Schaid DJ, Rowland CM, Tines DE, Jacobson RM,
-      Poland  GA. "Score tests for association of traits with haplotypes
-      when linkage phase is ambiguous." Amer J Hum Genet. 70 (2002):
-      425-434.}
-    \item{Lake et al}{
-      Lake S, LH, Silverman E, Weiss S, Laird N, Schaid DJ.  "Estimation and
-      tests of haplotype-environment interaction when linkage phase is
-      ambiguous". Human Heredity. 55 (2003):  56-65}
-  }
+ \describe{
+  \item{Schaid et al}{Schaid DJ, Rowland CM, Tines DE, Jacobson RM,
+    Poland  GA. Score tests for association of traits with haplotypes
+    when linkage phase is ambiguous. Amer J Hum Genet. 70 (2002): 425-434.}
+  \item{Lake et al}{Lake S, LH, Silverman E, Weiss S, Laird N, Schaid DJ.  Estimation and
+    tests of haplotype-environment interaction when linkage phase is
+    ambiguous. Human Heredity. 55 (2003):  56-65}
+ }
 }
 \seealso{
 \code{\link{haplo.em}},
