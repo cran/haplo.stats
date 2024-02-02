@@ -1,5 +1,5 @@
 Package: haplo.stats
-Version: 1.9.5
+Version: 1.9.5.1
 Date: 2023-12-11
 Title: Statistical Analysis of Haplotypes with Traits and Covariates
         when Linkage Phase is Ambiguous
@@ -13,6 +13,6 @@ Suggests: R.rsp, testthat
 VignetteBuilder: R.rsp
 URL: https://analytictools.mayo.edu/research/haplo-stats/
 NeedsCompilation: yes
-Packaged: 2023-12-11 14:22:32 UTC; sinnwell
+Packaged: 2024-02-02 09:34:37 UTC; ripley
 Repository: CRAN
-Date/Publication: 2023-12-11 15:40:05 UTC
+Date/Publication: 2024-02-02 09:41:30 UTC
