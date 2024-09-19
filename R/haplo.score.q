@@ -91,8 +91,6 @@
 #update for release of haplo.score 1.2.0 with 'PIN'
 #
 #Revision 1.4  2003/04/22 20:30:20  sinnwell
-#include use of is.R()
-#
 #Revision 1.3  2003/03/06 21:48:45  sinnwell
 #include license statement
 #
@@ -488,8 +486,8 @@ haplo.score <- function(y, geno, trait.type="gaussian",
       
     }
 
-   score.global.p <- if(is.R()) pchisq(score.global, df, lower.tail=FALSE) else 1 - pchisq(score.global,df)
-   score.haplo.p <- if(is.R()) pchisq(score.haplo^2, 1, lower.tail=FALSE) else 1 - pchisq(score.haplo^2,1)
+   score.global.p <- pchisq(score.global, df, lower.tail=FALSE)
+   score.haplo.p <- pchisq(score.haplo^2, 1, lower.tail=FALSE) 
 
 # Create locus label if missing:
    if(all(is.na(locus.label))) {
@@ -508,11 +506,7 @@ haplo.score <- function(y, geno, trait.type="gaussian",
        n.val.global=n.val.global,
        n.val.haplo=n.val.haplo, rows.rem=miss))
 
-   if(exists("is.R") && is.function(is.R) && is.R()) {
-     class(obj) <- "haplo.score"
-   } else {
-     oldClass(obj) <- "haplo.score"
-   }
+   class(obj) <- "haplo.score"
 
    return(obj)
    

@@ -239,11 +239,7 @@ haplo.model.frame <- function(m, locus.label=NA, control=haplo.glm.control() ){
   
   dimnames(x.hap)[[2]] <- paste(".",dimnames(x.hap)[[2]],sep="")
 
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-     class(x.hap) <- "model.matrix"
-   } else {
-     oldClass(x.hap) <- "model.matrix"
-   }
+  class(x.hap) <- "model.matrix"
 
   # Now expand model.frame (by repeating rows) to account for enumerated haplotypes
   m <- m[indx.subj,]
@@ -259,30 +255,16 @@ haplo.model.frame <- function(m, locus.label=NA, control=haplo.glm.control() ){
   # labels for a locus). For S, we can either do the same, or rely on S's model.frame
   # to have taken care of this for us, when model.frame was called within haplo.glm
 
-  if (is.R()) {
-      if(is.null(allele.lev)){
-        stop("Missing allele.lev = list of vectors for labels of alleles\nCheck par list for haplo.glm")
-      }
-
-      nloci <- ncol(hapEM$haplotype)
-      haplo.unique <- NULL
-      for(j in 1:nloci){
-        haplo.unique <- cbind(haplo.unique, allele.lev[[j]][as.numeric(hapEM$haplotype[,j])] )
-      }
-      dimnames(haplo.unique) <- dimnames(hapEM$haplotype)
-   } else {
-
-     if(!is.null(allele.lev)){
-       nloci <- ncol(hapEM$haplotype)
-       haplo.unique <- NULL
-       for(j in 1:nloci){
-          haplo.unique <- cbind(haplo.unique, allele.lev[[j]][as.numeric(hapEM$haplotype[,j])] )
-        }
-        dimnames(haplo.unique) <- dimnames(hapEM$haplotype)
-     } else {
-       haplo.unique <- hapEM$haplotype
-     }
+  if(is.null(allele.lev)){
+      stop("Missing allele.lev = list of vectors for labels of alleles\nCheck par list for haplo.glm")
   }
+
+  nloci <- ncol(hapEM$haplotype)
+  haplo.unique <- NULL
+  for(j in 1:nloci){
+      haplo.unique <- cbind(haplo.unique, allele.lev[[j]][as.numeric(hapEM$haplotype[,j])] )
+  }
+  dimnames(haplo.unique) <- dimnames(hapEM$haplotype)
   
   return(list(m.frame = m,
               g.dat = g.dat,

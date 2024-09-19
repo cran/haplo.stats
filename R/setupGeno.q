@@ -48,12 +48,7 @@ setupGeno <- function(geno, miss.val = c(0,NA),locus.label=NULL)
         # assign class model.matrix so it can be put into a data.frame
         # and to hold the unique.alleles attributes
         # negative is that subsetting does not work.
-	if(exists("is.R") && is.function(is.R) && is.R()) {
-          class(loci) <- "model.matrix"
-	}
-	else {
-          oldClass(loci) <- "model.matrix"
-	}
+        class(loci) <- "model.matrix"
 
 	attr(loci, "unique.alleles") <- unique.alleles
 

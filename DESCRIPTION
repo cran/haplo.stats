@@ -1,18 +1,21 @@
 Package: haplo.stats
-Version: 1.9.5.1
-Date: 2023-12-11
+Version: 1.9.7
+Date: 2024-09-19
 Title: Statistical Analysis of Haplotypes with Traits and Covariates
         when Linkage Phase is Ambiguous
-Author: Sinnwell JP, Schaid DJ
-Maintainer: Jason P. Sinnwell <sinnwell.jason@mayo.edu>
+Authors@R: c(person("Schaid", "Daniel", role="aut"), 
+             person("Jason P.", "Sinnwell", email="sinnwell.jason@mayo.edu",role=c("aut","cre")))
 Description: Routines for the analysis of indirectly measured haplotypes. The statistical methods assume that all subjects are unrelated and that haplotypes are ambiguous (due to unknown linkage phase of the genetic markers). The main functions are: haplo.em(), haplo.glm(), haplo.score(), and haplo.power(); all of which have detailed examples in the vignette.
 License: GPL (>= 2)
-Depends: R (>= 4.1.0), methods, stats, graphics, arsenal
+Depends: R (>= 4.2.0), methods, stats, graphics, arsenal
 Imports: rms
 Suggests: R.rsp, testthat
 VignetteBuilder: R.rsp
 URL: https://analytictools.mayo.edu/research/haplo-stats/
 NeedsCompilation: yes
-Packaged: 2024-02-02 09:34:37 UTC; ripley
+Packaged: 2024-09-19 13:46:47 UTC; sinnwell
+Author: Schaid Daniel [aut],
+  Jason P. Sinnwell [aut, cre]
+Maintainer: Jason P. Sinnwell <sinnwell.jason@mayo.edu>
 Repository: CRAN
-Date/Publication: 2024-02-02 09:41:30 UTC
+Date/Publication: 2024-09-19 22:50:02 UTC

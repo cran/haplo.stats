@@ -71,11 +71,7 @@ locus <- function(allele1,allele2,
   attr(geno,"locus.alias") <- locus.alias
   attr(geno,"x.linked") <- x.linked
   
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-    class(geno) <- "model.matrix"
-  } else {
-    oldClass(geno) <- "model.matrix"
-  }
+  class(geno) <- "model.matrix"
   
   attr(geno,"allele.labels") <- levels(t)
   if (x.linked) {

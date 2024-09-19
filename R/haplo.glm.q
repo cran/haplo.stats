@@ -109,7 +109,7 @@ haplo.glm  <- function(formula = formula(data),
       if(!is.null(call[[i]])) {
         frame.call[[i]] <- call[[i]]
         k <- k+1
-        if(is.R()) names(frame.call)[k]=i
+        names(frame.call)[k]=i
       }
 
     }

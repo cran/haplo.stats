@@ -379,25 +379,25 @@ void louis_info(
     }
   }
 
-  Free(tempvec1);
-  Free(tempvec2);
+  R_Free(tempvec1);
+  R_Free(tempvec2);
 
   for(i=0;i<size_max;i++) {
-    Free(amat[i]);
-    Free(bmat[i]);
-    Free(abmat[i]);
-    Free(cmat[i]); 
+    R_Free(amat[i]);
+    R_Free(bmat[i]);
+    R_Free(abmat[i]);
+    R_Free(cmat[i]); 
   }
 
-  Free(amat);
-  Free(bmat);
-  Free(abmat);
-  Free(cmat);
+  R_Free(amat);
+  R_Free(bmat);
+  R_Free(abmat);
+  R_Free(cmat);
  
   for(i=0;i< (*len_tot); i++){
-    Free(x[i]);
+    R_Free(x[i]);
   }
-  Free(x);
+  R_Free(x);
 
   return;
 
@@ -433,12 +433,12 @@ static double **double_matrix(int nrow, int ncol){
         double **m;
 
         /* allocate pointers to rows */
-        m=(double **) Calloc(nrow, double *);
+        m=(double **) R_Calloc(nrow, double *);
         if (!m) errmsg("mem alloc failure 1 in double_matrix");
   
 	/* allocate vec of memory for each row */
         for(i=0;i<nrow;i++) {
-          m[i]=(double *) Calloc(ncol, double);
+          m[i]=(double *) R_Calloc(ncol, double);
           if(!m[i]) errmsg("mem alloc failure 2 in double_matrix");
 	}
 
@@ -451,7 +451,7 @@ static double **double_matrix(int nrow, int ncol){
 static double *double_vec(int n){
 /* allocate double vec with subscript range v[0 ..(nrow-1)] */
         double *v;
-        v =(double *) Calloc(n, double);
+        v =(double *) R_Calloc(n, double);
           if(!v) errmsg("mem alloc failure in double_vec");
         return v;
 }

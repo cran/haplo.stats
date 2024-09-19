@@ -76,13 +76,13 @@ plot.seqhap <- function(x, pval="hap", single=TRUE, minp=.Machine$double.eps, ..
   }
   
   switch(pval,
-         "hap"={ if(is.R()) seqp <- pchisq(x$hap.stat, x$hap.df, lower.tail=FALSE) else seqp <- 1-pchisq(x$hap.stat,x$hap.df)
+         "hap"={ seqp <- pchisq(x$hap.stat, x$hap.df, lower.tail=FALSE)
                 ylabel <- '-log10(hap.pval)' 
                 },
-         "sum"={ if(is.R()) seqp <- pchisq(x$sum.stat,x$sum.df, lower.tail=FALSE) else 1-pchisq(x$sum.stat,x$sum.df)
+         "sum"={ seqp <- pchisq(x$sum.stat,x$sum.df, lower.tail=FALSE) 
                  ylabel <- '-log10(sum.pval)'
                },
-         "hap.sim"={seqp <-  ifelse(x$hap.p.point==0, 1/(x$n.sim+1), x$hap.p.point)
+         "hap.sim"={seqp <- ifelse(x$hap.p.point==0, 1/(x$n.sim+1), x$hap.p.point)
                     if(any(seqp < 1/x$n.sim)) warning("One or more permutation p-value(s) set from 0 to 1/(n.sim+1)")
                     ylabel <- '-log10(hap.sim.pval)'
                  },
@@ -125,12 +125,9 @@ plot.seqhap <- function(x, pval="hap", single=TRUE, minp=.Machine$double.eps, ..
          }
     }
 
-  if(single) lines(x$pos,log.single.p,lty=2)
-  if(is.R()) {  #mgp for title change
-    axis(1,at=x$pos, labels=x$locus.label, ...) # adj=0, las=2, cex.axis=.8
-  } else {
-    axis(1,at=x$pos, labels=x$locus.label, ...)  #cex.axis=.8, srt=90, adj=0
-  }
+  if(single) {       lines(x$pos,log.single.p,lty=2) }
+
+  axis(1,at=x$pos, labels=x$locus.label, ...) # adj=0, las=2, cex.axis=.8
 
   invisible()
 

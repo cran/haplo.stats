@@ -36,7 +36,8 @@
 #include <math.h>
 #include <string.h>
 #include <limits.h>
-#include <R.h> 
+#include <R.h>
+#include <R_ext/RS.h>
 #include <R_ext/Error.h>
 #include "haplo_em_pin.h"
 
@@ -115,20 +116,20 @@ void haplo_em_pin(
     }
   }
 
-  prior = (double *) Calloc(*max_haps, double);
+  prior = (double *) R_Calloc(*max_haps, double);
  
   if(prior==NULL){
     errmsg("could not alloc mem for prior");
   }
 
   /* array to keep track of loci used at any point in time */
-  loci_used = (int *) Calloc(n_loci, int);
+  loci_used = (int *) R_Calloc(n_loci, int);
   if(loci_used==NULL){
     errmsg("could not alloc mem for loci_used");
   }
 
   /* array of pointers to haplo information */
-  hap_list = (HAP **) Calloc(*max_haps, HAP* );
+  hap_list = (HAP **) R_Calloc(*max_haps, HAP* );
   if(hap_list==NULL){
     errmsg("could not alloc mem for hap_list");
   }
@@ -330,7 +331,7 @@ void haplo_em_pin(
 
   
  /* prepare to return info for unique haplotypes */
-  u_hap_list = (HAPUNIQUE **) Calloc(n_u_hap, HAPUNIQUE *);
+  u_hap_list = (HAPUNIQUE **) R_Calloc(n_u_hap, HAPUNIQUE *);
   if (!u_hap_list){
     errmsg("could not alloc mem for unique haplo");
   }
@@ -365,16 +366,16 @@ void haplo_em_pin(
 
   /* Free memory */
 
-  Free(prior);
+  R_Free(prior);
   prior = NULL;
 
-  Free(loci_used);
+  R_Free(loci_used);
   loci_used = NULL;
 
   for(i=0; i< (*n_subject); i++){
-    Free(geno[i]);
+    R_Free(geno[i]);
   }
-  Free(geno);
+  R_Free(geno);
   geno = NULL;
  
 }
@@ -385,7 +386,7 @@ static HAP* new_hap(int id, int pair_id, double wt, double prior, double post){
   HAP *result;
   int *loc;
 
-  result = (HAP *) Calloc(1, HAP);
+  result = (HAP *) R_Calloc(1, HAP);
  
  if (!result){
   errmsg("could not alloc mem for new hap");
@@ -397,10 +398,10 @@ static HAP* new_hap(int id, int pair_id, double wt, double prior, double post){
   result->post  = post;
   result->keep = 1;
 
-  loc = (int *) Calloc(n_loci, int);
+  loc = (int *) R_Calloc(n_loci, int);
   if (!loc) {
     errmsg("could not alloc mem for new hap");
-    Free(result);
+    R_Free(result);
   }
 
   result->loci = loc; 
@@ -554,15 +555,15 @@ static void unique_haps(int n_hap, HAP **hap_list, HAPUNIQUE **u_hap_list,
 static HAPUNIQUE* copy_hap_unique(HAP *old, double *prior) {
   HAPUNIQUE *result;
   int i;
-  result = (HAPUNIQUE *) Calloc(1, HAPUNIQUE);
+  result = (HAPUNIQUE *) R_Calloc(1, HAPUNIQUE);
   if (result) {
     result->code    = old->code;
     result->prior   = prior[old->code];
     result->keep    = old->keep;
-    result->loci = (int *) Calloc(n_loci, int);
+    result->loci = (int *) R_Calloc(n_loci, int);
     if (result->loci==NULL) {
       errmsg("could not alloc mem for copy_hap_unique");
-      Free(result);
+      R_Free(result);
     }
     for (i=0; i<n_loci; i++) 
 	result->loci[i] = old->loci[i];
@@ -762,7 +763,7 @@ static int hap_enum(HAP ***hap_list_ptr, double **prior_ptr, int *max_haps, int 
 static HAP* copy_hap(HAP *old) {
   HAP *result;
   int i;
-  result = (HAP *) Calloc(1, HAP);
+  result = (HAP *) R_Calloc(1, HAP);
   if (result) {
     result->id      = old->id;
     result->pair_id = old->pair_id;
@@ -770,10 +771,10 @@ static HAP* copy_hap(HAP *old) {
     result->post    = old->post;
     result->code    = old->code;
     result->keep    = old->keep;
-    result->loci = (int *) Calloc(n_loci, int);
+    result->loci = (int *) R_Calloc(n_loci, int);
     if (result->loci==NULL) {
       errmsg("could not alloc mem for copy_hap");
-      Free(result);
+      R_Free(result);
     }
     for (i=0; i<n_loci; i++) 
 	result->loci[i] = old->loci[i];
@@ -983,12 +984,12 @@ static int **int_matrix(int nrow, int ncol){
         int **m;
 
         /* allocate pointers to rows */
-        m=(int **) Calloc(nrow, int *);
+        m=(int **) R_Calloc(nrow, int *);
         if (!m) errmsg("mem alloc failure 1 in int_matrix");
   
 	/* allocate vec of memory for each row */
         for(i=0;i<nrow;i++) {
-          m[i]=(int *) Calloc(ncol, int);
+          m[i]=(int *) R_Calloc(ncol, int);
           if(!m[i]) errmsg("mem alloc failure 2 in int_matrix");
 	}
 
@@ -1068,24 +1069,24 @@ void haplo_free_memory(void){
 
   for(i=0;i<ret_max_haps;i++){
     if(ret_hap_list[i] != NULL) {
-      if(ret_hap_list[i]->loci != NULL) Free( ret_hap_list[i]->loci );
-      Free( ret_hap_list[i]); 
+      if(ret_hap_list[i]->loci != NULL) R_Free( ret_hap_list[i]->loci );
+      R_Free( ret_hap_list[i]); 
     }
   }
 
 
-  Free(ret_hap_list);
+  R_Free(ret_hap_list);
 
   ret_hap_list = NULL;
 
   for(i=0;i<ret_n_u_hap;i++){
     if(ret_u_hap_list[i] != NULL){
-      if(ret_u_hap_list[i]->loci != NULL) Free( ret_u_hap_list[i]->loci );
-       Free( ret_u_hap_list[i] );
+      if(ret_u_hap_list[i]->loci != NULL) R_Free( ret_u_hap_list[i]->loci );
+       R_Free( ret_u_hap_list[i] );
     }
   }
 
-  Free(ret_u_hap_list);
+  R_Free(ret_u_hap_list);
 
   ret_u_hap_list = NULL;
 
@@ -1210,12 +1211,12 @@ static void add_more_memory(HAP ***hap_list, double **prior,int *max_haps){
     }
 
 
-  *prior =  (double *) Realloc(*prior, *max_haps, double);
+  *prior =  (double *) R_Realloc(*prior, *max_haps, double);
   if(prior==NULL){
     errmsg("could not realloc mem for prior");
   }
 
-  *hap_list = (HAP **) Realloc(*hap_list, *max_haps, HAP* );
+  *hap_list = (HAP **) R_Realloc(*hap_list, *max_haps, HAP* );
   if(hap_list==NULL){
     errmsg("could not realloc mem for hap_list");
   }
@@ -1304,7 +1305,7 @@ static void overwrite_hap(HAP *new, HAP *old) {
  
 
     if(new->loci == NULL){
-       new->loci = (int *) Calloc(n_loci, int);
+      new->loci = (int *) R_Calloc(n_loci, int);
     }
     if(new->loci == NULL) {
       errmsg("could not alloc mem for overwrite_hap");

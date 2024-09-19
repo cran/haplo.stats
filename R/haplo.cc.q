@@ -97,12 +97,12 @@ haplo.cc <- function(y, geno, x.adj=NA, locus.label=NA, ci.prob=0.95,
 
   if(!all(is.na(x.adj))) {
     glm.data <- data.frame(geno.glm, y=y, x.adj)
-    hglm.formula <- formulize(y="y",
-          x=c("geno.glm", names(glm.data)[names(glm.data) %nin% c("y","geno.glm")]),
+    hglm.formula <- arsenal::formulize(y="y",
+          x=c("geno.glm", names(glm.data)[(names(glm.data) %nin% c("y","geno.glm"))]),
                               data=glm.data)
   } else {
     glm.data <- data.frame(geno.glm, y=y)
-    hglm.formula <- formulize(y="y", x="geno.glm",data=glm.data)
+    hglm.formula <- arsenal::formulize(y="y", x="geno.glm",data=glm.data)
   }
   # will only get OR's for haplotypes with freq > haplo.freq.min, based on min.count
   # should be set same as skip.haplo so 1:1 merge of haps from merge.lst

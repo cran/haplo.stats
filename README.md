@@ -30,12 +30,6 @@ have been implemented.
 Score statistics to test associations between haplotypes and a wide 
 variety of traits, including binary, ordinal, quantitative, and Poisson.
 
-## seqhap
-
-Sequential haplotype scan methods to perform association analyses
-for case-control data.  When evaluating each locus, loci that 
-contribute additional information to haplotype associations with 
-disease status will be added sequentially.
 
 ## haplo.design
 

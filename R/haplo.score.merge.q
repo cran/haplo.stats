@@ -15,45 +15,12 @@
 #Revision 1.4  2003/06/19 20:53:23  sinnwell
 #change "Hap-Prob" label to "Hap-Freq"
 #
-#Revision 1.3  2003/04/22 20:30:53  sinnwell
-#use is.R() function
-#
 #Revision 1.2  2003/03/06 20:34:59  sinnwell
 #revise to handle haplo.group list obj
 #
 #Revision 1.1  2003/01/17 16:29:47  sinnwell
 #Initial revision
-#
-# License: 
-# 
-# Copyright 2003 Mayo Foundation for Medical Education and Research. 
-# 
-# This program is free software; you can redistribute it and/or modify it under the terms of 
-# the GNU General Public License as published by the Free Software Foundation; either 
-# version 2 of the License, or (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful, but WITHOUT ANY 
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
-# more details.
-# 
-# You should have received a copy of the GNU General Public License along with this 
-# program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
-# Boston, MA 02111-1307 USA
-# 
-# For other licensing arrangements, please contact Daniel J. Schaid.
-# 
-# Daniel J. Schaid, Ph.D.
-# Division of Biostatistics
-# Harwick Building Room 775
-# Mayo Clinic
-# 200 First St., SW
-# Rochester, MN 55905
-# 
-# phone: 507-284-0639
-# fax:      507-284-9542
-# email: schaid@mayo.edu
-# 
+
 
 haplo.score.merge <- function(score, group)
   # Created by JP Sinnwell/ DJ Schaid
@@ -99,12 +66,7 @@ haplo.score.merge <- function(score, group)
   # Make a class for haplo.score.merge for print method.
   # Make it act just like a data.frame. Has one added attribute: n.loci
 
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-    class(df.merge) <- c("haplo.score.merge","data.frame")
-  } else {
-    setOldClass(c("haplo.score.merge","data.frame"))
-    oldClass(df.merge) <- "haplo.score.merge"
-  }
+  class(df.merge) <- c("haplo.score.merge","data.frame")
 
   return(df.merge)
 

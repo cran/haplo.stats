@@ -118,11 +118,7 @@ haplo.score.slide <- function(y, geno, trait.type="gaussian", n.slide=2,
                       simulate=simulate, n.slide=n.slide, locus.label=locus.label,
                       n.val.haplo=n.val.haplo, n.val.global=n.val.global)
 
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-     class(score.slide) <- "haplo.score.slide"
-   } else {
-     oldClass(score.slide) <- "haplo.score.slide"
-   }
+  class(score.slide) <- "haplo.score.slide"
 
   return(score.slide)
 

@@ -4,7 +4,7 @@
 #$Locker:  $
 #$Log: printBanner.q,v $
 #Revision 1.1  2011/04/28 19:48:22  sinnwell
-#is.R, printBanner, setupData
+#printBanner, setupData
 #
 #Revision 1.4  2007/01/23 21:00:27  sinnwell
 #rm ending newline \n.  Users can space if desired.

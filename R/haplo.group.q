@@ -27,9 +27,6 @@
 #   Revision 1.5  2003/05/20 14:49:53  sinnwell
 #   add more em control parameters
 #
-#   Revision 1.4  2003/04/22 20:29:27  sinnwell
-#   use is.R function
-#
 #   Revision 1.3  2003/03/06 20:58:13  sinnwell
 #   updates to make return obj a list and, and gnames
 #
@@ -161,12 +158,7 @@ haplo.group <- function(group, geno, locus.label=NA,
 
   hapgroup <- list(group.df=haplo.freq, group.count=group.count, n.loci=n.loci)
 
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-    class(hapgroup) <- c("haplo.group","data.frame")
-  } else {
-    setOldClass(c("haplo.group","data.frame"))
-    oldClass(hapgroup) <- "haplo.group"
-  }
+  class(hapgroup) <- c("haplo.group","data.frame")
   
   return(hapgroup)
 }

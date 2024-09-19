@@ -24,14 +24,9 @@ print.haplo.scan <- function(x, digits=max(options()$digits-2, 5), ...)
 
   loc.label <- paste("loc", 1:ncol(scan.df), sep='-')
   dimnames(scan.df) <- list(c("stat.obs", "sim.p-val"), loc.label) 
-  if(exists("is.R") && is.function(is.R) && is.R()) {
-    x$call <- deparse(x$call, width.cutoff=40)
-    cat("\n  Call: ", x$call, sep="\n")
-  }
-  else {
-    cat("\n  Call: \n")
-    dput(x$call)
-  }
+  x$call <- deparse(x$call, width.cutoff=40)
+  cat("\n  Call: ", x$call, sep="\n")
+
   cat("\n")
   
   printBanner("Locus Scan-statistic Simulated P-values")

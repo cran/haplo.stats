@@ -141,9 +141,7 @@ plot.haplo.score.slide <- function(x, pval="global", dist.vec=1:x$n.loci, ...)
   
   # plot outer region, then the axis with locus labels
   plot(x=c(1,x$n.loci),y=c(0,max(lnp)),type="n",ylab=ylabel,xlab="",xaxt="n", ...)
-  if(is.R()) axis(1,at=x.axis.vec, labels=x$locus.label)
-  else axis(1,at=x.axis.vec, labels=x$locus.label, ...)
-
+  axis(1,at=x.axis.vec, labels=x$locus.label)
   
   # plot a line for each set of n.slide loci at height of -log10p[i]
   for (i in x$df$start.loc) {

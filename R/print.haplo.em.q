@@ -77,11 +77,7 @@ print.haplo.em <- function(x, digits=max(options()$digits-2, 5), nlines=NULL, ..
 
   pval <- NA
   if(x$df.lr > 0) {
-    if(is.R()) {
-      pval = pchisq(x$lr, x$df.lr, lower.tail=FALSE)
-    } else {
-      pval = 1-pchisq(x$lr, x$df.lr)
-    }
+    pval = pchisq(x$lr, x$df.lr, lower.tail=FALSE)
   }
     
   cat("lnlike = ",round(x$lnlike,digits),"\n")

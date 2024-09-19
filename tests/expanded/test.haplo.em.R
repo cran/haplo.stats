@@ -6,6 +6,7 @@
 verbose=TRUE
 
 require(haplo.stats)
+packageVersion("haplo.stats")
 options(stringsAsFactors=FALSE)
 tmp <- Sys.setlocale("LC_COLLATE", "C")
 tmp <- Sys.getlocale("LC_COLLATE")
