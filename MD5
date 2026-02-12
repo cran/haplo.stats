@@ -1,4 +1,4 @@
-3cee7e030106474e8523b87d4b030f4f *DESCRIPTION
+b0bc452ee85a3e613116ea2c2d822625 *DESCRIPTION
 148cd7ca49bbec4e13196fdd5986324d *NAMESPACE
 e8c5d27eab400e1c1faa48dc31466053 *R/Ginv.R
 dd3dbda43c57931ca381e580f02bcdca *R/anova.haplo.glm.q
@@ -64,7 +64,7 @@ b9d82ad608c6eb8dcb8633f0c8af25d9 *R/residScaledGlmFit.q
 debb42bf915f94f7c242053909a66f3c *R/x.sexcheck.q
 118ae8ba1c9a51017cd121ac33606ac6 *R/zzz.haplo.stats.R
 8dd2501a784b426e6681ed74210200f7 *README.md
-315161e22cfd6190fb51f546ecc1f7f3 *build/vignette.rds
+2cb597c5b243d702642dddf2414499a1 *build/vignette.rds
 1dd590a772664a4981a9fd6a1502e336 *data/hapPower.demo.tab.gz
 6845c2953772c2e671e2e4ab94188ac9 *data/hla.demo.tab.gz
 2ef2670db0175457b501347944d6c47c *data/seqhap.dat.tab.gz
@@ -73,7 +73,8 @@ b3e18351bd6af13a3331cf1e94d92d6c *inst/NEWS.Rd
 d368405f1c604912f51ba286eed9944a *inst/doc/GPL.txt
 27bf59c2a37bff07a78c9730061e532b *inst/doc/LICENSE.mayo
 2bb9d322fe512aa29e056ca74f24b67c *inst/doc/haplostats.Rnw
-ad8ce5753fdac39a050d668e520c7a84 *inst/doc/haplostats.pdf
+c4ded55fc22ead6087cc1737ddd6d317 *inst/doc/haplostats.pdf
+64161df422da9531aa93fb0bb0fdbc30 *inst/doc/manualHaploStats.pdf
 2413e1f391f3cee0b780a174df883c95 *inst/doc/manualHaploStats.pdf.asis
 4b1e3869e6d210fe5b94b8cafadc3cb7 *inst/doc/manualHaploStats.rnwsave
 10ae00dab9c8f986bf5b6c64eef98521 *man/Ginv.Rd
@@ -179,4 +180,4 @@ f6c8416f51ef156d91ece2c763347732 *tests/testthat/cc.test.rds
 7a2df16ffdc77cb237051b803232b3cd *tests/testthat/test.haplo.glm.R
 df098cf1ae48aa75d4e6d15860330418 *tests/testthat/test.haplo.power.R
 2bb9d322fe512aa29e056ca74f24b67c *vignettes/haplostats.Rnw
-b630e4dd78f49fc4e800f5fa38c75294 *vignettes/manualHaploStats.pdf
+2413e1f391f3cee0b780a174df883c95 *vignettes/manualHaploStats.pdf.asis
