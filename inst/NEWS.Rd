@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{NEWS file for the haplo.stats package}
+\section{Changes in version 1.9.7}{
+  \itemize{
+    \item clear unused C variables and routines
+    \item make user manual as Rmd
+    \item remove dependency on R.rsp
+  }
+}
 \section{Changes in version 1.8.7}{
   \itemize{
     \item updated to testthat mechanisms to allow for tolerance

@@ -1,7 +1,0 @@
-\documentclass{article}
-\usepackage{pdfpages}
-%\VignetteIndexEntry{haplostats}
-
-\begin{document}
-\includepdf[pages=-, fitpaper=true]{manualHaploStats.pdf}
-\end{document}
