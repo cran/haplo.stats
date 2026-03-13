@@ -1,6 +1,10 @@
 ## ----setup, include=FALSE---------------------------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE, tidy.opts=list(width.cutoff=100), tidy=TRUE, comment=NA)
 options(width=120, max.print=1000)
+oldlc <- Sys.getlocale("LC_COLLATE")
+on.exit(Sys.setlocale("LC_COLLATE", oldlc))
+Sys.setlocale("LC_COLLATE","C")
+
 
 ## ----getstarted, echo=TRUE, eval=FALSE--------------------------------------------------------------------------------
 # # load the library, load and preview at demo dataset

@@ -1,4 +1,4 @@
-f0fa8b4cece74fea0f80c0d7f2a8512d *DESCRIPTION
+a3d9f05b7b2067c4a848ddb681d7f11d *DESCRIPTION
 148cd7ca49bbec4e13196fdd5986324d *NAMESPACE
 e8c5d27eab400e1c1faa48dc31466053 *R/Ginv.R
 dd3dbda43c57931ca381e580f02bcdca *R/anova.haplo.glm.q
@@ -74,8 +74,8 @@ b395516007295803e95e4951b0066373 *data/hla.demo.tab.gz
 1cd35a49ba9914a5c405260ed0175d08 *data/seqhap.pos.tab
 a7ee89da0aff191a340c312643f7cd73 *data/seqhap.pos.tab.gz
 f0cb58d80bf248f34124badf2c7ba5a6 *inst/NEWS.Rd
-2b10b4bcb3fcac751e986043e683d22e *inst/doc/haplostats.R
-cb90f6cc2a73321c7b4bc967065457c0 *inst/doc/haplostats.Rmd
+9c69bc09208b0e76e8a7059aac0a7334 *inst/doc/haplostats.R
+e8d225b5a315ccd20ca1ac6c96eaeb52 *inst/doc/haplostats.Rmd
 868ada3c7a981b0c1833702d3067ed1f *inst/doc/haplostats.html
 10ae00dab9c8f986bf5b6c64eef98521 *man/Ginv.Rd
 bf6f1a85454445157ab798632128e8ab *man/anova.haplo.glm.Rd
@@ -174,4 +174,4 @@ f6c8416f51ef156d91ece2c763347732 *tests/testthat/cc.test.rds
 3f858918326f24cf46a16cc73f96d644 *tests/testthat/test.haplo.cc.R
 7a2df16ffdc77cb237051b803232b3cd *tests/testthat/test.haplo.glm.R
 df098cf1ae48aa75d4e6d15860330418 *tests/testthat/test.haplo.power.R
-cb90f6cc2a73321c7b4bc967065457c0 *vignettes/haplostats.Rmd
+e8d225b5a315ccd20ca1ac6c96eaeb52 *vignettes/haplostats.Rmd
