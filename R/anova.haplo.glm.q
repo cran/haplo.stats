@@ -54,13 +54,12 @@ anova.haplo.glmlist <- function(object, test="Chisq", ...) {
     if(is.null(x$haplo.post.info)) sum(x$prior.weights)
     else sum(x$prior.weights*x$haplo.post.info$post) })
   
-  if (any(nsubj != nsubj[1])) 
-        stop("models were not all fitted to the same size of dataset")
+  if(any(abs(nsubj - nsubj[1]) > 1e-10))
+    stop("models were not all fitted to the same size of dataset")
 
   nmodels <- length(object)
   if (nmodels == 1) 
-    return(anova(object[[1L]], dispersion = dispersion, test = test))
-  
+    return(anova(object[[1L]], dispersion = dispersion, test = test))  
 
   #####
   resdf <- as.numeric(sapply(object, function(x) {

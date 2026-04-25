@@ -1217,14 +1217,18 @@ compare some of the nested models fit above, including a regular
 glm fit of $y \sim male$.  The anova method requires the nested model to be given first,
 and any anova with a *haplo.glm* object should explicitly call *anova.haplo.glm*.
 
+
 ```{r, anovaGLM}
 fit.gaus$lrt
 
 glmfit.gaus <- glm(y~male, family="gaussian", data=glm.data)
 
 anova.haplo.glm(glmfit.gaus, fit.gaus)
+
 anova.haplo.glm(fit.gaus, fit.inter)
+
 anova.haplo.glm(glmfit.gaus, fit.gaus, fit.inter)
+
 ``` 
 
 Extended Applications
@@ -1240,7 +1244,7 @@ to align the results from *haplo.score* with *haplo.group*.
 To do so, use the function *haplo.score.merge*, as illustrated in
 the following example:
 
-```{r, scoreMerge,echo=TRUE}
+```{r, scoreMerge, echo=TRUE}
 # merge haplo.score and haplo.group results
 merge.bin <- haplo.score.merge(score.bin, group.bin)
 print(merge.bin, nlines=10)
@@ -1328,8 +1332,9 @@ To evaluate the association of sub-haplotypes (subsets of alleles from
 the full haplotype) with a trait, the user can evaluate a "window" of 
 alleles by *haplo.score*, and slide this window across the entire 
 haplotype. This procedure is implemented by the function 
-*haplo.score.slide*. To illustrate this method, we use all 11 loci
-in the demo data, *hla.demo*.
+*haplo.score.slide*. The run-time is considerably longer for this method, because
+many re-runs of haplo.em are performed. For this reason, we show only example code
+using all 11 loci in the demo data, *hla.demo*.
  
 First, make the geno matrix and the locus labels for the 11 loci.
 Then use *haplo.score.slide* for a window of 3 loci 
@@ -1337,112 +1342,30 @@ Then use *haplo.score.slide* for a window of 3 loci
 contiguous subsets of size 3, using the previously defined gaussian trait 
 *resp*.
 
-```{r, eval=TRUE, echo=FALSE}
-set.seed(seed)
-```
 
-```{r, label=scoreSlide, echo=TRUE, eval=TRUE }
+```{r, label=scoreSlide, echo=TRUE, eval=FALSE}
 # haplo.score on 11 loci, slide on 3 consecutive loci at a time
 geno.11 <- hla.demo[,-c(1:4)]
 label.11 <- c("DPB","DPA","DMA","DMB","TAP1","TAP2","DQB","DQA","DRB","B","A")
 score.slide.gaus <- haplo.score.slide(hla.demo$resp, geno.11, trait.type =
                 "gaussian", n.slide=3, min.count=5, locus.label=label.11)
 print(score.slide.gaus)
+
 ```
 
-The first column is the row index of the nine calls to 
-*haplo.score*, the second column is the number of the starting 
-locus of the sub-haplotype, the third column is the global score
-statistic p-value for each call.  The last two columns are the 
-simulated p-values for the global and maximum score statistics, 
-respectively.  If you specify *simulate=TRUE* in the function 
-call, the simulated p-values would be present. 
 
 ### Plot Results from *haplo.score.slide*
 
-The results from *haplo.score.slide* can be easily viewed in a plot
-shown below. The x-axis has tick marks for each locus, and the y-axis is the 
-$ -log_{10}(pval) $.  To select which p-value to plot, use the 
-parameter  pval, with  choices "*global*", "*global.sim*", and
-"*max.sim*" corresponding to p-values described above.  If the
-simulated p-values were not computed, the default is to plot the
-global p-values.  For each p-value, a horizontal line is drawn at the 
-height of $ -log_{10}(pval) $\ across the loci over which it was
-calculated. For example, the p-value *score.global.p = 0.009963*
-for loci 8-10 is plotted as a horizontal line at $ y=2.002 $
-spanning the $8^{th}$, $9^{th}$, and $10^{th}$ x-axis tick marks.
+The results from *haplo.score.slide* can be easily viewed in a plot, as shown
+shown below in the example code. The plot method consists of tick markers for each locus on the x-axis,
+and the y-axis is the -log_{10}(pval) $.  To select which p-value to plot, use the 
+parameter  pval, with  choices "*global*", "*global.sim*", and "*max.sim*" corresponding to p-values
+described previously for haplo.score.
 
-```{r, label=plotSlide, fig=TRUE, echo=TRUE }
+```{r, label=plotSlide, fig=TRUE, echo=TRUE, eval=FALSE }
 # plot global p-values for sub-haplotypes from haplo.score.slide
 plot.haplo.score.slide(score.slide.gaus)
 ```
-
-## Scanning Haplotypes Within a Fixed-Width Window: *haplo.scan*
-
-Another method to search for a candidate locus within a genome region 
-is *haplo.scan*, an implementation of the method proposed
-by [Cheng et al. in 2005](https://doi.org/10.1046/j.1529-8817.2004.00140.x).
-This method searches for a region for which the haplotypes 
-have the strongest association with a binary trait by sliding a window of fixed 
-width over each marker locus, and then scans over all haplotype lengths within
-each window. This latter step, scanning over all possible haplotype
-lengths within a window, distinguishes *haplo.scan* from 
-*haplo.score.slide* (which considers only the maximum haplotype
-length within a window).  To account for unknown linkage phase, the 
-function *haplo.em* is called prior to scanning, to create a list of 
-haplotype pairs and posterior probabilities. To illustrate the scanning 
-window, consider a 10-locus dataset. When placing a window of 
-width 3 over locus 5, the possible haplotype lengths that contain locus 5 
-are three (loci 3-4-5, 4-5-6, and 5-6-7), two (loci 4-5 and 5-6) and one 
-(locus 5).
-For each of these loci subsets a score statistic is computed, which is
-based on the difference between the mean vector of haplotype counts
-for cases and that for controls. The maximum of these score
-statistics, over all possible haplotype lengths within a window, is 
-the locus-specific test statistic, or the locus scan statistic. The global 
-test statistic is the maximum over all computed score statistics. To 
-compute p-values, the case/control status is randomly permuted. Below we 
-run *haplo.scan* on the 11-locus HLA dataset with a binary
-response and a window width of $3$, but first we use the results of 
-*summaryGeno* to choose subjects with less than $50,000$ haplotype
-pairs to speed calculations with all $11$ polymorphic loci
-with many missing alleles.
-
-```{r, eval=TRUE, echo=FALSE}
-set.seed(seed)
-```
-
-```{r, hapScan, echo=TRUE, eval=TRUE }
-geno.11 <- hla.demo[,-c(1:4)]
-y.bin <- 1*(hla.demo$resp.cat=="low")
-hla.summary <- summaryGeno(geno.11, miss.val=c(0,NA))
-
-# track those subjects with too many possible haplotype pairs ( > 50,000)
-many.haps <- (1:length(y.bin))[hla.summary[,4] > 50000]
-
-# For speed, or even just so it will finish, make y.bin and geno.scan 
-# for genotypes that don't have too many ambigous haplotypes
-geno.scan <- geno.11[-many.haps,]
-y.scan <- y.bin[-many.haps]
-
-# scan haplotypes for regions within width of 3 for each locus.
-# test statistic measures difference in haplotype counts in cases and controls
-# p-values are simulated for each locus and the maximum statistic, 
-# we do 100 simuations here, should use default settings for analysis
-
-scan.hla <- haplo.scan(y.scan, geno.scan, width=3,
-        sim.control=score.sim.control(min.sim=100, max.sim=100),
-        em.control=haplo.em.control())
-
-print(scan.hla)
-```
-
-In the output we report the simulated p-values for each locus test statistic.
-Additionally, we report the loci (or locus) which provided the maximum observed test
-statistic, and the *Max-Stat Simulated Global p-value* is the simulated p-value for that 
-maximum statistic. We print the number of simulations, because they are performed until
-p-value precision criteria are met.  We would typically allow simulations to run under
-default parameters rather than limiting to $100$ by the control parameters.
 
 ## Creating Haplotype Effect Columns: *haplo.design* 
 

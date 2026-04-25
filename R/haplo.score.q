@@ -3,97 +3,6 @@
 #$Header: /projects/genetics/cvs/cvsroot/haplo.stats/R/haplo.score.q,v 1.32 2013/12/02 21:11:40 sinnwell Exp $
 #$Locker:  $
 #$Log: haplo.score.q,v $
-#Revision 1.32  2013/12/02 21:11:40  sinnwell
-#change rms::: to rms::
-#
-#Revision 1.31  2013/01/14 19:33:16  sinnwell
-#small changes for 1.5.9
-#
-#Revision 1.30  2011/12/05 20:56:10  sinnwell
-#final manual changes, updated test suite
-#
-#Revision 1.29  2011/11/23 20:34:02  sinnwell
-#release 1.4.81, updates with test scripts
-#
-#Revision 1.28  2009/04/09 14:31:37  sinnwell
-#*** empty log message ***
-#
-#Revision 1.27  2009/04/08 17:52:40  sinnwell
-# use R's pchisq with lower.tail=FALSE for more signif digits
-#
-#Revision 1.26  2008/04/08 20:26:22  sinnwell
-#add eps.svd, undo last changes with haplo.effect and control
-#
-#Revision 1.25  2008/04/07 21:54:51  sinnwell
-#make control parameter have eps.svd, haplo.effect, sim.control, em.control
-#
-#Revision 1.24  2008/04/04 14:15:17  sinnwell
-#change Ginv eps to 1e-5, sometimes gives full rank for v.score, when should  be n.score-1
-#
-#Revision 1.23  2008/04/01 20:53:07  sinnwell
-#added epsilon par to Ginv
-#
-#Revision 1.22  2007/02/26 22:01:12  sinnwell
-#remove row.rem code, it was deprecated in haplo.em
-#rows.rem is now miss, the index of rows removed in y, x.adj b/c of NA
-#
-#
-#Revision 1.21  2007/01/25 19:41:27  sinnwell
-#include haplo.effect for additive, recessive, dominant
-#include min.count as parameter, base skip.haplo on it.
-#Added a few comments for readability
-#
-#Revision 1.20  2006/10/25 15:09:54  sinnwell
-#rm Matrix library call, only done in Ginv.q
-#
-#Revision 1.19  2006/05/02 15:09:25  sinnwell
-#improve error messages
-#
-#Revision 1.18  2006/01/27 16:25:47  sinnwell
-#enforce dependency of Ginv on Matrix
-#
-#Revision 1.17  2005/11/01 14:49:22  sinnwell
-#*** empty log message ***
-#
-#Revision 1.16  2005/03/31 15:18:41  sinnwell
-#for g.inv of class Matrix, must have t(u.score)%*% g.inv
-#
-#Revision 1.15  2005/02/16 19:58:13  sinnwell
-#change some comments
-#
-#Revision 1.14  2004/12/29 17:35:18  sinnwell
-#default for skip.haplo is now 5/(nrow(geno)*2)
-#
-#Revision 1.13  2003/12/08 19:42:18  sinnwell
-# changed F,T to FALSE,TRUE
-#
-#Revision 1.12  2003/09/17 22:56:25  schaid
-#added check for var(u.score) < 0 when computing simulated haplo.score.sim
-#
-#Revision 1.11  2003/09/17 22:35:06  schaid
-#modified how max-stat and score.haplo simulated p-values account for NA
-#results (either NA for observed stat, or NA for simulated stats)
-#
-#Revision 1.10  2003/09/15 14:53:17  sinnwell
-#add in na.rm in score.max.sim calculation.
-#may be part of a bigger problem
-#
-#Revision 1.9  2003/09/11 21:27:54  sinnwell
-#change simulations to target both global and max for precision
-#
-#Revision 1.8  2003/08/27 21:19:06  sinnwell
-#*** empty log message ***
-#
-#Revision 1.7  2003/08/27 20:59:18  sinnwell
-#add rows.rem back into return list, it was needed in haplo.group
-#
-#Revision 1.6  2003/08/22 18:05:24  sinnwell
-#update for release of haplo.score 1.2.0 with 'PIN'
-#
-#Revision 1.4  2003/04/22 20:30:20  sinnwell
-#Revision 1.3  2003/03/06 21:48:45  sinnwell
-#include license statement
-#
 #Revision 1.2  2003/01/17 16:57:06  sinnwell
 #revision for haplo.score version 1.2
 # 
@@ -303,12 +212,17 @@ haplo.score <- function(y, geno, trait.type="gaussian",
    if(trait.int==4) {
 
       if(adjusted){
-         requireNamespace("rms", quietly = TRUE) ## had: require(rms)
-         reg.out <- rms::lrm(y ~ x.adj)
-         K <- max(y)
-         n.xadj <- ncol(x.adj)
-         alpha <- reg.out$coef[1:(K-1)]
-         beta <- reg.out$coeff[K:(K-1 + n.xadj)]
+         ##requireNamespace("rms", quietly = TRUE) ## had: require(rms)
+         ##reg.out <- rms::lrm(y ~ x.adj)
+            ## suggested change from rms to MASS::polr, Victor Moreno 2026 ##
+         reg.out <- MASS::polr(factor(y) ~ x.adj)
+         alpha <- reg.out$zeta * -1 # polr returns reversed signs for the intercepts
+         beta <- reg.out$coef
+ 
+#         K <- max(y)
+#         n.xadj <- ncol(x.adj)
+#         alpha <- reg.out$coef[1:(K-1)]
+#         beta <- reg.out$coeff[K:(K-1 + n.xadj)]
 
          tmp <- haplo.score.podds(y, alpha, beta, x.adj, nreps, x.post,
                               post, x)

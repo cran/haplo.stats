@@ -356,10 +356,13 @@ fit.gaus$lrt
 glmfit.gaus <- glm(y~male, family="gaussian", data=glm.data)
 
 anova.haplo.glm(glmfit.gaus, fit.gaus)
+
 anova.haplo.glm(fit.gaus, fit.inter)
+
 anova.haplo.glm(glmfit.gaus, fit.gaus, fit.inter)
 
-## ----scoreMerge,echo=TRUE-------------------------------------------------------------------------
+
+## ----scoreMerge, echo=TRUE------------------------------------------------------------------------
 # merge haplo.score and haplo.group results
 merge.bin <- haplo.score.merge(score.bin, group.bin)
 print(merge.bin, nlines=10)
@@ -377,47 +380,18 @@ cc.hla <- haplo.cc(y=y.bin, geno=geno, locus.label = genolabel,
 print(cc.hla, nlines=25, digits=2)
 names(cc.hla)
 
-## ----eval=TRUE, echo=FALSE------------------------------------------------------------------------
-set.seed(seed)
+## ----label=scoreSlide, echo=TRUE, eval=FALSE------------------------------------------------------
+# # haplo.score on 11 loci, slide on 3 consecutive loci at a time
+# geno.11 <- hla.demo[,-c(1:4)]
+# label.11 <- c("DPB","DPA","DMA","DMB","TAP1","TAP2","DQB","DQA","DRB","B","A")
+# score.slide.gaus <- haplo.score.slide(hla.demo$resp, geno.11, trait.type =
+#                 "gaussian", n.slide=3, min.count=5, locus.label=label.11)
+# print(score.slide.gaus)
+# 
 
-## ----label=scoreSlide, echo=TRUE, eval=TRUE-------------------------------------------------------
-# haplo.score on 11 loci, slide on 3 consecutive loci at a time
-geno.11 <- hla.demo[,-c(1:4)]
-label.11 <- c("DPB","DPA","DMA","DMB","TAP1","TAP2","DQB","DQA","DRB","B","A")
-score.slide.gaus <- haplo.score.slide(hla.demo$resp, geno.11, trait.type =
-                "gaussian", n.slide=3, min.count=5, locus.label=label.11)
-print(score.slide.gaus)
-
-## ----label=plotSlide, fig=TRUE, echo=TRUE---------------------------------------------------------
-# plot global p-values for sub-haplotypes from haplo.score.slide
-plot.haplo.score.slide(score.slide.gaus)
-
-## ----eval=TRUE, echo=FALSE------------------------------------------------------------------------
-set.seed(seed)
-
-## ----hapScan, echo=TRUE, eval=TRUE----------------------------------------------------------------
-geno.11 <- hla.demo[,-c(1:4)]
-y.bin <- 1*(hla.demo$resp.cat=="low")
-hla.summary <- summaryGeno(geno.11, miss.val=c(0,NA))
-
-# track those subjects with too many possible haplotype pairs ( > 50,000)
-many.haps <- (1:length(y.bin))[hla.summary[,4] > 50000]
-
-# For speed, or even just so it will finish, make y.bin and geno.scan 
-# for genotypes that don't have too many ambigous haplotypes
-geno.scan <- geno.11[-many.haps,]
-y.scan <- y.bin[-many.haps]
-
-# scan haplotypes for regions within width of 3 for each locus.
-# test statistic measures difference in haplotype counts in cases and controls
-# p-values are simulated for each locus and the maximum statistic, 
-# we do 100 simuations here, should use default settings for analysis
-
-scan.hla <- haplo.scan(y.scan, geno.scan, width=3,
-        sim.control=score.sim.control(min.sim=100, max.sim=100),
-        em.control=haplo.em.control())
-
-print(scan.hla)
+## ----label=plotSlide, fig=TRUE, echo=TRUE, eval=FALSE---------------------------------------------
+# # plot global p-values for sub-haplotypes from haplo.score.slide
+# plot.haplo.score.slide(score.slide.gaus)
 
 ## ----label=hapDesign1, echo=TRUE------------------------------------------------------------------
 # create a matrix of haplotype effect columns from haplo.em result
